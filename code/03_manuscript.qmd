@@ -1,0 +1,76 @@
+---
+title: "Examining the VAT Incidence in the Philippines"
+format: 
+    html:
+        theme: cosmo
+        code:-fold: true
+        toc: true
+---
+
+## Introduction
+
+The Value-Added Tax (VAT) is a significant source of revenue for the Philippine government. In 2024, VAT contributed almost one-third of the country's total tax collection.
+
+An exisiting proposal in Congress aims to reduce the VAT rate from 12% to 10%. This proposal has sparked debates regarding its potential impact on different socioeconomic groups.
+
+Understanding its incidence is crucial for policymakers to determine who are currently benefitting from the existing VAT structure. COnsidering the proposed changes, it is essential to evaluate the potential effects on various income groups. This study aims to analyze the incidence of VAT in the Philippines using the 2023 Family Income and Expenditure Survey from the PSA.
+
+The analysis aims to answer the following questions: - How do households allocate their budgets across different consumption categories? How much is alloted to savings/investments? (optional) - Which types of goods/services are exempt from VAT according to the Tax Code? - What is the distribution of VAT burden across different income groups considering both 1) household consumption patterns, and 2) exemptions based on law? - What is the impact of reducing the VAT rate on various socioeconomic groups?
+
+## Data and Methodology
+
+The analysis utilizes the 2023 Family Income and Expenditure Survey (FIES) conducted by the Philippine Statistics Authority (PSA). The FIES provides comprehensive data on household income, expenditure patterns, and demographic characteristics. A review of the VAT provisions in the Philippine Tax Code was conducted to identify which goods and services in the FIES are subject to VAT and which are exempt. The exemptions list include basic food items, educational services, healthcare services, public transportation, among others. Table \_ provides a summary matrix of the VAT exemptions as defined in the Tax Code and sample covered expenditure items as found in the FIES.
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+| Tax Code Provision                                                                                                                                                                                          | Covered FIES expenditure         | Remarks |
++:============================================================================================================================================================================================================+:=================================+:========+
+| **Unprocessed Agricultural Products**:                                                                                                                                                                      | rice, corn, fish, and vegetables |         |
+|                                                                                                                                                                                                             |                                  |         |
+| Agricultural and marine food products in their original state, livestock and poultry of kind generally used as, or yielding/producing foods for human consumption; and breeding stock and genetic materials |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+|                                                                                                                                                                                                             |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+|                                                                                                                                                                                                             |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+| Services subject to percentage tax, rendered by the following:                                                                                                                                              |                                  |         |
+|                                                                                                                                                                                                             |                                  |         |
+| -   non-VAT registered persons                                                                                                                                                                              |                                  |         |
+|                                                                                                                                                                                                             |                                  |         |
+| -   domestic common carriers by land, for the transport of passengers and keepers of garages                                                                                                                |                                  |         |
+|                                                                                                                                                                                                             |                                  |         |
+| -   international air / shipping carriers                                                                                                                                                                   |                                  |         |
+|                                                                                                                                                                                                             |                                  |         |
+| -                                                                                                                                                                                                           |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+| Medical, dental, hospital and veterinary services, except those rendered by professionals                                                                                                                   |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+|                                                                                                                                                                                                             |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+|                                                                                                                                                                                                             |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+|                                                                                                                                                                                                             |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+|                                                                                                                                                                                                             |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+|                                                                                                                                                                                                             |                                  |         |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
+
+: VAT exempt list
+
+```{python}
+#| echo: false
+#| warnings: false
+
+# import pandas as pd
+# import numpy as np
+# import plotly.express as px
+# import plotly.graph_objects as go
+
+# Import data
+# decile = read.csv("clean_data/decile_vat.csv")
+
+
+
+
+# fig.show()
+```

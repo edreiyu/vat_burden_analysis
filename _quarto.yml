@@ -1,0 +1,11 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "VAT Burden Analysis"
+  
+format:
+  html:
+    theme: cosmo
+    toc: true

@@ -1,0 +1,629 @@
+---
+title: "Data Processing"
+format: html
+---
+
+# Data processing
+
+This document cleans and prepares the FIES 2023 data for the analysis of the VAT burden by income in the Philippines.
+
+I have several objectives in cleaning/processing this dataset:
+
+1.  Categorize the expenditure items in the FIES 2023 data into vatable and exempt
+2.  Categorize the expenditure items into major expenditure groupings e.g., food, beverages, health, education, durable items, transportation, etc.
+3.  Decide on the income groupings to be used for the analysis, either use deciles, or use a combination of deciles and quitiles for a more detailed presentation of the data, i.e., lowest 2 deciles, 2nd-4th quintile, then highest 2 deciles.
+4.  Estimate the budget shares of each income group:
+
+-   By major expenditure grouping
+-   By taxable/exempt status
+
+5.  Estimate the amounts of VAT paid of each income group:
+
+-   In absolute peso amounts - in order to get how much each income group contributes to the total VAT collection
+-   as percentage share to total income
+-   as percentage share to total expenditure
+
+6.  Estimate the VAT revenue forgone from the level of exempt expenditures, do this by income group. Q: Who benefits from the VAT exemptions?
+7.  Estimate the effective tax rate for each decile, i.e., the ratio of vat payments to total expenditure for each decile
+
+## Setup
+
+```{python}
+import pandas as pd
+import numpy as np
+import polars as pl
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings('ignore')
+
+# Set display options
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
+# Set global Polars display format
+pl.Config.set_float_precision(2)
+pl.Config.set_tbl_formatting("ASCII_MARKDOWN")
+pl.Config.set_tbl_width_chars(1000)
+```
+
+Load and check shape of datasets
+
+```{python}
+# exempt_list = pd.read_csv('vat_exempt_list.csv')
+# fies_raw = pd.read_csv('data/FIES2023_VOL2_COMPLETE.csv') #main FIES dataset
+
+# polars equivalent
+exempt_list = pl.read_csv('clean_data/vat_exempt_list.csv')
+fies_raw = pl.read_csv('clean_data/FIES2023_VOL2_COMPLETE.csv')  # main FIES dataset
+
+fies_raw.shape
+fies_raw.head(10)
+fies_raw.columns
+fies_raw.dtypes
+exempt_list.schema
+```
+
+## Fixing rows/columns
+
+I need to use the exempt list data as basis to categorize the taxability of different expenditure items in the FIES dataset. The exempt list contains item codes and their VAT status (vatable or exempt). Item codes can be matched to the main FIES dataset, but they are stored as column names instead of row names in the exempt list data.
+
+```{python}
+## FOR FIES_RAW
+def clean_item_code(code):
+    """Remove first 6 characters and add leading zero if exactly 6 chars remain."""
+    cleaned = code[6:]
+    return "0" + cleaned if len(cleaned) == 6 else cleaned
+
+def extract_major_code(code):
+    """Extract first 2 characters for major category code."""
+    return code[:2]
+
+exempt_list = exempt_list.with_columns([
+    pl.col('item_code')
+      .cast(pl.Utf8)
+      .map_elements(clean_item_code, return_dtype=pl.Utf8)
+      .alias('new_item_code'),
+    
+    pl.col('item_code')
+      .cast(pl.Utf8)
+      .map_elements(clean_item_code, return_dtype=pl.Utf8)
+      .map_elements(extract_major_code, return_dtype=pl.Utf8)
+      .alias('item_code_major')
+])
+
+    
+## FOR EXEMPT_LIST - # standardize column names to match with exempt_list df
+def rename_column_name(col):
+    """Remove TOTAL_ prefix and add leading zero if needed"""
+    if col.startswith('TOTAL_'):
+        code = col[6:]  # Remove 'TOTAL_'
+        return "0" + code if len(code) == 6 else code
+    return col
+
+# Apply transformation
+fies_raw = fies_raw.rename({col: rename_column_name(col) for col in fies_raw.columns})
+
+# Check results
+print(exempt_list[['item_code_major','new_item_code', 'item_code', 'description', 'vatable']].head())
+
+```
+
+## Vatable and exempt expenditures
+
+VAT in the Philippines is generally applied to goods and services at a 12% standard tax rate. Some items are VAT-exempt as provided under Section 109 of the Tax Code. These are basic commodities, food items, medicines, education, and health expenditures. Further, the expenditures of specific groups are exempted such as those of senior citizens and PWDs.
+
+Now, I need to create the following groupings: - Expenditure items into vatable and exempt - Major expenditure groupings e.g., food, beverages, health, education, durable items, transportation, etc.
+
+```{python}
+# Create lists for vatable and exempt items
+vatable_items = (
+    exempt_list
+    .filter(pl.col('vatable') == 'vatable')
+    .select('new_item_code')
+    .to_series()
+    .to_list()
+)
+
+exempt_items = (
+    exempt_list
+    .filter(pl.col('vatable') == 'exempt')
+    .select('new_item_code')
+    .to_series()
+    .to_list()
+)
+
+# One-line version
+# vatable_items = exempt_list.filter(pl.col('vatable') == 'vatable').select('new_item_code').to_series().to_list()) 
+
+# Check results
+print(f"Number of vatable items: {len(vatable_items)}")
+print(f"Sample exempt codes: {exempt_items[:5]}")
+
+exempt_list.get_column('item_code_major').to_list() #get the list of values in the item_code_major column
+exempt_list.get_column('item_code_major').value_counts()#.to_dict()  #count the instance per value of item_code_major column
+
+```
+
+::: {style="color: red; font-style: italic;"}
+**Question: Do I also need to create groupings for major expenditure categories before I do the matching between the 2 datasets?**
+:::
+
+## Major expenditure groupings
+
+```{python}
+# Create lists for items included in each major expenditure category
+
+def get_expenditure_items(df, major_code):
+    """Get list of expenditure item codes for a given major category."""
+    return (
+        df
+        .filter(pl.col('item_code_major') == major_code)
+        .select('new_item_code')
+        .to_series()
+        .to_list()
+    )
+    
+# Define category mapping
+category_codes = {
+    'food': '01',
+    'alcohol_cigs': '02',
+    'clothing': '03',
+    'water_elec': '04',
+    'furnishings': '05',
+    'health': '06',
+    'transport': '07',
+    'ict': '08',
+    'recreation': '09',
+    'education': '10',
+    'resto_accom': '11',
+    'insurance_financial': '12',
+    'personal_care': '13',
+    'family_occasions': '15',
+    'other_disbursements': '17'
+}
+
+# Create all lists in one loop
+expenditure_categories = {
+    name: get_expenditure_items(exempt_list, code)
+    for name, code in category_codes.items()
+}
+
+# Use as needed
+# Option A: Extract to individual variables
+food = expenditure_categories['food']
+alcohol_cigs = expenditure_categories['alcohol_cigs']
+
+# Option B: Use dictionary directly (no extraction)
+pl.sum_horizontal(expenditure_categories['food']).alias('food_exp')
+
+```
+
+## Estimate VAT burden
+
+1.  Taxable/Exempt status by income group (What portion of each household's spending are taxable? exempt?)
+
+```{python}
+# Calculate share of spending that is taxable/exempt by decile
+tax_share = (
+    fies_raw
+    .with_columns([
+        pl.sum_horizontal(vatable_items).alias('vatable_spending'),
+        pl.sum_horizontal(exempt_items).alias('exempt_spending')
+    ])
+    .with_columns((pl.col('vatable_spending') + pl.col('exempt_spending')).alias('total_spending'))
+    .group_by('NPCINC').agg([
+        pl.len().alias('households'),
+        pl.sum('vatable_spending').alias('vatable_expenditures'),
+        pl.sum('exempt_spending').alias('exempt_expenditures'),
+        pl.sum('total_spending').alias('total_expenditures')
+    ])
+    .sort('NPCINC')
+    .with_columns([
+        (pl.col('vatable_expenditures') / pl.col('total_expenditures') * 100).alias('vatable_share'),
+        (pl.col('exempt_expenditures') / pl.col('total_expenditures') * 100).alias('exempt_share')
+    ])
+)
+print(tax_share)
+
+# Calculate overall distribution across deciles
+tax_share_bydecile = (
+    tax_share
+    .with_columns([
+        # Share of total vatable expenditure by decile
+        (pl.col('vatable_expenditures') / pl.col('vatable_expenditures').sum() * 100)
+        .alias('vatable_share_decile'),
+        # Share of total exempt expenditure by decile
+        (pl.col('exempt_expenditures') / pl.col('exempt_expenditures').sum() * 100)
+        .alias('exempt_share_decile')
+    ])
+)
+print(tax_share_bydecile)
+
+# Export results
+tax_share.write_csv('tax_share.csv')
+tax_share_bydecile.write_csv('tax_share_bydecile.csv')
+
+```
+
+2. Budget shares by major expenditure category and by income group
+
+```{python}
+budget_share = (
+    fies_raw
+    .with_columns([
+        pl.sum_horizontal(expenditure_categories[name]).alias(name)
+        for name in expenditure_categories
+    ])
+    .group_by('NPCINC').agg(
+        [pl.len().alias('households')] +
+        [pl.sum(name) for name in expenditure_categories]
+    )
+    .sort('NPCINC')
+    .with_columns(
+        pl.sum_horizontal([pl.col(name) for name in expenditure_categories]).alias('total_expenditures')
+    )
+    .with_columns([
+        (pl.col(category) / pl.col('total_expenditures') * 100).alias(f'{category}_share')
+        for category in expenditure_categories
+    ])
+)
+print(budget_share)
+
+# Export results
+budget_share.write_csv('budget_share.csv') 
+
+```
+
+
+3.  Estimated VAt payments by income group
+
+-   How much total VAT is paid by each decile?
+-   What is the proportion of VAT paid to their total income? total expenditure?
+
+Estimate the effective tax rate for each decile, i.e., the ratio of vat payments to total expenditure for each decile
+**Effective tax rate** can be derived using the tax_shares dataframe, i.e., total vatable expenditures divided by total expenditures for each decile is similar when those figures are multiplied by the VAT rate of 12%.
+
+```{python}
+vat_rate = 0.12
+
+vat_paid_est = (
+    tax_share_bydecile
+    .with_columns([
+        (pl.col('vatable_expenditures') * vat_rate).alias('estimated_vat_paid'),
+        ((pl.col('vatable_expenditures') * vat_rate) / pl.col('total_expenditures') * 100).alias('effective_vat_rate'),
+    ])
+    .with_columns([
+        ((pl.col('estimated_vat_paid') / (pl.col('total_expenditures') * vat_rate)) * 100).alias('vat_to_expenditure'),
+        # ((pl.col('vatable_expenditures') * (vat_rate / (1 + vat_rate))) / pl.col('TOINC') * 100).alias('vat_to_income')
+    ])
+)
+print(vat_paid_est)
+
+```
+
+
+4.  Estimate the VAT revenue forgone from the level of exempt expenditures, do this by income group. Q: Who benefits from the VAT exemptions?
+
+```{python}
+# How much is the estimated VAT foregone? 
+vat_foregone_est = (
+    vat_paid_est
+    .with_columns([
+        (pl.col('exempt_expenditures') * vat_rate).alias('estimated_vat_foregone'),
+        ((pl.col('exempt_expenditures') * vat_rate) / pl.col('total_expenditures') * 100).alias('vat_foregone_to_expenditure'),
+    ])
+)
+print(vat_foregone_est)
+vat_foregone_est.write_csv('vat_paid_and_foregone.csv') 
+
+```
+
+## Focusing on exempt expenditure categories
+
+1. who benefits from exempting food items? public transport? education? health?
+
+
+```{python}
+
+```
+
+
+
+
+## Visualize the results:
+
+```{python}
+plot_data = budget_shares_overall.to_pandas()
+
+fig, ax = plt.subplots(figsize=(10, 6))
+
+decile_labels = [f"Decile {int(d)}" for d in plot_data['NPCINC']]
+
+ax.bar(decile_labels, plot_data['vatable_share_pct'], 
+       label='Vatable', color='#e74c3c')
+ax.bar(decile_labels, plot_data['exempt_share_pct'], 
+       bottom=plot_data['vatable_share_pct'],
+       label='Exempt', color='#3498db')
+
+ax.set_xlabel('Per Capita Income Decile', fontweight='bold')
+ax.set_ylabel('Percentage Share (%)', fontweight='bold')
+ax.set_title('Budget Share by VAT Status and Income Decile', fontweight='bold')
+ax.set_ylim(0, 100)
+ax.legend()
+ax.grid(axis='y', alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('vat_shares_by_decile.png', dpi=300)
+plt.show()
+```
+
+Get summary stats for each decile for Total income and total expenditure
+
+```{python}
+# Simple chain-based approach for TOINC and TOTEX by decile
+decile_summary = (
+    fies_raw
+    .group_by('NPCINC')
+    .agg([
+        # Count households
+        pl.len().alias('households'),
+        
+        # Sum
+        pl.col('TOINC').sum().alias('total_income'),
+        pl.col('TOTEX').sum().alias('total_expenditure'),
+        
+        # Average
+        pl.col('TOINC').mean().alias('avg_income'),
+        pl.col('TOTEX').mean().alias('avg_expenditure')
+    ])
+    .sort('NPCINC')
+)
+
+# Display results
+print("=== INCOME AND EXPENDITURE BY DECILE ===")
+print(decile_summary)
+
+# Export to Excel
+decile_summary.write_csv('decile_summary.csv')
+print("\nExported to: decile_summary.csv")
+
+decile_summary.to_pandas().to_excel('decile_summary.xlsx', index=False, sheet_name='Decile_Summary')
+print("Exported to: decile_summary.xlsx")
+```
+
+STEP 3: Calculate VAT Analysis (Polars Version)
+
+```{python}
+# Calculate VAT analysis using Polars expressions
+vat_rate = 0.12
+
+vat_analysis = (
+    fies_data
+    .with_columns([
+        # Sum vatable expenditures
+        pl.sum_horizontal(vatable_cols_available).alias('total_vatable_expenditure'),
+        
+        # Sum exempt expenditures  
+        pl.sum_horizontal(exempt_cols_available).alias('total_exempt_expenditure')
+    ])
+    .with_columns([
+        # Calculate total FIES expenditure
+        (pl.col('total_vatable_expenditure') + pl.col('total_exempt_expenditure'))
+        .alias('total_fies_expenditure'),
+        
+        # Calculate VAT amount (embedded in prices)
+        (pl.col('total_vatable_expenditure') * (vat_rate / (1 + vat_rate)))
+        .alias('vat_amount')
+    ])
+    .with_columns([
+        # Calculate VAT burden as percentage of total income
+        ((pl.col('vat_amount') / pl.col('TOINC')) * 100)
+        .alias('vat_burden_percent')
+    ])
+)
+
+print("VAT analysis calculated successfully with Polars!")
+
+# Display some summary statistics using Polars
+summary_stats = (
+    vat_analysis
+    .select([
+        pl.len().alias('total_households'),
+        pl.col('total_vatable_expenditure').mean().alias('avg_vatable_expenditure'),
+        pl.col('total_exempt_expenditure').mean().alias('avg_exempt_expenditure'),
+        pl.col('vat_amount').mean().alias('avg_vat_amount'),
+        pl.col('vat_burden_percent').mean().alias('avg_vat_burden_percent'),
+        pl.col('vat_burden_percent').median().alias('median_vat_burden_percent')
+    ])
+)
+
+print("\n=== VAT BURDEN ANALYSIS SUMMARY (Polars) ===")
+print(summary_stats)
+
+# Show first few rows of results
+print("\n=== Sample Results ===")
+sample_results = (
+    vat_analysis
+    .select([
+        'SEQ_NO', 'TOINC', 'total_vatable_expenditure', 
+        'total_exempt_expenditure', 'vat_amount', 'vat_burden_percent'
+    ])
+    .head(5)
+)
+print(sample_results)
+```
+
+## 4. Data Cleaning Functions
+
+```{python}
+def clean_fies_data(df):
+    """
+    Clean FIES data for VAT burden analysis
+    
+    Parameters:
+    df (DataFrame): Raw FIES data
+    
+    Returns:
+    DataFrame: Cleaned data
+    """
+    df_clean = df.copy()
+    
+    # Remove rows with missing household ID
+    df_clean = df_clean.dropna(subset=['SEQ_NO'])
+    
+    # Convert expenditure columns to numeric
+    expenditure_cols = [col for col in df_clean.columns if col.startswith('TOTAL_')]
+    for col in expenditure_cols:
+        df_clean[col] = pd.to_numeric(df_clean[col], errors='coerce')
+    
+    # Fill missing expenditure values with 0
+    df_clean[expenditure_cols] = df_clean[expenditure_cols].fillna(0)
+    
+    return df_clean
+
+def calculate_income_quintiles(df, income_col):
+    """
+    Calculate income quintiles for households
+    
+    Parameters:
+    df (DataFrame): Household data
+    income_col (str): Name of total income column
+    
+    Returns:
+    DataFrame: Data with income quintiles
+    """
+    df_with_quintiles = df.copy()
+    
+    # Calculate quintiles
+    df_with_quintiles['income_quintile'] = pd.qcut(
+        df_with_quintiles[income_col], 
+        q=5, 
+        labels=['Q1_Poorest', 'Q2_Poor', 'Q3_Middle', 'Q4_Rich', 'Q5_Richest']
+    )
+    
+    return df_with_quintiles
+
+def calculate_vat_burden(df, vat_rate=0.12):
+    """
+    Calculate VAT burden for each household
+    
+    Parameters:
+    df (DataFrame): Household data with expenditures
+    vat_rate (float): VAT rate (default 12% for Philippines)
+    
+    Returns:
+    DataFrame: Data with VAT calculations
+    """
+    df_vat = df.copy()
+    
+    # Identify VAT-taxable expenditure columns
+    # This would need to be customized based on actual FIES variable names
+    vat_cols = [col for col in df_vat.columns if col.startswith('TOTAL_') and 
+                any(keyword in col.lower() for keywords in vat_taxable_categories.values() 
+                    for keyword in keywords)]
+    
+    # Calculate total VAT-taxable expenditure
+    df_vat['total_vat_taxable_expenditure'] = df_vat[vat_cols].sum(axis=1)
+    
+    # Calculate VAT amount (embedded in prices)
+    df_vat['vat_amount'] = df_vat['total_vat_taxable_expenditure'] * (vat_rate / (1 + vat_rate))
+    
+    # Calculate VAT burden as percentage of income
+    # Note: Replace 'TOTAL_INCOME' with actual income variable name
+    # df_vat['vat_burden_pct'] = (df_vat['vat_amount'] / df_vat['TOTAL_INCOME']) * 100
+    
+    return df_vat
+```
+
+## 5. Data Processing Pipeline
+
+```{python}
+# This section would process the actual FIES data
+# Uncomment and modify when you have the main dataset
+
+# # Load and clean data
+# fies_data = pd.read_csv('fies_2023_data.csv')
+# fies_clean = clean_fies_data(fies_data)
+
+# # Calculate income quintiles
+# fies_with_quintiles = calculate_income_quintiles(fies_clean, 'TOTAL_INCOME')
+
+# # Calculate VAT burden
+# fies_final = calculate_vat_burden(fies_with_quintiles)
+
+# # Create summary statistics
+# summary_stats = fies_final.groupby('income_quintile').agg({
+#     'TOTAL_INCOME': ['mean', 'median'],
+#     'total_vat_taxable_expenditure': ['mean', 'median'],
+#     'vat_amount': ['mean', 'median'],
+#     'vat_burden_pct': ['mean', 'median']
+# }).round(2)
+
+# print("Summary statistics by income quintile:")
+# print(summary_stats)
+```
+
+## 6. Export Cleaned Data
+
+```{python}
+# Export cleaned data for analysis
+# When you have the actual data, uncomment these lines:
+
+# # Main household-level dataset
+# fies_final.to_csv('data/fies_2023_clean.csv', index=False)
+
+# # Summary by income quintile
+# summary_stats.to_csv('data/fies_2023_summary_by_quintile.csv')
+
+# # VAT-taxable expenditure categories mapping
+# vat_categories_df = pd.DataFrame([
+#     {'category': cat, 'keywords': ', '.join(keywords)} 
+#     for cat, keywords in vat_taxable_categories.items()
+# ])
+# vat_categories_df.to_csv('data/vat_categories_mapping.csv', index=False)
+
+print("Data cleaning completed. Files saved to data/ directory.")
+```
+
+## 7. Data Quality Checks
+
+```{python}
+# Quality checks for the cleaned data
+def perform_quality_checks(df):
+    """
+    Perform data quality checks on cleaned FIES data
+    """
+    print("=== DATA QUALITY REPORT ===")
+    
+    print(f"\n1. Dataset shape: {df.shape}")
+    
+    print(f"\n2. Missing values:")
+    missing_pct = (df.isnull().sum() / len(df)) * 100
+    print(missing_pct[missing_pct > 0].sort_values(ascending=False))
+    
+    print(f"\n3. Duplicate household IDs: {df['SEQ_NO'].duplicated().sum()}")
+    
+    print(f"\n4. Income distribution:")
+    # print(df['TOTAL_INCOME'].describe())
+    
+    print(f"\n5. Expenditure checks:")
+    expenditure_cols = [col for col in df.columns if col.startswith('TOTAL_')]
+    print(f"   - Number of expenditure variables: {len(expenditure_cols)}")
+    print(f"   - Negative values: {(df[expenditure_cols] < 0).sum().sum()}")
+    
+    return True
+
+# When you have the actual data:
+# perform_quality_checks(fies_final)
+```
+
+## Documentation Notes
+
+**Data Source**: FIES 2023 Volume 2, Philippine Statistics Authority
+
+**Key Variables Identified**: - Household ID: `SEQ_NO` - Regional identifiers: `W_REGN`, `W_PROV` - Expenditure variables: Variables starting with `TOTAL_` - Income variables: To be identified in main dataset
+
+**VAT Rate**: 12% (standard rate in Philippines as of 2023)
+
+**Assumptions**: - VAT is embedded in final prices (tax-inclusive pricing) - Basic commodities (rice, basic food items) are generally VAT-exempt - Processed foods, beverages, manufactured goods are VAT-taxable
+
+**Next Steps**: 1. Load actual FIES 2023 microdata 2. Identify exact income variable names 3. Map expenditure categories to VAT tax status 4. Run full cleaning pipeline 5. Validate results against known income distribution patterns

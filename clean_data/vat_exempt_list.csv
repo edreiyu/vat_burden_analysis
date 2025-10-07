@@ -1,0 +1,972 @@
+﻿item_code,description,vatable
+TOTAL_111121,"Rice, well milled (Total)",exempt
+TOTAL_111122,"Rice, regular milled (Total)",exempt
+TOTAL_111123,"Rice, special (Total)",exempt
+TOTAL_111125,NFA rice (Total),exempt
+TOTAL_111128,"Rice, glutinous (Total)",exempt
+TOTAL_111129,"Other rice, n.e.c. (Total)",exempt
+TOTAL_111124,"Rice, over milled, broken rice (Total)",exempt
+TOTAL_111126,"Rice, undermilled, brown (Total)",exempt
+TOTAL_111127,"Rice, undermilled, red (Total)",exempt
+TOTAL_111168,"Corn on the cob (includes yellow, white and glutinous) (Total)",exempt
+TOTAL_111163,"Whole corn, grain (Total)",exempt
+TOTAL_111166,"Corn grits, milled (Total)",exempt
+TOTAL_111169,"Other corn, n.e.c. (Total)",exempt
+TOTAL_111165,Popcorn (variety) (Total),exempt
+TOTAL_111190,"Other Cereals (oats, rye, etc.) (Total)",vatable
+TOTAL_111210,"Wheat flour (All-purpose flour, cake flour, etc.) (Total)",vatable
+TOTAL_111290,"Other flours of cereals, n.e.c. (Total)",vatable
+TOTAL_111220,Rice flour (Total),vatable
+TOTAL_111261,Corn starch (Total),vatable
+TOTAL_111269,"Corn Flour/Cornmeal, n.e.c. (Total)",vatable
+TOTAL_111311,Loaf bread (Total),vatable
+TOTAL_111312,Pandesal (Total),exempt
+TOTAL_111313,"Toasted bread, croutons,and similar toasted products (Total)",vatable
+TOTAL_111314,"Crackers, crispbread (Total)",vatable
+TOTAL_111319,"Other breads, n.e.c (Total)",vatable
+TOTAL_111392,"Cookies, waffles and wafers, ice cream cones (Total)",vatable
+TOTAL_111393,"Cakes, muffins, hopia and pies (excluding pies of fish and meat) (Total)",vatable
+TOTAL_111394,Biscuits (Total),vatable
+TOTAL_111399,"Other (pizza dough, etc.) (Total)",vatable
+TOTAL_111401,"Flakes (cornflakes, puffed rice, oat flakes and similar products) (Total)",vatable
+TOTAL_111409,"Other breakfast cereal, n.e.c (Total)",vatable
+TOTAL_111501,Ready-mixed noodle soup (instant noodles) (Total),vatable
+TOTAL_111502,"Pasta (e.g., macaroni, lasagna,spaghetti and the like) (Total)",vatable
+TOTAL_111503,"Noodles (e.g. sotanghon, bihon, lomi, canton, miki, misua, etc.) (Total)",vatable
+TOTAL_111509,"Other macaroni and similar pasta products, n.e.c (Total)",vatable
+TOTAL_111901,"Native cakes (puto, bibingka, biko, suman, etc. prepared from rice) (Total)",vatable
+TOTAL_111903,Junk food cereal-based (Total),vatable
+TOTAL_111904,Mixes and doughs for the preparation of bakery products (Total),vatable
+TOTAL_111909,"Other cereal and grain mill products, n.e.c. (Total)",vatable
+TOTAL_112120,Pig (Total),exempt
+TOTAL_112130,"Goat, lamb and sheep (Total)",exempt
+TOTAL_112140,Poultry (Total),exempt
+TOTAL_112190,Other live animals (Total),exempt
+TOTAL_112110,Cow (Total),exempt
+TOTAL_112150,Hares and rabbits (Total),exempt
+TOTAL_112210,"Beef, carabeef (Total)",exempt
+TOTAL_112220,Pork (Total),exempt
+TOTAL_112231,Goat (Total),exempt
+TOTAL_112241,Chicken (Total),exempt
+TOTAL_112290,Other meat (Total),exempt
+TOTAL_112232,Lambs and sheep (Total),exempt
+TOTAL_112243,Turkeys (Total),exempt
+TOTAL_112250,Hares and rabbits (Total),exempt
+TOTAL_112260,Horses and other equines (Total),exempt
+TOTAL_112242,Ducks (Total),exempt
+TOTAL_112310,"Beef, salted, dried or smoked (Total)",exempt
+TOTAL_112321,"Salami, ham (Total)",exempt
+TOTAL_112322,Bacon (Total),exempt
+TOTAL_112390,"Other meat, dried, salted or smoked (Total)",exempt
+TOTAL_112400,"Offal, blood and other parts of slaughtered animals, fresh, chilled or frozen, dried, salted, in brine or smoked (Total)",exempt
+TOTAL_112511,Sausages (Total),vatable
+TOTAL_112512,Tocino and tapa (Total),vatable
+TOTAL_112513,"Hotdog, longaniza, chorizo (Total)",vatable
+TOTAL_112514,Embotido (Total),vatable
+TOTAL_112521,Corned beef (Total),vatable
+TOTAL_112522,"Luncheon meat, canned meatloaf (Total)",vatable
+TOTAL_112530,Liver spread (Total),vatable
+TOTAL_112590,"Other meat, offal or blood preparations (meat pies, etc.) (Total)",vatable
+TOTAL_113111,Tilapia (St. Peterâs fish) (Total),exempt
+TOTAL_113161,Galunggong (Round scad) (Total),exempt
+TOTAL_113162,Bangus (Milkfish) (Total),exempt
+TOTAL_113163,Dilis (Anchovies) (Total),exempt
+TOTAL_113164,Hasa-hasa (Short-bodied mackerel) (Total),exempt
+TOTAL_113165,Alumahan (Indian mackerel) (Total),exempt
+TOTAL_113166,Tanigi or tanigue (Spanish mackerel) (Total),exempt
+TOTAL_113191,Lapu-lapu (Total),exempt
+TOTAL_113190,Other fish (Total),exempt
+TOTAL_113112,Biya (Goby) (Total),exempt
+TOTAL_113113,Gurami (Gourami) (Total),exempt
+TOTAL_113114,Dalag (Mudfish) (Total),exempt
+TOTAL_113115,Hito (Native catfish) (Total),exempt
+TOTAL_113116,Carpa or Imelda (Bighead carp) (Total),exempt
+TOTAL_113117,Kanduli (Sea catfish) (Total),exempt
+TOTAL_113131,Dapa (Righteye flounders) (Total),exempt
+TOTAL_113132,Dapang Bilog (Lefteye flounders) (Total),exempt
+TOTAL_113133,Kalangkaw or Kalangkao (Indian turbot) (Total),exempt
+TOTAL_113134,Sunog (Flathead) (Total),exempt
+TOTAL_113195,Isdang loro (Parrotfish) (Total),exempt
+TOTAL_113196,Bitilya (Drum) (Total),exempt
+TOTAL_113197,Labahita (Epaulette surgeonfish) (Total),exempt
+TOTAL_113192,Maya-maya (One-spot snapper) (Total),exempt
+TOTAL_113193,Talakitok (Big-eye Trevally) (Total),exempt
+TOTAL_113194,Pampano (Silver pompano) (Total),exempt
+TOTAL_113198,Malasugi (Blue marlin) (Total),exempt
+TOTAL_113121,Salmon (Total),exempt
+TOTAL_113150,"Tunas, skipjack or stripe-bellied bonito (Total)",exempt
+TOTAL_113291,Bisugo (Threadfin bream) (Total),exempt
+TOTAL_113292,Tunsoy/Lapad (Tuyo) (Total),exempt
+TOTAL_113293,Salinas (Total),exempt
+TOTAL_113294,Tamban (Indian sardine) (Total),exempt
+TOTAL_113295,Danggit (Rabbit fish) (Total),exempt
+TOTAL_113297,Espada (Largehead hairtail) (Total),exempt
+TOTAL_113298,"Dilis (Anchovies), dried, salted, in brine or smoked (Total)",exempt
+TOTAL_113290,"Other fish, dried, salted, in brine, smoked (Total)",exempt
+TOTAL_113210,"Salmon, dried, salted, in brine or smoked (Total)",exempt
+TOTAL_113296,"Bangus (Milkfish), dried, salted, in brine or smoked (Total)",exempt
+TOTAL_113300,"Fish preparations (in oil or in sauce, Canned or bottled) (Total)",vatable
+TOTAL_113410,Shrimps and prawns (Total),exempt
+TOTAL_113421,Crabs (Total),exempt
+TOTAL_113422,Lobsters (Total),exempt
+TOTAL_113430,"Shells (oysters, mussels, scallops, clams, cockles, arkshells, etc) (Total)",exempt
+TOTAL_113440,"Cuttle fish, squid, octopus, etc. (Total)",exempt
+TOTAL_113450,"Snails (abalone, snail (kuhol/suso), etc.) (Total)",exempt
+TOTAL_113490,"Sea cucumbers, sea urchins, jellyfish, etc. (Total)",exempt
+TOTAL_113510,"Shrimps and prawns (alamang, etc.), dried, salted, in brine or smoked  (Total)",exempt
+TOTAL_113521,"Crabs, dried, salted, in brine or smoked  (Total)",exempt
+TOTAL_113522,"Lobsters, dried, salted, in brine or smoked  (Total)",exempt
+TOTAL_113530,"Shells (oysters, mussels, scallops, clams, cockles, arkshells, etc), dried, salted, in brine or smoked  (Total)",exempt
+TOTAL_113540,"Cuttle fish, squid, octopus, etc., dried, salted, in brine or smoked  (Total)",exempt
+TOTAL_113550,"Snails (abalone, kuhol/suso etc.), dried, salted, in brine or smoked  (Total)",exempt
+TOTAL_113590,"Sea cucumbers, sea urchins, jellyfish, etc., dried, salted, in brine or smoked  (Total)",exempt
+TOTAL_113600,"Other seafood preparations[shrimps and prawns(prepared or preserved), squid(canned or bottled),etc.] (Total)",vatable
+TOTAL_113700,"Livers, roes and offal of fish and of other seafood in all forms (Total)",vatable
+TOTAL_114100,Raw and whole milk (Total),vatable
+TOTAL_114200,Skimmed milk (Total),vatable
+TOTAL_114311,Condensed milk (Total),vatable
+TOTAL_114312,Evaporated milk (Total),vatable
+TOTAL_114321,Advanced formula adult powdered milk (Total),vatable
+TOTAL_114329,"Other powdered milk, n.e.c. (Total)",vatable
+TOTAL_114330,Cream (Total),vatable
+TOTAL_114390,Other milk (Total),vatable
+TOTAL_114410,Coconut milk (Total),vatable
+TOTAL_114430,Soy milk (Total),vatable
+TOTAL_114490,Other non-animal milk (Total),vatable
+TOTAL_114420,Almond milk (Total),vatable
+TOTAL_114440,Rice milk (Total),vatable
+TOTAL_114450,Oat milk (Total),vatable
+TOTAL_114501,"Cheese, fresh (kesong puti; including whey cheese) (Total)",vatable
+TOTAL_114503,Grated or powdered cheese (Total),vatable
+TOTAL_114504,Processed cheese (not grated or powdered) (Total),vatable
+TOTAL_114509,"Other cheese, n.e.c. (Total)",vatable
+TOTAL_114505,Blue-veined cheese (Total),vatable
+TOTAL_114502,Curd (Total),vatable
+TOTAL_114600,Yoghurt and similar products (except frozen yoghurt) (Total),vatable
+TOTAL_114700,Milk-based dessert and beverages (Total),vatable
+TOTAL_114811,"Eggs, fresh (chicken) (Total)",exempt
+TOTAL_114812,"Eggs, fresh (quails) (Total)",exempt
+TOTAL_114819,"Other eggs of hen and other birds, in shell, fresh, n.e.c (Total)",exempt
+TOTAL_114820,"Eggs of other animals, in shell, fresh (Total)",exempt
+TOTAL_114890,"Other egg products (salted eggs, balut, penoy, century eggs) (Total)",vatable
+TOTAL_114900,Other dairy products (Total),vatable
+TOTAL_115120,Palm oil (Total),vatable
+TOTAL_115130,Olive oil (Total),vatable
+TOTAL_115160,"Coconut oil (virgin coconut oil,other coconut oil, n.e.c.) (Total)",vatable
+TOTAL_115170,Corn oil (Total),vatable
+TOTAL_115190,Other edible vegetable oils n.e.c. (Total),vatable
+TOTAL_115110,Sunflower-seed and safflower-seed oil (Total),vatable
+TOTAL_115140,Soya bean oil (Total),vatable
+TOTAL_115150,Peanut oil (Total),vatable
+TOTAL_115192,Canola oil (Total),vatable
+TOTAL_115200,Butter and other fats and oils derived from milk (Total),vatable
+TOTAL_115300,Margarine and similar preparations (Total),vatable
+TOTAL_115900,Other animal oils and fats (Total),vatable
+TOTAL_116110,Avocados (Total),exempt
+TOTAL_116120,Bananas (Total),exempt
+TOTAL_116151,Mangoes (Total),exempt
+TOTAL_116160,Papayas (Total),exempt
+TOTAL_116170,Pineapples (Total),exempt
+TOTAL_116180,Coconuts (Total),exempt
+TOTAL_116190,Other tropical fruits (Total),exempt
+TOTAL_116153,Mangosteens (Total),exempt
+TOTAL_116130,Dates (Total),exempt
+TOTAL_116140,Figs (Total),exempt
+TOTAL_116192,"Durian, fresh (Total)",exempt
+TOTAL_116193,"Jackfruit, fresh (Total)",exempt
+TOTAL_116194,"Atis, fresh (Total)",exempt
+TOTAL_116195,"Chico, fresh (Total)",exempt
+TOTAL_116196,"Guyabano, fresh (Total)",exempt
+TOTAL_116197,"Star-apple, fresh (Total)",exempt
+TOTAL_116198,"Rambutan, fresh (Total)",exempt
+TOTAL_116152,Guavas (Total),exempt
+TOTAL_116210,Pomelos and grapefruits (Total),exempt
+TOTAL_116221,Lemons (Total),exempt
+TOTAL_116230,Oranges (Total),exempt
+TOTAL_116240,"Tangerines, mandarins and clementines (Total)",exempt
+TOTAL_116291,Calamansi (Total),exempt
+TOTAL_116290,Other citrus fruits (Total),exempt
+TOTAL_116222,Limes (Total),exempt
+TOTAL_116310,Apples (Total),exempt
+TOTAL_116340,"Cherries, fresh (batangas cherry, aratiles) (Total)",exempt
+TOTAL_116390,Other stone fruits and pome fruits (Total),exempt
+TOTAL_116320,Pears and quinces (Total),exempt
+TOTAL_116330,Apricots (Total),exempt
+TOTAL_116350,Peaches and nectarines (Total),exempt
+TOTAL_116360,"Plums and sloes, fresh (mabolo, makopa, malay apple) (Total)",exempt
+TOTAL_116450,Strawberries (Total),exempt
+TOTAL_116490,Other berries (Total),exempt
+TOTAL_116430,"Raspberries, fresh (Total)",exempt
+TOTAL_116440,"Blackberries, mulberries and loganberries, fresh (Total)",exempt
+TOTAL_116460,"Blueberries, fresh (Total)",exempt
+TOTAL_116470,"Cranberries, fresh (Total)",exempt
+TOTAL_116510,Grapes (Total),exempt
+TOTAL_116540,Watermelons (Total),exempt
+TOTAL_116590,"Other fruits, fresh, n.e.c. (Total)",exempt
+TOTAL_116530,Cantaloupes and other melons (Total),exempt
+TOTAL_116550,Persimmons (Total),exempt
+TOTAL_116560,Cashew (Total),exempt
+TOTAL_116570,Dragon fruit (Total),exempt
+TOTAL_116520,Kiwi fruit (Total),exempt
+TOTAL_116600,Frozen fruit (Total),vatable
+TOTAL_116791,"Pineapples, dried and dehydrated (Total)",vatable
+TOTAL_116792,"Mangoes, dried and dehydrated (Total)",vatable
+TOTAL_116790,"Other dried fruit, n.e.c. (Total)",vatable
+TOTAL_116793,"Bananas, dried and dehydrated (Total)",vatable
+TOTAL_116794,"Papayas, dried and dehydrated (Total)",vatable
+TOTAL_116795,"Dalanghita, dried and dehydrated (Total)",vatable
+TOTAL_116797,"Apple, dried and dehydrated (Total)",vatable
+TOTAL_116798,"Durian, dried and dehydrated (Total)",vatable
+TOTAL_116720,Prunes (Total),vatable
+TOTAL_116710,Raisins (Total),vatable
+TOTAL_116820,Cashew nuts (Total),vatable
+TOTAL_116880,Peanuts (Total),vatable
+TOTAL_116890,Other nuts (Total),vatable
+TOTAL_116840,Hazelnuts (Total),vatable
+TOTAL_116850,Pistachios (Total),vatable
+TOTAL_116860,Walnuts (Total),vatable
+TOTAL_116810,Almonds (Total),vatable
+TOTAL_116830,Chestnuts (Total),vatable
+TOTAL_116910,"Fruit and nuts flour (coconut flour, almond flour and etc.) (Total)",vatable
+TOTAL_116920,"Canned fruit (fruit cocktail, peach, pineapple crushed and slice, etc.) (Total)",vatable
+TOTAL_116930,Homogenized fruit preparations (Total),vatable
+TOTAL_116990,"Other fruit and nuts preparations (pineapple preparation, mango,preparation,nata de coco, etc.) (Total)",vatable
+TOTAL_117120,Cabbages (Total),exempt
+TOTAL_117191,Ampalaya leaves (Total),exempt
+TOTAL_117192,Camote tops (Total),exempt
+TOTAL_117193,Kangkong (Total),exempt
+TOTAL_117194,Malunggay (Total),exempt
+TOTAL_117195,Pechay (Total),exempt
+TOTAL_117197,Alugbati (Total),exempt
+TOTAL_117198,Saluyot (Total),exempt
+TOTAL_117190,"Other leafy or stem vegetables, n.e.c. (Total)",exempt
+TOTAL_117110,Asparagus (Total),exempt
+TOTAL_117170,Cassava leaves (Total),exempt
+TOTAL_117130,Cauliflowers and broccoli (Total),exempt
+TOTAL_117140,Lettuce and chicory (Total),exempt
+TOTAL_117150,Spinach (Total),exempt
+TOTAL_117196,Mustard (Total),exempt
+TOTAL_117210,Chilies and peppers (Total),exempt
+TOTAL_117230,Eggplants (Total),exempt
+TOTAL_117240,Tomatoes (Total),exempt
+TOTAL_117251,Squash (Total),exempt
+TOTAL_117252,Ampalaya (Total),exempt
+TOTAL_117260,Okra (Total),exempt
+TOTAL_117290,Other fruit-bearing vegetables (Total),exempt
+TOTAL_117220,Cucumbers and gherkins (Total),exempt
+TOTAL_117255,Zucchini (Total),exempt
+TOTAL_117253,Patola (Total),exempt
+TOTAL_117254,Chayote (Total),exempt
+TOTAL_117256,Upo (Total),exempt
+TOTAL_117310,"Beans (bitsuwelas,patani, etc.) (Total)",exempt
+TOTAL_117320,String beans (Total),exempt
+TOTAL_117330,"Peas (green peas,paayap,garbanzo, etc.) (Total)",exempt
+TOTAL_117360,Munggo beans and sprouts (Total),exempt
+TOTAL_117390,Other green leguminous vegetables (Total),exempt
+TOTAL_117340,Broad beans and horse bean (Total),exempt
+TOTAL_117350,Soya beans (Total),exempt
+TOTAL_117411,Carrots (Total),exempt
+TOTAL_117420,Garlic (Total),exempt
+TOTAL_117430,Onions and shallots (Total),exempt
+TOTAL_117490,"Other vegetable, mixtures of vegetables (Total)",exempt
+TOTAL_117412,Turnips (Singkamas) (Total),exempt
+TOTAL_117440,Leeks and other alliaceous vegetables (Total),exempt
+TOTAL_117452,Truffles (Total),exempt
+TOTAL_117460,Edible seaweeds and other aquatic plants (Total),exempt
+TOTAL_117470,Olives (Total),exempt
+TOTAL_117480,Young corn (Total),exempt
+TOTAL_117451,Mushrooms (Total),exempt
+TOTAL_117491,Radish (Labanos) (Total),exempt
+TOTAL_117510,Potatoes (Total),exempt
+TOTAL_117520,Sweet potatoes (Total),exempt
+TOTAL_117530,"Cassava (manioc, yuca) (Total)",exempt
+TOTAL_117590,Other tubers (Total),exempt
+TOTAL_117540,Yams (Ube) (Total),exempt
+TOTAL_117550,Taro (Gabi) (Total),exempt
+TOTAL_117591,Tugui/Tuge (Total),exempt
+TOTAL_117610,"Beans (kidney beans (bitsuwelas),patani, etc.), dried (Total)",exempt
+TOTAL_117691,"Munggo beans, dried (Total)",exempt
+TOTAL_117690,"Other beans and peas, dried (Total)",exempt
+TOTAL_117640,"Lentils, dried (Total)",exempt
+TOTAL_117660,"Cow peas, dried (Total)",exempt
+TOTAL_117670,"Pigeon peas, dried (Total)",exempt
+TOTAL_117680,"Bambara beans, dried (Total)",exempt
+TOTAL_117650,"Peas, dried (Total)",exempt
+TOTAL_117700,"Other vegetables and tubers, dried and dehydrated (soya beans, potatoes, etc.) (Total)",vatable
+TOTAL_117800,"Vegetables and tubers, frozen (fruit-bearing vegetables, etc.) (Total)",vatable
+TOTAL_117942,"French fries, potato wedges, frozen (Total)",vatable
+TOTAL_117943,Potato chips and fries (Total),vatable
+TOTAL_117950,"Soy curd (tofu, tokwa, etc.) (Total)",vatable
+TOTAL_117971,Cassava cake (Total),vatable
+TOTAL_117972,Haleya (Total),vatable
+TOTAL_117973,"Sweet potato (camote), preserved or processed (Total)",vatable
+TOTAL_117992,Pickled vegetables (Total),vatable
+TOTAL_117990,"Other vegetables, beans and peas and tubers, preserved or processed (Total)",vatable
+TOTAL_117911,Cassava flour (Total),vatable
+TOTAL_117920,Canned vegetables (Total),vatable
+TOTAL_117930,Preserved olives (Total),vatable
+TOTAL_117960,"Tempeh, soy meat and burgers (Total)",vatable
+TOTAL_117974,"Cassava/Manioc except cassava cake, preserved or processed (Total)",vatable
+TOTAL_117975,"Yam (ube) except haleya, preserved or processed (Total)",vatable
+TOTAL_117976,"Taro (gabi), preserved or processed (Total)",vatable
+TOTAL_117944,Potato starch (Total),vatable
+TOTAL_118111,White sugar (Total),vatable
+TOTAL_118112,Washed sugar (Total),vatable
+TOTAL_118113,Brown sugar (Total),vatable
+TOTAL_118114,Muscovado (Total),vatable
+TOTAL_118119,"Other cane sugar, n.e.c. (Total)",vatable
+TOTAL_118200,"Other sugar and sugar substitutes (panocha, etc.) (Total)",vatable
+TOTAL_118310,Honey (Total),vatable
+TOTAL_118391,Jams (Total),vatable
+TOTAL_118392,Fruit jellies (Total),vatable
+TOTAL_118393,Marmalades (Total),vatable
+TOTAL_118390,"Other jams, fruit jellies and marmalades (Total)",vatable
+TOTAL_118394,Fruit purÃ©e and pastes (Total),vatable
+TOTAL_118410,Peanut butter (Total),vatable
+TOTAL_118490,"Other nut butter, such as: almond butter, cashew butter, hazelnut butter, macadamia nut butter, pecan butter, pistachio butter and walnut butter (Total)",vatable
+TOTAL_118510,"Chocolate, including white chocolate (Total)",vatable
+TOTAL_118520,Cocoa beans (Total),vatable
+TOTAL_118530,Cocoa powder (Total),vatable
+TOTAL_118590,Other cocoa-based foods and cocoa-based dessert preparations (Total),vatable
+TOTAL_118601,Ice cream (Total),vatable
+TOTAL_118604,Edible ice (Total),vatable
+TOTAL_118609,"Other ice, ice cream and sorbet (sorbet, frozen yoghurt, etc.) (Total)",vatable
+TOTAL_118910,"Vegetables, fruits, nuts, fruit-peel and other parts of plants, preserved by sugar (bukayo, etc.) (Total)",vatable
+TOTAL_118990,"Other sugar confectionery and desserts (not containing cocoa) (chewing gums, candies, etc.) (Total)",vatable
+TOTAL_119110,Pre-cooked dishes based on pasta and cereals (Total),vatable
+TOTAL_119120,Pre-cooked dishes based on meat and/or fish (Total),vatable
+TOTAL_119130,Composed salads and prepared dishes based on vegetables (Total),vatable
+TOTAL_119140,"Sandwiches, pizzas, quiches, meat or fish pies, frozen or not (Total)",vatable
+TOTAL_119190,Other prepared ready-made dishes and meals n.e.c. (Total),vatable
+TOTAL_119150,"Omelettes, crepes and other ready-made food based on eggs (Total)",vatable
+TOTAL_119160,Ready-made soups (Total),vatable
+TOTAL_119210,Baby formula (milk for baby use) (Total),vatable
+TOTAL_119220,Baby rice cereals and flours for baby meals (Total),vatable
+TOTAL_119290,"Other baby food (baby cookies, etc.) (Total)",vatable
+TOTAL_119230,Homogenized baby food (Total),vatable
+TOTAL_119311,Rock salt (Total),vatable
+TOTAL_119312,Iodized salt (Total),vatable
+TOTAL_119324,Sugarcane vinegar (Total),vatable
+TOTAL_119327,Apple cider vinegar (Total),vatable
+TOTAL_119329,Other vinegar and substitutes (Total),vatable
+TOTAL_119321,Coco vinegar (Total),vatable
+TOTAL_119322,Pineapple vinegar (Total),vatable
+TOTAL_119323,Palm vinegar (Total),vatable
+TOTAL_119325,Lanzones vinegar (Total),vatable
+TOTAL_119326,Rice vinegar (Total),vatable
+TOTAL_119391,Soya (soybean) sauce (Total),vatable
+TOTAL_119392,Tomato ketchup and other tomato sauces (Total),vatable
+TOTAL_119394,Banana catsup (Total),vatable
+TOTAL_119395,Salad dressing and mayonnaise (Total),vatable
+TOTAL_119396,Fish sauce (Patis) (Total),vatable
+TOTAL_119399,"Other sauces and condiments (flavor seasoning, lechon sauce, oyster sauce,coconut milk for cooking, etc.) (Total)",vatable
+TOTAL_119401,Pepper (Total),vatable
+TOTAL_119402,"Chillies and peppers, dry (Total)",vatable
+TOTAL_119403,Ginger (Total),vatable
+TOTAL_119404,Monosodium glutamate (Vetsin) (Total),vatable
+TOTAL_119407,Bay leaves (laurel) (Total),vatable
+TOTAL_119409,"Other spices, culinary herbs and seed (thyme, saffron, cumin, etc.) (Total)",vatable
+TOTAL_119900,"Other food products n.e.c. (bakers yeast, boullion, ready-mixed soups, etc.) (Total)",vatable
+TOTAL_121011,"Pineapple juice, powder (Total)",vatable
+TOTAL_121012,"Orange juice, powder (Total)",vatable
+TOTAL_121013,"Mango juice, powder (Total)",vatable
+TOTAL_121017,"Calamansi juice, powder (Total)",vatable
+TOTAL_121019,"Other fruit and vegetables juices, powder,n.e.c. (Total)",vatable
+TOTAL_121016,"Grapefruit juice, powder (Total)",vatable
+TOTAL_121018,"Tomato juice, powder (Total)",vatable
+TOTAL_121014,"Guyabano juice, powder (Total)",vatable
+TOTAL_121015,"Apple juice, powder (Total)",vatable
+TOTAL_129021,Pineapple juice (Total),vatable
+TOTAL_129022,Orange juice (Total),vatable
+TOTAL_129023,Mango juice (Total),vatable
+TOTAL_129027,Calamansi juice (Total),vatable
+TOTAL_129029,"Other concentrates and ready to drink juices, n.e.c. (Total)",vatable
+TOTAL_129026,Grapefruit juice (Total),vatable
+TOTAL_129028,Tomato juice (Total),vatable
+TOTAL_129024,Guyabano juice (Total),vatable
+TOTAL_129025,Apple juice (Total),vatable
+TOTAL_122011,Coffee instant (Total),vatable
+TOTAL_122012,Coffee roasted or ground (Total),vatable
+TOTAL_122020,"Coffee substitutes (rice coffee, corn coffee, etc.) (Total)",vatable
+TOTAL_122090,Other coffee (Total),vatable
+TOTAL_123010,"Green tea, leaves (Total)",vatable
+TOTAL_123020,"Black tea, leaves (Total)",vatable
+TOTAL_123030,Iced tea (Total),vatable
+TOTAL_123041,Salabat powder (Total),vatable
+TOTAL_123042,Malunggay powder (Total),vatable
+TOTAL_123090,Other tea products and plant products for infusion (Total),vatable
+TOTAL_124001,"Cocoa, powdered (Total)",vatable
+TOTAL_124002,"Cocoa, processed (Total)",vatable
+TOTAL_124003,Cocoa-based beverage preparations (Total),vatable
+TOTAL_125001,Mineral waters (Total),vatable
+TOTAL_125009,"Other water, n.e.c. (Total)",vatable
+TOTAL_126000,Soft drinks (Total),vatable
+TOTAL_129001,Aloe vera juice (Total),vatable
+TOTAL_129009,"Other non-alcoholic beverages (flavored water, energy drinks, energy supplement, etc.) (Total)",vatable
+TOTAL_1111101,Restaurant (Total),vatable
+TOTAL_1111102,Cafes (Total),vatable
+TOTAL_1111103,"Hotels, if food and beverages are separately invoiced (Total)",vatable
+TOTAL_1111109,"Other establishments providing food and beverage in full service, n.e.c._________ (Total)",vatable
+TOTAL_1111104,"Other accommodation establishments, if separately invoiced from accommodation (Total)",vatable
+TOTAL_1111105,"Establishments providing recreational, cultural, sporting or entertainment services (e.g. theatres, cinemas, sports stadiums, swimming pools, sports complexes, museums, art galleries, nightclubs, dancing establishments and similar facilities) (Total)",vatable
+TOTAL_1111106,Shisha lounge and the like with full service (Total),vatable
+TOTAL_1111201,Self service restaurant and cafes (Total),vatable
+TOTAL_1111202,"Refreshment stands, fish and chip stands, fast-food outlet (Total)",vatable
+TOTAL_1111203,"Kiosks, food stalls, and food carts (Total)",vatable
+TOTAL_1111206,Catering contractors whether collected by the customer or delivered to the customerâs home (Total),vatable
+TOTAL_1111209,"Other food and beverage services provided in limited service, n.e.c.___________ (Total)",vatable
+TOTAL_1111204,Ice cream parlors and cake serving places (Total),vatable
+TOTAL_1111205,"Public transport (coaches, trains, boats, airplanes, etc.) (Total)",vatable
+TOTAL_1111207,Shisha lounge and the like with limited service (Total),vatable
+TOTAL_1112100,"Canteens, cafeterias of universities, schools, and kindergartens (Total)",vatable
+TOTAL_1112900,"Other canteens, cafeterias and refectories (e.g., work/office premises, military masses/wardrooms, etc.)____________ (Total)",vatable
+TOTAL_211001,Whisky (Total),vatable
+TOTAL_211002,Rum (Total),vatable
+TOTAL_211003,Gin (Total),vatable
+TOTAL_211004,Brandy (Total),vatable
+TOTAL_211005,"Vodka (lambanog, etc.) (Total)",vatable
+TOTAL_211009,"Other spirits and liquors, n.e.c. (Total)",vatable
+TOTAL_211006,Tequila (Total),vatable
+TOTAL_212101,Champagne and sparkling wines (Total),vatable
+TOTAL_212102,Wine from grapes other than champagne and sparkling wine (Total),vatable
+TOTAL_212201,Tuba (palm) wine (Total),vatable
+TOTAL_212202,Basi wine (Total),vatable
+TOTAL_212207,Lambanog wine (Total),vatable
+TOTAL_212209,"Other wine from other sources (e.g. medicinal wine (sioktong), duhat (plum) wine , bignay/bugnay (wild berry wine), strawberry wine, raisin wine, duhat wine, etc.) (Total)",vatable
+TOTAL_212203,Mango wine (Total),vatable
+TOTAL_212204,"Wine based aperitifs (ube wine, rice wine (sake), kasuy (cashew) wine, etc.) (Total)",vatable
+TOTAL_212205,Cider and perry (Total),vatable
+TOTAL_212206,Fortified wines (Total),vatable
+TOTAL_212208,Calamansi wine (Total),vatable
+TOTAL_213000,Beer (Total),vatable
+TOTAL_219001,"Mixed alcohol-based drinks (gin pomelo, shandy, cola beer) (Total)",vatable
+TOTAL_219009,"Other alcoholic beverages, n.e.c. (Total)",vatable
+TOTAL_230100,Cigarettes (Total),vatable
+TOTAL_230200,Cigars (Total),vatable
+TOTAL_230901,Pipe tobacco sniff/snuff tobacco (Total),vatable
+TOTAL_230902,Chewing tobacco (Total),vatable
+TOTAL_230905,Electronic cigarette refills (Total),vatable
+TOTAL_230909,"Other tobacco products, n.e.c. (pipe tobacco, tobacco leaves, etc.) (Total)",vatable
+TOTAL_240020,"Other vegetables based products (betel leaves, betel nuts, etc.) (Total)",vatable
+TOTAL_130001,Services for processing primary goods for food (Total),vatable
+TOTAL_130002,Services for processing non-alcoholic beverages (Total),vatable
+TOTAL_220000,Alcohol production services (Total),vatable
+TOTAL_311000,Clothing materials (Total),vatable
+TOTAL_312101,"Pants, shorts (Total)",vatable
+TOTAL_312102,"T-shirts, polo shirts, undershirts, camisa tsino (Total)",vatable
+TOTAL_312103,"Underwear (supporter, brief, etc.) (Total)",vatable
+TOTAL_312104,"Socks, sports socks (Total)",vatable
+TOTAL_312105,"Suits, coats, jackets, raincoats, sweater, capes and trousers (Total)",vatable
+TOTAL_312106,"Track suits, swimwear, jogging suits, sweatshirts (Total)",vatable
+TOTAL_312109,"Other garments for men or boys, n.e.c. ___________ (Total)",vatable
+TOTAL_312201,"Dress, suits (Total)",vatable
+TOTAL_312202,"Pants, shorts, skirts (Total)",vatable
+TOTAL_312203,"Blouses, t-shirts (Total)",vatable
+TOTAL_312204,"Underwear (panties, chemise (kamison), bra, half slip, girdles, etc.) (Total)",vatable
+TOTAL_312205,"Stockings, panty hose, socks, sports socks, tights (Total)",vatable
+TOTAL_312206,"Raincoats, jackets, sweater, capes (Total)",vatable
+TOTAL_312207,"Track suits, swimwear, jogging suits, sweatshirts, leotards (Total)",vatable
+TOTAL_312209,"Other garments for women (Duster, pajamas, etc.) ____________ (Total)",vatable
+TOTAL_312301,Dress (Total),vatable
+TOTAL_312302,Briefs and panties (Total),vatable
+TOTAL_312303,"Shirt, tie-side shirt, sweatshirt, sando (Total)",vatable
+TOTAL_312304,"Pants, shorts, skirts, pajamas (Total)",vatable
+TOTAL_312305,Cloth diaper (lampin) (Total),vatable
+TOTAL_312309,"Other garments for infants, n.e.c _________ (Total)",vatable
+TOTAL_312400,School uniforms (Total),vatable
+TOTAL_313101,"Ties, handkerchiefs, shawls, scarves, cravats, working gloves and belts including those made of leather (Total)",vatable
+TOTAL_313102,Veil (Total),vatable
+TOTAL_313103,Malong (Total),vatable
+TOTAL_313104,"Hat, caps, berret and bonnets (Total)",vatable
+TOTAL_313105,"Braces, aprons, smocks, bibs, sleeve protectors (Total)",vatable
+TOTAL_313109,"Others, specify (suspenders, etc.) _____________ (Total)",vatable
+TOTAL_313210,"Sewing threads (e.g. cotton sewing thread, sewing thread of human-made filaments, and others, n.e.c.) (Total)",vatable
+TOTAL_313220,"Accessories for making clothing (e.g buttons, zipper, hook, snap fastener/automatic buttons, garter, buckles, ribbons, laces and others, n.e.c.) (Total)",vatable
+TOTAL_314101,Dry cleaning services (including fur product cleaning services) (Total),vatable
+TOTAL_314102,"Laundering (washing, cleaning and ironing services of textile clothes and apparel for collectivities and enterprises) (Total)",vatable
+TOTAL_314109,"Other cleaning of clothing services (e.g. Dyeing of garments and coloring services, etc.) ________ (Total)",vatable
+TOTAL_314200,"Repair, tailoring and rental of clothing (e.g. darning, mending, repair and altering of garments, and rental of garments) (Total)",vatable
+TOTAL_321111,Men's shoes (Total),vatable
+TOTAL_321112,Men's slippers (Total),vatable
+TOTAL_321113,"Men's sports footwear suitable for everyday or leisure wear (shoes for jogging, cross training, tennis, basketball, etc.) (Total)",vatable
+TOTAL_321119,"Other footwear and parts for men, n.e.c. (e.g., sandals, boots, soles, heels, shoelaces, etc.) ________ (Total)",vatable
+TOTAL_321211,Women's shoes (Total),vatable
+TOTAL_321212,Women's slippers (Total),vatable
+TOTAL_321213,"Women's sports footwear suitable for everyday or leisure wear (e.g., shoes for jogging, cross training, tennis, basketball, etc.) (Total)",vatable
+TOTAL_321219,"Other footwear and parts for women, n.e.c. (e.g. sandals,step-in, boots, soles, heels, shoelaces, etc.) __________ (Total)",vatable
+TOTAL_321311,Infants shoes (Total),vatable
+TOTAL_321312,Infants slippers (Total),vatable
+TOTAL_321313,Infants rubber shoes (Total),vatable
+TOTAL_321319,"Other footwear for infants, n.e.c. ____________ (Total)",vatable
+TOTAL_321321,Children's shoes (Total),vatable
+TOTAL_321322,Children's slippers (Total),vatable
+TOTAL_321323,Children's sports shoes (Total),vatable
+TOTAL_321329,"Other footwear for children, n.e.c. __________ (Total)",vatable
+TOTAL_321330,"Parts of footwear for infants and children (e.g. heels, soles, shoelaces, gaiters, etc.) _____________ (Total)",vatable
+TOTAL_322000,"Cleaning, repair, dying/coloring, and rental of footwear (Total)",vatable
+TOTAL_411011,Rentals actually paid by tenants or subtenants occupying unfurnished premises as their main residence (Total),exempt
+TOTAL_411012,Rentals actually paid by tenants or subtenants occupying furnished premises as their main residence (Total),exempt
+TOTAL_411020,Payments by households occupying a room in a hotel or boarding house as their main residence. (Total),vatable
+TOTAL_411090,"Other actual rentals paid by tenants for main residence, n.e.c. (Total)",vatable
+TOTAL_412100,Actual rentals paid by tenants for secondary residences (Total),exempt
+TOTAL_412200,"Garage rentals and other rentals paid by tenants (e.g. parking lot in connection with the dwelling as main residence and other garage rentals, n.e.c.) (Total)",exempt
+TOTAL_421000,Imputed rentals of owner-occupiers for main residence (Own or owner-like possession) (Total),exempt
+TOTAL_422000,"Other imputed rentals (e.g. Imputed rentals for secondary residences, garage in connection with the dwelling, and storage units) (Total)",exempt
+TOTAL_431111,Paints and varnishes (Total),vatable
+TOTAL_431112,"Wallpaper, wall paper pastes and fabric wall covering (Total)",vatable
+TOTAL_431113,Plaster (Total),vatable
+TOTAL_431114,Cement (Total),vatable
+TOTAL_431115,Renderings and putty (Total),vatable
+TOTAL_431116,Window panes (Total),vatable
+TOTAL_431119,"Other products and materials for the maintenance and repair, n.e.c._________ (Total)",vatable
+TOTAL_431120,"Small plumbing items (e.g., pipes, taps, joints, etc.), surfacing materials (e.g., floorboards, ceramic tiles, etc.) and brushes and scrapers for paint, varnish and wallpaper (Total)",vatable
+TOTAL_431130,Fitted carpets and linoleum (Total),vatable
+TOTAL_431140,"Door fittings, power sockets, wiring flex (Total)",vatable
+TOTAL_431200,"Security equipment (e.g., smoke detector, security alarms, security/surveillance cameras, door phones for dwellings, and fire extinguishers) (Total)",vatable
+TOTAL_432000,"Services for the maintenance, repair and security of the dwelling (e.g. services of plumbers, electricians, guard services, carpenters, locksmith, etc.) (Total)",vatable
+TOTAL_441000,Water supply (Total),vatable
+TOTAL_444000,"Other services relating to the dwelling (e.g., maintenance charges, association fees, etc.) (Total)",exempt
+TOTAL_451000,Electricity (Total),vatable
+TOTAL_452200,"LPG, butane, propane, etc. (Total)",vatable
+TOTAL_453000,Kerosene (Total),vatable
+TOTAL_454100,"Coal, coal briquettes and peat (Total)",vatable
+TOTAL_454200,"Wood fuel and sawdust (including pellets and briquettes, logs, twigs, etc.) (Total)",vatable
+TOTAL_454300,Charcoal (Total),vatable
+TOTAL_454920,Other briquettes (Total),vatable
+TOTAL_454990,"Other biomass, n.e.c., (e.g., waste from agricultural production such as wheat and nutshells, and dry animal dung) (Total)",vatable
+TOTAL_454900,"Other fuels, n.e.c. ______________ (Total)",vatable
+TOTAL_511300,"Lighting equipment (e.g. ceiling lights, standard lamps, globe lights, etc.) (Total)",vatable
+TOTAL_511401,Loose carpets and rugs (Total),vatable
+TOTAL_511402,Floor mats (Total),vatable
+TOTAL_511403,"Clocks (wall clocks, alarm clocks, etc.) (Total)",vatable
+TOTAL_511404,"Pictures, sculptures, engravings, tapestries and other art objects including reproductions of works of art and other ornaments (Total)",vatable
+TOTAL_511406,"Screens, folding partitions and non-textile blinds (Total)",vatable
+TOTAL_511407,"Mirrors, candle-holders or candlesticks (Total)",vatable
+TOTAL_511409,"Other furnishings, n.e.c. ___________ (Total)",vatable
+TOTAL_511405,Statuettes and other decorative articles of porcelain and crystal glass (Total),vatable
+TOTAL_511408,Leather and fur for upholstery and room decorating (Total),vatable
+TOTAL_512000,"Repair, installation and hire of furniture, furnishings and loose carpets (Total)",vatable
+TOTAL_521100,"Furnishing fabrics and curtains (e.g., door curtains, curtain materials, awnings and fabric blinds, etc.) (Total)",vatable
+TOTAL_521200,"Bed linen and bedding (e.g., bed sheet, pillow case, blanket, comforter, mosquito nets, futons, bolster, hammocks, etc.) (Total)",vatable
+TOTAL_521300,"Table linen and bathroom linen (e.g., tablecloth, table napkin, bath towel, face/hand towel, table cover, etc.) (Total)",vatable
+TOTAL_521900,"Other household textiles, n.e.c. (e.g., shopping bag, laundry bag, shoe bag, bathroom mat, doormat, fillers for pillow, pot holder, etc.) (Total)",vatable
+TOTAL_522000,"Repair, hire and sewing services of household textiles (Total)",vatable
+TOTAL_532120,"Small non-electric appliances for cooking and processing of food (e.g., puree maker, mincer, household scale, can-opener, spice grinder, etc.) (Total)",vatable
+TOTAL_532220,"Small non-electric appliances for preparing beverages (e.g., coffee grinder, juice extractor, soda and sparkling water maker, etc.) (Total)",vatable
+TOTAL_532920,"Other non-electric small household appliances (e.g., ironing board, etc.) (Total)",vatable
+TOTAL_533000,"Repair, installation and hire of small and major household appliances (electric and non-electric) (Total)",vatable
+TOTAL_540000,"GLASSWARE, TABLEWARE AND HOUSEHOLD UTENSILS, and Repair (Total)",vatable
+TOTAL_552100,Non-motorized hand tools and garden tools (Total),vatable
+TOTAL_552200,"Miscellaneous accessories (e.g., Fittings for radiators and fireplaces, metal articles for the house or for the garden, small electric accessories) (Total)",vatable
+TOTAL_553000,Repair and hire of non-motorized and motorized tools and equipment (Total),vatable
+TOTAL_561111,"Laundry/detergent soap, powder and liquid (Total)",vatable
+TOTAL_561112,Dishwashing powder/liquid soap (Total),vatable
+TOTAL_561119,"Other cleaning and maintenance products, n.e.c. ____________ (Total)",vatable
+TOTAL_561113,Scouring powder/cleanser (Total),vatable
+TOTAL_561114,"Disinfectants, bleaches, softeners, fabric conditioner and stain remover (Total)",vatable
+TOTAL_561115,"General purposes cleanser, window cleaning products and unblocking agents (Total)",vatable
+TOTAL_561116,Floorwax and floor-polishes (Total),vatable
+TOTAL_561117,Shoe polishes and creams (Total),vatable
+TOTAL_561120,"Articles of cleaning (e.g., broom, dustpan, duster, shoe brush, floor mop, floor rug, dish brush, household sponge, steel wool, scourer, etc.) (Total)",vatable
+TOTAL_561900,"Other non-durable household goods (e.g., insecticide, filter, kitchen paper, disposable plates/cups/cutlery, aluminum foil, plastic wrap, plastic bag, garbage bag, match, candle, clothes peg and hanger, nail, screw, sewing needle, pail, etc.) (Total)",vatable
+TOTAL_562101,Maid (Total),exempt
+TOTAL_562102,Baby sitter or nanny (Total),exempt
+TOTAL_562104,Cook (Total),exempt
+TOTAL_562105,Driver (Total),exempt
+TOTAL_562107,Gardener (Total),exempt
+TOTAL_562109,"Other domestic services by paid staff, n.e.c. (e.g., launderer, etc.) __________ (Total)",exempt
+TOTAL_562103,Secretary (Total),exempt
+TOTAL_562106,Butler (Total),exempt
+TOTAL_562900,"Other household services (e.g., Dry-cleaning, laundering and dyeing of household linen and textiles, pest extermination, disinfection, etc.) (Total)",vatable
+TOTAL_611121,"Infections (antibiotics such as amoxicillin, erythromycin and ciprofloxacin) and infestations (e.g., Metronidazole and Tinidazole) (Total)",vatable
+TOTAL_611122,"Hypertensive and cardiovascular diseases (e.g., Losartan, Clopidogrel, Valsartan) (Total)",exempt
+TOTAL_611123,"Pain relief and consciousness such as analgesic, immunology such as anesthetics, and immunosuppresants (e.g., ibuprofen, naproxen, paracetamol) (Total)",vatable
+TOTAL_611124,"Allergies and respiratory diseases (e.g., Antihistamine, Cetirizine, loratadine ) (Total)",vatable
+TOTAL_611125,"Endocrine diseases and disorders (e.g., medicines for diabetes, thyroid, Osteoporosis, etc.) (Total)",exempt
+TOTAL_611126,Pharmaceutical products to treat mental health illnesses and well-being (Total),exempt
+TOTAL_611129,"Other pharmaceutical products to treat illnesses, diseases and injuries, n.e.c. (Total)",vatable
+TOTAL_611131,COVID-19 vaccines (Total),exempt
+TOTAL_611132,Other vaccines (Total),vatable
+TOTAL_611139,"Other pharmaceutical products to prevent, diagnose or treat illnesses and diseases, n.e.c. (Total)",vatable
+TOTAL_611133,Hormones (Total),vatable
+TOTAL_611134,Oral contraceptives (Total),vatable
+TOTAL_611135,"Injectible contraceptives and other contraceptives, except contraceptive devices (Total)",vatable
+TOTAL_611140,Vitamins and minerals (Total),vatable
+TOTAL_611150,"Alcohol for external use, fluids required for dialysis, and gases used in health care, such as oxygen, when the patient purchases them directly. (Total)",vatable
+TOTAL_611160,Service fees to dispense medicines charged by the pharmacists (Total),exempt
+TOTAL_611190,Other pharmaceutical products or articles for medical or surgical purposes (Total),vatable
+TOTAL_611200,Herbal medicines and homeopathic products (Total),vatable
+TOTAL_612101,Pregnancy test kit (Total),vatable
+TOTAL_612102,Thermometer (Total),vatable
+TOTAL_612103,Glucose meters (Total),vatable
+TOTAL_612104,Blood pressure meters (Total),vatable
+TOTAL_612105,Baby scales (Total),vatable
+TOTAL_612109,"Other medical diagnostic products, n.e.c. (Total)",vatable
+TOTAL_612201,Face Masks (Total),exempt
+TOTAL_612202,Face shields (Total),exempt
+TOTAL_612203,Medicinal stockings (e.g. compression stockings) (Total),vatable
+TOTAL_612204,Medicinal gloves (Total),vatable
+TOTAL_612205,Protective gowns and aprones (Total),vatable
+TOTAL_612206,Insecticide treated mosquito nets (Total),vatable
+TOTAL_612207,Mechanical contraceptive devices such as condoms (Total),vatable
+TOTAL_612209,"Other prevention and protective devices, n.e.c. (Total)",vatable
+TOTAL_612301,Inhalers (Total),vatable
+TOTAL_612302,Syringes (Total),vatable
+TOTAL_612303,Humidifiers (Total),vatable
+TOTAL_612304,Nebulizers (Total),vatable
+TOTAL_612305,"Hot bags, ice packs (Total)",vatable
+TOTAL_612306,"First aid kits, bandages (Total)",vatable
+TOTAL_612309,"Other treatment devices for personal use, n.e.c. (Total)",vatable
+TOTAL_613100,"Vision (e.g., Corrective eye glasses, contact lenses, etc.) (Total)",vatable
+TOTAL_613200,"Hearing and communication (e.g., digital hearing aids, etc.) (Total)",vatable
+TOTAL_613300,"Mobility and daily living (e.g., Therapeutic footwear, orthoses, prostheses, crutches, wheelchairs, adult diapers, etc.) (Total)",vatable
+TOTAL_614000,"Repair, rental and maintenance of medical and assistive products (Total)",vatable
+TOTAL_621110,Public immunization services (Total),exempt
+TOTAL_621120,Private immunization services (Total),vatable
+TOTAL_621911,Covid-19 testing services (Total),exempt
+TOTAL_621919,"Other public preventive services, n.e.c. (Total)",exempt
+TOTAL_621921,Covid-19 testing services (Total),exempt
+TOTAL_621929,"Other private preventive services, n.e.c. (Total)",vatable
+TOTAL_622110,Public dental preventive services (Total),exempt
+TOTAL_622120,Private dental preventive services (Total),vatable
+TOTAL_622910,Other Public dental preventive services (Total),exempt
+TOTAL_622920,Other Private dental preventive services (Total),vatable
+TOTAL_623111,Online consultation fees of public telehealth services (Total),exempt
+TOTAL_623112,Public curative and rehabilitative services provided in any setting except online consultation (Total),exempt
+TOTAL_623121,Online consultation fees of private telehealth services (Total),vatable
+TOTAL_623122,Private curative and rehabilitative services provided in any setting except online consultation (Total),vatable
+TOTAL_623210,Public long-term care services (Total),exempt
+TOTAL_623220,Private long-term care services (Total),vatable
+TOTAL_631010,Public inpatient curative and rehabilitative services (Total),exempt
+TOTAL_631020,Private inpatient curative and rehabilitative services (Total),vatable
+TOTAL_632010,Public inpatient long-term care services service (Total),exempt
+TOTAL_632020,Private inpatient long-term care services services (Total),vatable
+TOTAL_641010,Services of medical analysis laboratories (urine/blood tests) (Total),exempt
+TOTAL_641020,"Diagnostic imaging services (CT, MRI, sonography, x-ray, etc.) (Total)",vatable
+TOTAL_642010,Ambulance services for individuals with or without emergency rescue (Total),vatable
+TOTAL_642020,Individual's transportation by airplane and vehicles (Total),vatable
+TOTAL_642030,Memberships for emergency transport services (Total),vatable
+TOTAL_721100,"Tires (e.g., new and used/retreaded tires, inner tubes) (Total)",vatable
+TOTAL_721200,"Parts for personal transport equipment (e.g., spark plugs, rims, batteries, fun belts, shock absorber, etc.) (Total)",vatable
+TOTAL_721330,Crash helmets for motorcycles and bicycles (Total),vatable
+TOTAL_721350,Dash cameras (Total),vatable
+TOTAL_721390,Other accessories for personal transport __________ (Total),vatable
+TOTAL_721310,GPS (satellite positioning) equipment (Total),vatable
+TOTAL_721320,"Roof racks, cargo roof boxes (Total)",vatable
+TOTAL_721340,"Baby and child seats for cars, motorcycles and bicycles (Total)",vatable
+TOTAL_721360,Fire extinguishers for transport equipment (Total),vatable
+TOTAL_721370,"Cleaning and maintenance products (paint, chrome cleaner, sealing compound, bodywork polish, car covers) (Total)",vatable
+TOTAL_722100,Diesel (Total),vatable
+TOTAL_722200,Gasoline (Petrol) (Total),vatable
+TOTAL_722311,Liquid petroleum gas (LPG) (Total),vatable
+TOTAL_722312,"Natural gas (CNG, LNG) (Total)",vatable
+TOTAL_722313,"Biofuels (ethanol, methanol) (Total)",vatable
+TOTAL_722320,Electricity (Total),vatable
+TOTAL_722300,"Other fuels for personal transport equipment, n.e.c. ________ (Total)",vatable
+TOTAL_722314,Methane and two-stroke mixtures (Total),vatable
+TOTAL_722330,Hydrogen (Total),vatable
+TOTAL_722400,Lubricants (Total),vatable
+TOTAL_723030,Change oil (Total),vatable
+TOTAL_723050,"Car wash, car detailing (Total)",vatable
+TOTAL_723090,"Other maintenance and repair of personal transport equipment, n.e.c._____________ (Total)",vatable
+TOTAL_723010,Tune-up (Total),vatable
+TOTAL_723020,Engine overhaul (Total),vatable
+TOTAL_723040,"Tire repair, tire change (Total)",vatable
+TOTAL_724000,"Other services in respect of personal transport equipment (e.g., services for parking, toll facilities, driving lessons, tests, licences, etc.) (Total)",vatable
+TOTAL_731000,Passenger transport by railway (Total),exempt
+TOTAL_732111,Bus fare for point-to-point operation (Total),exempt
+TOTAL_732112,Bus fare for multi-stop operation (Total),exempt
+TOTAL_732120,Utility Vehicle (UV) express fare (Total),exempt
+TOTAL_732201,Taxi fare (Total),exempt
+TOTAL_732202,Transport Network Vehicle Service (TNVS) fare except motorcycle (Total),exempt
+TOTAL_732203,Carpooling and ridesharing fare (Total),exempt
+TOTAL_732204,Rental of vehicle with driver (Total),exempt
+TOTAL_732300,Passenger transport for students to and from school (Total),exempt
+TOTAL_732901,Jeepney fare (Total),exempt
+TOTAL_732902,Tricycle fare (Total),exempt
+TOTAL_732903,Pedicab fare (Total),exempt
+TOTAL_732904,Animal-driven passenger transport fare (Total),exempt
+TOTAL_732905,"Other TNVS fare (e.g., motorcycle, tricycle) (Total)",exempt
+TOTAL_732909,"Other road passenger transport fare (e.g., habal-habal, etc.) (Total)",exempt
+TOTAL_733100,Domestic air fare (Total),vatable
+TOTAL_733200,International air fare (Total),exempt
+TOTAL_734000,"Passenger transport by sea and inland waterway (e.g., fare for ship, boat, ferry, etc.) (Total)",exempt
+TOTAL_735000,"Combined passenger transport (e.g., bus and RORO, etc.) (Total)",exempt
+TOTAL_736000,"Other purchased transport services (e.g., porters, travel agent's commissions, left-luggage, etc.) (Total)",vatable
+TOTAL_741100,"Letter handling services (e.g., Payment for new postage stamps and other pre-franked postal matte, Courier services for letters, etc.) (Total)",vatable
+TOTAL_741200,Courier and parcel delivery services (Total),vatable
+TOTAL_749100,"Removal (e.g., lipat bahay, etc.) and storage services (Total)",vatable
+TOTAL_749210,Services of delivery of goods (Total),vatable
+TOTAL_749220,Services of delivery of food for immediate consumption such as take-out meals (Total),vatable
+TOTAL_813250,"Networking equipment (e.g., home wifi, pocket wifi, routers, etc.) (Total)",vatable
+TOTAL_813260,"Consumable components (e.g., toner and ink cartridges, laser priter drums, printer ribbons, etc.) (Total)",vatable
+TOTAL_813290,"Other peripheral equipment (e.g., keyboard, mouse, calculators including pocket calculators, web cameras, etc.) (Total)",vatable
+TOTAL_815000,"Unrecorded recording media (e.g., external hard drives, USB flash drives, SD and microSD cards, CDs, DVDs, etc.) (Total)",vatable
+TOTAL_819210,"Smartphone accessories and gadgets accessories (e.g., chargers, docking stations, batteries, power banks, cases, covers, cables, SIM cards, etc.) (Total)",vatable
+TOTAL_819220,"Computer components (e.g., processors, internal hard drives and solid-state drives, memory, motherboards, DVD drives, etc.) (Total)",vatable
+TOTAL_820000,Software excluding games (Total),vatable
+TOTAL_831000,Fixed communication services (landline) (Total),vatable
+TOTAL_832010,Post-paid subscription (Total),vatable
+TOTAL_832020,Prepaid subscription (Total),vatable
+TOTAL_833000,Internet access provision services and net storage services (Total),vatable
+TOTAL_834000,"Bundled telecommunication services (e.g., telephone-Internet-TV packages or any combination of telecom packages) (Total)",vatable
+TOTAL_835000,Repair and rental of information and communication equipment (Total),vatable
+TOTAL_839210,Streaming services (film and music) (Total),vatable
+TOTAL_839220,"Rental, download or subscription of CDs, video tapes, DVDs, Blu-ray discs, software (excluding game software) (Total)",vatable
+TOTAL_839230,"Subscription to cable TV, satellite TV, IPTV, Pay-TV, and via decoder and rental of decoders (Total)",vatable
+TOTAL_839250,Subscription to TV via decoder and rental of decoders (Total),vatable
+TOTAL_839900,"Other information and communication services, n.e.c. (Total)",vatable
+TOTAL_911200,"Accessories for photographic and cinematographic equipment (e.g., screens, lenses, filters and exposure meters, camera batteries and chargers, films, photo papers, etc.) (Total)",vatable
+TOTAL_921100,"Video game softwares, electronic games, and game apps (for game consoles, computers, tablets, smartphones, download and on any media, including CD-ROMs, cartridges, DVDs, Blu-ray discs, flash drives, etc.) (Total)",vatable
+TOTAL_921200,"Other games, toys and hobbies (e.g., traditional games, toys of all kinds, hobby-stamp-collecting requisites, items for collections, etc.) (Total)",vatable
+TOTAL_921300,"Celebration articles (e.g., fireworks, Christmas trees, lanterns, lights and ornaments, holiday decorations, etc.) (Total)",vatable
+TOTAL_922100,"Equipment for sport (e.g., balls, shuttlecocks, rackets, body building equipment, firearms and other weapons for hunting and protection, fishing rods, game specific footwear, etc.) (Total)",vatable
+TOTAL_922200,"Equipment for camping and open-air recreation (e.g., inflatable boats/rafts, frisbee, tents, sleeping bags, headlamps, camping stove, etc.) (Total)",vatable
+TOTAL_931100,"Garden products (e.g., peat, soil, fertilizers, turf for lawns, pots, etc.) (Total)",vatable
+TOTAL_931200,"Plants, seeds and flowers (e.g., indoor/outdoor plants and flowers (natural or artificial), seeds, bulbs, tubers, shrubs, etc.) (Total)",vatable
+TOTAL_932100,Purchase of pets (Total),vatable
+TOTAL_932200,"Products for pets and other household animals (e.g., pet food, grooming products, etc.) (Total)",vatable
+TOTAL_941000,Hire and repair of photographic and cinematographic equipment and optical instruments (Total),vatable
+TOTAL_942000,"Hire, maintenance and repair of major durables for recreation (e.g., hire and repair of camper vans) (Total)",vatable
+TOTAL_943000,"Hire and repair of video game consoles, toys and hobby articles (e.g., rental of game software and subscription to online games, etc.) (Total)",vatable
+TOTAL_944000,"Hire and repair of equipment for sport, camping and open-air recreation (Total)",vatable
+TOTAL_945000,"Veterinary and other services for pets (e.g., pet grooming, pet training, etc.) (Total)",vatable
+TOTAL_946000,"Recreational and sporting services (e.g., amusement park, arcades, water parks and beaches, stadiums, courts, arenas, halls, aerobics, Zumba, admission tickets, etc.) (Total)",vatable
+TOTAL_947000,"Games of chance (e.g., lotteries, bingo, sweepstakes, casino games, online games, etc.) (Total)",vatable
+TOTAL_950000,"Cultural Goods [Audio-visual media (e.g., flash drives, blu-ray discs for reproduction of sound and picture material, audio-visual content purchased online for immediate downloading, etc.)] (Total)",vatable
+TOTAL_961001,"Services provided live (Cinemas, theaters and opera houses) (Total)",vatable
+TOTAL_961002,Services provided live (Concert and music venues) (Total),vatable
+TOTAL_961009,Services provided live (Others) (Total),vatable
+TOTAL_961021,"Services provided on-line (Cinemas, theaters and opera houses) (Total)",vatable
+TOTAL_961022,Services provided on-line (Concert and music venues) (Total),vatable
+TOTAL_961029,Services provided on-line (Others) (Total),vatable
+TOTAL_971000,"Books (Educational and textbooks in printed or electronic copy, e-books, fiction and non-fiction books, children's books, religious books, etc.) (Total)",exempt
+TOTAL_972000,"Newspapers and periodicals (newspapers, magazines, subscription for newspapers/magazines/periodicals, interner subscription for newspaper/magazine/periodical) (Total)",exempt
+TOTAL_973000,"Miscellaneous printed matter (catalogues, posters, etc.) (Total)",vatable
+TOTAL_974000,"Stationery and drawing materials (writing pads, notebooks, bond paper, crayons, paper cutter, scissors, etc.) (Total)",vatable
+TOTAL_980001,Half-day and one-day tour (Total),vatable
+TOTAL_980002,More than one-day tour (Total),vatable
+TOTAL_990000,"Independent Traveler (total expenditure on varieties of tourism products and services such as transport, accommodation, food services, recreation, etc.) (Total)",vatable
+TOTAL_1010121,School-based tuition fees - Private early childhood educational development programs (Total),exempt
+TOTAL_1010141,"School-based tuition fees - Private early childhood educational development programs for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010144,School-based tuition fees - Private early childhood educational development programs for learners with disability (Total),exempt
+TOTAL_1010161,School-based tuition fees - Private pre-primary education programs (kindergarten) (Total),exempt
+TOTAL_1010181,"School-based tuition fees - Private pre-primary education programs (kindergarten) for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010184,School-based tuition fees - Private pre-primary education programs (kindergarten) for learners with disability (Total),exempt
+TOTAL_1010221,School-based tuition fees - Private primary education services (Total),exempt
+TOTAL_1010241,"School-based tuition fees - Private primary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010244,School-based tuition fees - Private primary education services for learners with disability (Total),exempt
+TOTAL_1020121,School-based tuition fees - Private lower secondary general education services (Total),exempt
+TOTAL_1020141,"School-based tuition fees - Private lower secondary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1020144,School-based tuition fees - Private lower secondary education services for learners with disability (Total),exempt
+TOTAL_1020321,School-based tuition fees - Private upper secondary general education services (Total),exempt
+TOTAL_1020521,School-based tuition fees - Private upper secondary technical-vocational education programs services (Total),exempt
+TOTAL_1030011,"School-based tuition fees - Public post-secondary non-tertiary education services (All Tesda-administered public schools, state universities and colleges, agricultural training institutes, etc.) (Total)",exempt
+TOTAL_1030021,"School-based tuition fees - Private post-secondary non-tertiary education services (All Tesda accredited private schools and institutions e.g. UniTech Educational Institute, Inc., KIMLAR, etc.) (Total)",exempt
+TOTAL_1030031,"School-based tuition fees - Public post-secondary non-tertiary services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1030033,School-based tuition fees - Public post-secondary non-tertiary services for learners with disability (Total),exempt
+TOTAL_1030041,"School-based tuition fees - Private post-secondary non-tertiary services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1030043,School-based tuition fees - Private post-secondary non-tertiary services for learners with disability (Total),exempt
+TOTAL_1040011,School-based tuition fees - Public short-cycle tertiary education services (Total),exempt
+TOTAL_1040021,School-based tuition fees - Private short-cycle tertiary education services (Total),exempt
+TOTAL_1040031,School-based tuition fees - Public bachelor level education services (Total),exempt
+TOTAL_1040041,School-based tuition fees - Private bachelor level education services (Total),exempt
+TOTAL_1040051,School-based tuition fees - Public master level education services (Total),exempt
+TOTAL_1040061,School-based tuition fees - Private master level education services (Total),exempt
+TOTAL_1040071,School-based tuition fees - Public doctoral level education services (Total),exempt
+TOTAL_1040081,School-based tuition fees - Private doctoral level education services (Total),exempt
+TOTAL_1050110,"Independent tutors (private lessons to support formal education), tutor centers, homework help centers, etc. (Total)",vatable
+TOTAL_1050120,Online tutoring (Total),vatable
+TOTAL_1050130,Exam preparation courses (Total),vatable
+TOTAL_1050201,Review classes for professional and licensure examination (Total),vatable
+TOTAL_1050900,Other education not defined by level (Total),vatable
+TOTAL_1050301,Language proficiency classes (Total),vatable
+TOTAL_1050401,Cultural educational program (Total),vatable
+TOTAL_1050501,Sports and recreational program services (Total),vatable
+TOTAL_1050600,Education support service program (Total),vatable
+TOTAL_1050701,Short educational courses in classroom or online (not defined in 10.5.0) (Total),vatable
+TOTAL_1010123,Home-based tuition fees - Private early childhood educational development programs (Total),exempt
+TOTAL_1010143,"Home-based tuition fees - Private early childhood educational development programs for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010145,Home-based tuition fees - Private early childhood educational development programs for learners with disability (Total),exempt
+TOTAL_1010163,Home-based tuition fees - Private pre-primary education programs (kindergarten) (Total),exempt
+TOTAL_1010183,"Home-based tuition fees - Private pre-primary education programs (kindergarten) for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010185,Home-based tuition fees - Private pre-primary education programs (kindergarten) for learners with disability (Total),exempt
+TOTAL_1010223,Home-based tuition fees - Private primary education services (Total),exempt
+TOTAL_1010243,"Home-based tuition fees - Private primary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010245,Home-based tuition fees - Private primary education services for learners with disability (Total),exempt
+TOTAL_1020123,Home-based tuition fees - Private lower secondary general education services (Total),exempt
+TOTAL_1020143,"Home-based tuition fees - Private lower secondary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1020145,Home-based tuition fees - Private lower secondary education services for learners with disability (Total),exempt
+TOTAL_1020323,Home-based tuition fees - Private upper secondary general education services (Total),exempt
+TOTAL_1020523,Home-based tuition fees - Private upper secondary technical-vocational education programs services (Total),exempt
+TOTAL_1010112,Allowance - Public early childhood educational development programs (Total),exempt
+TOTAL_1010122,Allowance - Private early childhood educational development programs (Total),exempt
+TOTAL_1010132,"Allowance - Public early childhood educational development programs for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010136,Allowance - Public early childhood educational development programs for learners with disability (Total),exempt
+TOTAL_1010142,"Allowance - Private early childhood educational development programs for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010146,Allowance - Private early childhood educational development programs for learners with disability (Total),exempt
+TOTAL_1010152,Allowance - Public pre-primary education programs (kindergarten) (Total),exempt
+TOTAL_1010162,Allowance - Private pre-primary education programs (kindergarten) (Total),exempt
+TOTAL_1010172,"Allowance - Public pre-primary education programs (kindergarten) for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010176,Allowance - Public pre-primary education programs (kindergarten) for learners with disability (Total),exempt
+TOTAL_1010182,"Allowance - Private pre-primary education programs (kindergarten) for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010186,Allowance - Private pre-primary education programs (kindergarten) for learners with disability (Total),exempt
+TOTAL_1010212,Allowance - Public primary education services (Total),exempt
+TOTAL_1010222,Allowance - Private primary education services (Total),exempt
+TOTAL_1010232,"Allowance - Public primary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010236,Allowance - Public primary education services for learners with disability (Total),exempt
+TOTAL_1010242,"Allowance - Private primary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1010246,Allowance - Private primary education services for learners with disability (Total),exempt
+TOTAL_1020112,Allowance - Public lower secondary general education services (Total),exempt
+TOTAL_1020122,Allowance - Private lower secondary general education services (Total),exempt
+TOTAL_1020132,"Allowance - Public lower secondary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1020136,Allowance - Public lower secondary education services for learners with disability (Total),exempt
+TOTAL_1020142,"Allowance - Private lower secondary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1020146,Allowance - Private lower secondary education services for learners with disability (Total),exempt
+TOTAL_1020312,Allowance - Public upper secondary general education services (Total),exempt
+TOTAL_1020322,Allowance - Private upper secondary general education services (Total),exempt
+TOTAL_1020512,Allowance - Public upper secondary technical-vocational education programs services (Total),exempt
+TOTAL_1020522,Allowance - Private upper secondary technical-vocational education programs services (Total),exempt
+TOTAL_1030012,Allowance - Public post-secondary non-tertiary education services (Total),exempt
+TOTAL_1030022,Allowance - Private post-secondary non-tertiary education services (Total),exempt
+TOTAL_1030032,"Allowance - Public post-secondary non-tertiary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1030036,Allowance - Public post-secondary non-tertiary education services for learners with disability (Total),exempt
+TOTAL_1030042,"Allowance - Private post-secondary non-tertiary education services for indigenous, gifted and Muslim groups (Total)",exempt
+TOTAL_1030046,Allowance - Private post-secondary non-tertiary education services for learners with disability (Total),exempt
+TOTAL_1040012,Allowance - Public short-cycle tertiary education services (Total),exempt
+TOTAL_1040022,Allowance - Private short-cycle tertiary education services (Total),exempt
+TOTAL_1040032,Allowance - Public bachelor level education services (Total),exempt
+TOTAL_1040042,Allowance - Private bachelor level education services (Total),exempt
+TOTAL_1040052,Allowance - Public master level education services (Total),exempt
+TOTAL_1040062,Allowance - Private master level education services (Total),exempt
+TOTAL_1040072,Allowance - Public doctoral level education services (Total),exempt
+TOTAL_1040082,Allowance - Private doctoral level education services (Total),exempt
+TOTAL_1050112,"Allowance - Independent tutors (private lessons to support formal education), tutor centres, homework help centres and the like (Total)",exempt
+TOTAL_1050122,Allowance - Online tutoring (Total),exempt
+TOTAL_1050132,Allowance - Exam preparation courses (Total),exempt
+TOTAL_1050202,Allowance - Review classes for professional and licensure examination (Total),exempt
+TOTAL_1050302,Allowance - Language proficiency classes (Total),exempt
+TOTAL_1050402,Allowance - Cultural educational program (Total),exempt
+TOTAL_1050502,Allowance - Sports and recreational program services (Total),exempt
+TOTAL_1050612,Allowance - Public education support service program (Total),exempt
+TOTAL_1050622,Allowance - Private education support service program (Total),exempt
+TOTAL_1050702,Allowance - Short educational courses in classroom or online (not defined in 10.5.0) (Total),exempt
+TOTAL_1050912,Allowance - Public education services not definable by level (Total),exempt
+TOTAL_1050922,Allowance - Private education services not definable by level (Total),exempt
+TOTAL_1090100,Miscellaneous fees (Total),exempt
+TOTAL_1090900,"Other educational expenses, n.e.c. (graduation fee, excursion fee, college admission fee, etc.)_______________ (Total)",vatable
+TOTAL_1120000,"ACCOMMODATION SERVICES (e.g., hotels, motels, inns, holiday centers, camping sites, boarding schools/universities, hostels and accommodation for workers, etc.) (Total)",vatable
+TOTAL_1211100,GSIS (Total),exempt
+TOTAL_1211200,SSS (Total),exempt
+TOTAL_1211300,Other Life Insurance/Pre-need Insurance (Total),exempt
+TOTAL_1212100,PhilHealth (Total),exempt
+TOTAL_1212200,Health/Medical Insurance other than PhilHealth (Total),vatable
+TOTAL_1213000,"Insurance connected with the dwelling (insurance typically taken out by tenants against fire, theft, water damage, etc.) (Total)",vatable
+TOTAL_1214100,"Personal transport insurance (car insurance, etc.) (Total)",vatable
+TOTAL_1214200,"Travel insurance [Service charges for travel insurance (for change of travel plans, travel cancellation, etc.) and luggage insurance] (Total)",vatable
+TOTAL_1219000,"Other insurance, n.e.c. (Service charges for civil liability for injury or damage to third parties or their property, legal insurance, pet medical insurance, agricultural insurance etc.) (Total)",vatable
+TOTAL_1220000,"FINANCIAL SERVICES (financial charges of money lenders, credit card issuers, pawnshops, remittance fees, etc.) (Total)",exempt
+TOTAL_1311000,"Electric appliances for personal care including repair (e.g., electric razors and hair trimmers, hand-held and hood hair dryers, curling tongs, etc.) (Total)",vatable
+TOTAL_1312011,"Razors, hair trimmers, blades and scissors (Total)",vatable
+TOTAL_1312013,Combs and hair brushes (Total),vatable
+TOTAL_1312014,Toothbrushes (Total),vatable
+TOTAL_1312016,Personal weighing machines and baby scales (Total),vatable
+TOTAL_1312019,"Others, specify (e.g. shaving brushes, etc.) (Total)",vatable
+TOTAL_1312012,Nail files and nail brush (Total),vatable
+TOTAL_1312015,Hair pins and curlers (Total),vatable
+TOTAL_1312021,Toilet and medicinal soap (Total),vatable
+TOTAL_1312024,Toothpaste (Total),vatable
+TOTAL_1312026,Shampoo and hair conditioner (Total),vatable
+TOTAL_1312022,"Facial wash, cleansing oil and milk, and facial scrub (Total)",vatable
+TOTAL_1312025,Mouthwash (Total),vatable
+TOTAL_1312029,"Others articles for personal hygiene, n.e.c. (Total)",vatable
+TOTAL_1312023,"Shaving soap, cream and foam (Total)",vatable
+TOTAL_1312027,Hand sanitizer (Total),vatable
+TOTAL_1312028,Feminine and masculine wash (Total),vatable
+TOTAL_1312031,Lipsticks and lip tints (Total),vatable
+TOTAL_1312036,Perfumes (Total),vatable
+TOTAL_1312037,Personal deodorants and tawas (Total),vatable
+TOTAL_1312033,Make-up and make-up removal products (Total),vatable
+TOTAL_1312034,Hair lacquers and lotions (Total),vatable
+TOTAL_1312039,"Other beauty products (e.g. shaving products, etc.) (Total)",vatable
+TOTAL_1312032,Nail varnishes/polishes (Total),vatable
+TOTAL_1312035,Sunbathing products (Total),vatable
+TOTAL_1312091,Disposable diaper (Total),vatable
+TOTAL_1312095,Sanitary napkins and tampons (Total),vatable
+TOTAL_1312099,"Other appliances, articles and products for personal care, n.e.c. (Total)",vatable
+TOTAL_1312092,Cloth diaper (Total),vatable
+TOTAL_1312093,Wipes (Total),vatable
+TOTAL_1312094,"Toilet paper, sanitary towels, and facial tissue (Total)",vatable
+TOTAL_1312096,Cotton wools and cotton buds (Total),vatable
+TOTAL_1312097,Bath sponge (Total),vatable
+TOTAL_1313100,"Hairdressing services (e.g., cut, trim, hot oil, rebonding, perm, etc. in salons/parlors and barber shops) (Total)",vatable
+TOTAL_1313200,"Personal grooming treatments (e.g., facial beauty treatment, manicure/pedicure, spas, saunas, non-medical massages, etc.) (Total)",vatable
+TOTAL_1321100,"Jewellery, watches and stop watches (Total)",vatable
+TOTAL_1321200,Repair and hire of jewellery and watches (Total),vatable
+TOTAL_1322000,"Devotional articles and articles for religious and ritual celebrations (e.g., crucifixes and rosaries, figurines, pictures, etc.) (Total)",vatable
+TOTAL_1329101,"Travel goods and other carriers of personal effects (e.g., suitcases, travel bags, attache cases, handbags, wallets, purses, school bags, etc. (Total)",vatable
+TOTAL_1329102,"Articles for babies (e.g., baby carriages, pushchairs, etc.) (Total)",vatable
+TOTAL_1329103,"Articles for smokers (e.g., pipes, lighters, cigarette cases, ashtrays, etc.) (Total)",vatable
+TOTAL_1329104,"Miscellaneous personal articles (e.g., sunglasses, walking sticks and canes, umbrellas and parasols, fans, key rings, etc. (Total)",vatable
+TOTAL_1329106,Articles for smokers (electronic cigarettes and vaping devices) (Total),vatable
+TOTAL_1329105,"Funerary articles (e.g., coffins, gravestones, urns, etc.) (Total)",vatable
+TOTAL_1329109,"Other travel goods and articles for babies and other personal effects, n.e.c. (Total)",vatable
+TOTAL_1329200,"Repair and rental of other personal effects, n.e.c. (Total)",vatable
+TOTAL_1330100,"Child care services (e.g., nurseries, day-care facilities, wet-nurses, crÃ¨ches and other child-minding facilities for babies, etc.) (Total)",vatable
+TOTAL_1330200,"Non-medical retirement homes for elderly persons and non-medical residences for disabled persons (e.g., Retirement homes for elderly persons, residences for disabled persons, rehabilitation centres providing long- term support for patients rather than hea",vatable
+TOTAL_1330300,"Services to maintain persons in their private homes (this includes help to maintain elderly and disabled persons at home such as home-cleaning services, meal programmes, day-care centres, day-care services and holiday-care services) (Total)",vatable
+TOTAL_1330900,Other social protection services (Total),vatable
+TOTAL_1390903,"Charges for funeral, cremation and undertaking services (Total)",vatable
+TOTAL_1390906,"Fees for issuance of birth, marriage and death certificates and other administrative documents (Total)",vatable
+TOTAL_1390909,"Payments for other services, n.e.c (Total)",vatable
+TOTAL_1390200,Religious services (Total),vatable
+TOTAL_1390901,Fees for legal advisory and representation services concerning criminal law (Total),vatable
+TOTAL_1390902,Fees for employment agency services (Total),vatable
+TOTAL_1390904,"Payments for services of real estate agents, housing agents, auctioneers, salesroom operators and other intermediaries (Total)",vatable
+TOTAL_1390905,Payments for photocopies and other reproductions of documents (duplicating services) (Total),vatable
+TOTAL_1390907,Payments for newspaper notices and advertisements (Total),vatable
+TOTAL_1390908,"Payments for services of graphologists, astrologers, private detectives, bodyguards, matrimonial agencies and marriage guidance counsellors, public writers, miscellaneous concessions (seats, toilets, cloakrooms), etc. (Total)",vatable
+TOTAL_511000,"Furniture (e.g., household furniture, garden and camping furniture, etc.) (Total)",vatable
+TOTAL_531100,"Major kitchen appliances (e.g., refrigerators, freezer, gas stove, oven and microwave oven, ranges, etc.) (Total)",vatable
+TOTAL_531200,"Major laundry appliances (e.g., washing machines, dryers, ironing and pressing machines, etc.) (Total)",vatable
+TOTAL_531300,"Heaters, air conditioners (e.g., air conditioners, water heater, etc.) (Total)",vatable
+TOTAL_531400,"Cleaning equipment (e.g., vacuum cleaners, air purifiers, etc.) (Total)",vatable
+TOTAL_531900,"Other major household appliances (e.g., sewing machine, safes, etc.) (Total)",vatable
+TOTAL_532000,"Small electric household appliances (e.g., air fryer, rice cooker, toaster, blender, coffee maker, juice extractor, electric fan, flat iron, etc.) (Total)",vatable
+TOTAL_551000,"Motorized tools and equipment (e.g., electric drills, saws, lawn mowers, water pumps, etc.) (Total)",vatable
+TOTAL_711000,"Motor cars (e.g., new and second-hand sedan, vans, SUVs, pick-up trucks, etc.) (Total)",vatable
+TOTAL_712000,"Motorcycles, motor scooters and tricycles (Total)",vatable
+TOTAL_713000,"Bicycles [e.g., bicycles, cycle rickshaws (pedicab), e-bikes, e-trikes, pedelecs (electric pedal-assisted bicycles) , etc.] (Total)",vatable
+TOTAL_714000,Animal drawn vehicles (Total),vatable
+TOTAL_719000,"Other vehicles, n.e.c. (Total)",vatable
+TOTAL_811000,"Fixed telephone equipment (e.g., landline telephones, wireless landline telephones, etc.) (Total)",vatable
+TOTAL_812000,"Mobile telephone equipment (e.g., cellular phones/smart phones, etc.) (Total)",vatable
+TOTAL_813101,Desktop computers (Total),vatable
+TOTAL_813102,Laptop computers (Total),vatable
+TOTAL_813103,Tablets (Total),vatable
+TOTAL_813200,"Peripheral equipment (e.g., printer, scanner, monitor, projector) (Total)",vatable
+TOTAL_814010,"Television sets, and TV aerials (antenna) of all types (Total)",vatable
+TOTAL_814020,"Satellite receivers, IPTV receivers, set-top boxes, TV converter boxes, streaming boxes (e.g., Mibox, digibox, etc.) (Total)",vatable
+TOTAL_814040,"Radio receivers (e.g., radio sets, digital radio sets, Internet radio sets, satellite radio sets, car radios, radio clocks, two-way radios, walkie-talkies, amateur radio receivers and transmitters) (Total)",vatable
+TOTAL_814090,"Other equipment for reception, recording and reproduction of sound and vision, n.e.c. (e.g., microphone, speakers, headphones, amplifiers, karaoke systems, audio and video systems for cars, digital media players, etc.)________ (Total)",vatable
+TOTAL_814030,"Digital and cassette video players and recorders such as DVD, Blu-ray, Ultra HD Blue-ray, VHS (Total)",vatable
+TOTAL_814050,"Audio players and recorders such as CD, stereo equipment and radio cassette (Total)",vatable
+TOTAL_819000,"Other information and communication equipment and accessories (e.g., wireless home monitor, smartwatches, fitness tracker, e-book reader, etc.) (Total)",vatable
+TOTAL_911000,"Photographic and cinematographic equipment and optical instruments (e.g., cameras, video cameras, drone with camera, binoculars, microscopes, etc.) (Total)",vatable
+TOTAL_912000,"Major durables for recreation (e.g., camper vans, gliders, boats, horses and ponies, etc.) (Total)",vatable
+TOTAL_921110,Video game computers (Total),vatable
+TOTAL_921120,Video game consoles (Total),vatable
+TOTAL_921130,"Accessories for video gaming (gamepads, joysticks, racing wheels, etc.) (Total)",vatable
+TOTAL_922227,Camp table and chairs (Total),vatable
+TOTAL_920009,"Other recreational goods, n.e.c. _________ (Total)",vatable
+TOTAL_950001,"CULTURAL GOODS (e.g., musical instruments and spare parts) (Total)",vatable
+TOTAL_1511000,Food and refreshments (Total),vatable
+TOTAL_1512000,Alcoholic beverages (Total),vatable
+TOTAL_1513000,"Service of priests, cooks, waiters, etc. (Total)",vatable
+TOTAL_1514000,"Rental of space, facilities and equipment (Total)",vatable
+TOTAL_1516000,"Others (balloons, flowers, candles, paints, firecrackers, etc.) (Total)",vatable
+TOTAL_1701000,Purchase/amortization of real property (Total),vatable
+TOTAL_1703000,"Installments for appliances, etc. bought before 2023 (Total)",vatable
+TOTAL_1704000,Installments for personal transport bought before 2023 (Total),vatable
+TOTAL_1707000,Major repair of the house (Total),vatable
+TOTAL_1708000,Construction of new house (Total),vatable

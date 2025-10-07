@@ -1,0 +1,104 @@
+---
+title: "Untitled"
+format: html
+---
+
+# Filter FIES Data - Keep Only TOTAL Variables
+
+## Overview
+
+This script filters the FIES dataset to keep only "TOTAL" variables from the FIES_REC category while retaining all other rows.
+
+## Setup
+
+```{python}
+import pandas as pd
+import numpy as np
+
+# Read the Excel file
+df = pd.read_excel('filtered_col_list.xlsx')
+
+print(f"Original dataset shape: {df.shape}")
+print(f"Columns: {list(df.columns)}")
+```
+
+## Data Exploration
+
+```{python}
+# Check the categories
+print("Categories in the dataset:")
+print(df['category'].value_counts())
+
+# Look at FIES_REC data pattern
+fies_rec_data = df[df['category'] == 'FIES_REC']
+print(f"\nFIES_REC category has {len(fies_rec_data)} rows")
+
+# Show the pattern of variables
+print("\nSample FIES_REC variables (showing the CASH/KIND/GIFTS/TOTAL pattern):")
+print(fies_rec_data['var'].head(12).tolist())
+```
+
+## Filter the Data
+
+```{python}
+# Step 1: Keep all rows that are NOT in FIES_REC category
+non_fies_rec = df[df['category'] != 'FIES_REC'].copy()
+
+# Step 2: From FIES_REC category, keep only rows with "TOTAL" in the variable name
+fies_rec_total = df[
+    (df['category'] == 'FIES_REC') & 
+    (df['var'].str.contains('TOTAL', na=False))
+].copy()
+
+# Step 3: Combine both datasets
+filtered_df = pd.concat([non_fies_rec, fies_rec_total], ignore_index=True)
+
+print(f"Filtering results:")
+print(f"- Non-FIES_REC rows: {len(non_fies_rec)}")
+print(f"- FIES_REC TOTAL rows: {len(fies_rec_total)}")
+print(f"- Total filtered rows: {len(filtered_df)}")
+print(f"- Original rows: {len(df)}")
+print(f"- Rows removed: {len(df) - len(filtered_df)}")
+```
+
+## Verify the Results
+
+```{python}
+# Check that we only kept TOTAL variables from FIES_REC
+fies_rec_filtered = filtered_df[filtered_df['category'] == 'FIES_REC']
+
+print("Sample of filtered FIES_REC variables:")
+print(fies_rec_filtered['var'].head(10).tolist())
+
+# Verify all remaining FIES_REC variables contain "TOTAL"
+has_total = fies_rec_filtered['var'].str.contains('TOTAL', na=False).all()
+print(f"\nAll remaining FIES_REC variables contain 'TOTAL': {has_total}")
+
+# Show some examples of the TOTAL variables
+print(f"\nExamples of kept TOTAL variables:")
+sample_totals = fies_rec_filtered['var'].head(5).tolist()
+for var in sample_totals:
+    desc = fies_rec_filtered[fies_rec_filtered['var'] == var]['description'].iloc[0]
+    print(f"- {var}: {desc}")
+```
+
+## Save the Filtered Data
+
+```{python}
+# Save the filtered dataset
+output_filename = 'filtered_col_list_totals_only.xlsx'
+filtered_df.to_excel(output_filename, index=False)
+
+print(f"Filtered dataset saved as: {output_filename}")
+print(f"Final dataset shape: {filtered_df.shape}")
+```
+
+## Summary
+
+The filtering process:
+
+1.  **Kept all rows** where `category != 'FIES_REC'`
+2.  **From FIES_REC category**, kept only rows where the `var` column contains "TOTAL"
+3.  **Combined** both groups into the final filtered dataset
+
+This removes variables like `CASH_111121`, `KIND_111121`, `GIFTS_111121` while keeping `TOTAL_111121`, effectively reducing the FIES_REC variables by approximately 75% (keeping only the TOTAL aggregations).

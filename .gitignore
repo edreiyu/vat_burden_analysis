@@ -1,0 +1,39 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Mac system files
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Quarto render cache and support files
+# The .quarto/ folder contains Quarto's internal cache and metadata - not needed it in repository
+/.quarto/
+*_cache/
+*_files/
+
+# Keep docs folder for GitHub Pages
+!docs/
+
+# Ignore all contents of dump_data folder containing refernce files 
+dump_data/
+
+# Ignore large data files - store locally only
+clean_data/
+
+# csv files not in a folder
+*.csv
