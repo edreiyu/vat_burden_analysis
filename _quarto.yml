@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: docs
+  render: 
+    - "*.qmd"
+    - "!code/01_data_cleaning.qmd"  # Exclude this file
+    - "!code/test.qmd"       # Exclude this file
 
 website:
   title: "VAT Burden Analysis"
