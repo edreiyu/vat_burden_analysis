@@ -3,9 +3,10 @@
 This project analyzes VAT burden data across different sectors.
 
 ## Files
-- `data/`: Contains the clean datasets to be used for analyses
+- `clean_data/`: Contains the clean datasets to be used for analyses, except for the large main FIES csv
 - `*.qmd`: Quarto analysis documents
 - `requirements.txt`: Python dependencies
+- `outputs/`: Contains the clean summary tables generated from the analyses
 
 ## Setup
 1. Clone this repository
