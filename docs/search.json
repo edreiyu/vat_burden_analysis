@@ -19,5 +19,26 @@
     "title": "Examining the VAT Incidence in the Philippines",
     "section": "Data and Methodology",
     "text": "Data and Methodology\nThe analysis utilizes the 2023 Family Income and Expenditure Survey (FIES) conducted by the Philippine Statistics Authority (PSA). The FIES provides comprehensive data on household income, expenditure patterns, and demographic characteristics. A review of the VAT provisions in the Philippine Tax Code was conducted to identify which goods and services in the FIES are subject to VAT and which are exempt. The exemptions list include basic food items, educational services, healthcare services, public transportation, among others. Table _ provides a summary matrix of the VAT exemptions as defined in the Tax Code and sample covered expenditure items as found in the FIES.\n\nVAT exempt list\n\n\n\n\n\n\n\nTax Code Provision\nCovered FIES expenditure\nRemarks\n\n\n\n\nUnprocessed Agricultural Products:\nAgricultural and marine food products in their original state, livestock and poultry of kind generally used as, or yielding/producing foods for human consumption; and breeding stock and genetic materials\nrice, corn, fish, and vegetables\n\n\n\n\n\n\n\n\n\n\n\n\n\nServices subject to percentage tax, rendered by the following:\n\nnon-VAT registered persons\ndomestic common carriers by land, for the transport of passengers and keepers of garages\ninternational air / shipping carriers\n\n\n\n\n\n\nMedical, dental, hospital and veterinary services, except those rendered by professionals"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "VAT Burden Analysis",
+    "section": "",
+    "text": "This project examines the VAT incidence in the Philippines.\n\n\n\nManuscript\n\n\n\n\nAnalysis of Value Added Tax burden across different sectors using FIES 2023 data."
+  },
+  {
+    "objectID": "index.html#available-reports",
+    "href": "index.html#available-reports",
+    "title": "VAT Burden Analysis",
+    "section": "",
+    "text": "Manuscript"
+  },
+  {
+    "objectID": "index.html#about",
+    "href": "index.html#about",
+    "title": "VAT Burden Analysis",
+    "section": "",
+    "text": "Analysis of Value Added Tax burden across different sectors using FIES 2023 data."
   }
 ]

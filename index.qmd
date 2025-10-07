@@ -1,0 +1,19 @@
+---
+title: "VAT Burden Analysis"
+format:
+  html:
+    toc: true
+---
+
+# Welcome to VAT Burden Analysis
+
+This project examines the VAT incidence in the Philippines.
+
+## Available Reports
+
+- [Manuscript](code/03_manuscript.html)
+
+
+## About
+
+Analysis of Value Added Tax burden across different sectors using FIES 2023 data.
