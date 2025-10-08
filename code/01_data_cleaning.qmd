@@ -48,12 +48,9 @@ pl.Config.set_tbl_width_chars(1000)
 Load and check shape of datasets
 
 ```{python}
-# exempt_list = pd.read_csv('vat_exempt_list.csv')
-# fies_raw = pd.read_csv('data/FIES2023_VOL2_COMPLETE.csv') #main FIES dataset
-
 # polars equivalent
 exempt_list = pl.read_csv('clean_data/vat_exempt_list.csv')
-fies_raw = pl.read_csv('clean_data/FIES2023_VOL2_COMPLETE.csv')  # main FIES dataset
+fies_raw = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED.parquet')  # main FIES dataset
 
 fies_raw.shape
 fies_raw.head(10)
@@ -203,6 +200,7 @@ pl.sum_horizontal(expenditure_categories['food']).alias('food_exp')
 
 ```{python}
 # Calculate share of spending that is taxable/exempt by decile
+# Expenditure units are in monthly pesos for total household population
 tax_share = (
     fies_raw
     .with_columns([
@@ -211,15 +209,22 @@ tax_share = (
     ])
     .with_columns((pl.col('vatable_spending') + pl.col('exempt_spending')).alias('total_spending'))
     .group_by('NPCINC').agg([
-        pl.len().alias('households'),
+        # pl.len().alias('households'),
+        pl.sum('RFACT').alias('number_households'),
+        pl.sum('TOINC').alias('total_income'),
+        pl.sum('TOTEX').alias('total_HH_expenditures'), #original TOTEX from FIES
         pl.sum('vatable_spending').alias('vatable_expenditures'),
         pl.sum('exempt_spending').alias('exempt_expenditures'),
         pl.sum('total_spending').alias('total_expenditures')
     ])
     .sort('NPCINC')
     .with_columns([
-        (pl.col('vatable_expenditures') / pl.col('total_expenditures') * 100).alias('vatable_share'),
-        (pl.col('exempt_expenditures') / pl.col('total_expenditures') * 100).alias('exempt_share')
+        (pl.col('vatable_expenditures') / pl.col('total_expenditures') * 100).alias('vatable_share_exp'),
+        (pl.col('exempt_expenditures') / pl.col('total_expenditures') * 100).alias('exempt_share_exp'),
+        (pl.col('vatable_expenditures') / pl.col('total_income') * 100).alias('vatable_share_income'),
+        (pl.col('exempt_expenditures') / pl.col('total_income') * 100).alias('exempt_share_income'),
+        (pl.col('vatable_expenditures') / pl.col('total_HH_expenditures') * 100).alias('vatable_share_HHexp'),
+        (pl.col('exempt_expenditures') / pl.col('total_HH_expenditures') * 100).alias('exempt_share_HHexp')
     ])
 )
 print(tax_share)
@@ -239,12 +244,12 @@ tax_share_bydecile = (
 print(tax_share_bydecile)
 
 # Export results
-tax_share.write_csv('tax_share.csv')
-tax_share_bydecile.write_csv('tax_share_bydecile.csv')
+tax_share.write_csv('tax_share_month_rfact.csv')
+tax_share_bydecile.write_csv('outputs/tax_share_bydecile_month_rfact.csv')
 
 ```
 
-2. Budget shares by major expenditure category and by income group
+2.  Budget shares by major expenditure category and by income group
 
 ```{python}
 budget_share = (
@@ -254,7 +259,7 @@ budget_share = (
         for name in expenditure_categories
     ])
     .group_by('NPCINC').agg(
-        [pl.len().alias('households')] +
+        [pl.sum('RFACT').alias('number_households')] +
         [pl.sum(name) for name in expenditure_categories]
     )
     .sort('NPCINC')
@@ -269,20 +274,20 @@ budget_share = (
 print(budget_share)
 
 # Export results
-budget_share.write_csv('budget_share.csv') 
+budget_share.write_csv('outputs/budget_share_month_rfact.csv') 
 
 ```
-
 
 3.  Estimated VAt payments by income group
 
 -   How much total VAT is paid by each decile?
 -   What is the proportion of VAT paid to their total income? total expenditure?
 
-Estimate the effective tax rate for each decile, i.e., the ratio of vat payments to total expenditure for each decile
-**Effective tax rate** can be derived using the tax_shares dataframe, i.e., total vatable expenditures divided by total expenditures for each decile is similar when those figures are multiplied by the VAT rate of 12%.
+Estimate the effective tax rate for each decile, i.e., the ratio of vat payments to total expenditure for each decile **Effective tax rate** can be derived using the tax_shares dataframe, i.e., total vatable expenditures divided by total expenditures for each decile is similar when those figures are multiplied by the VAT rate of 12%.
 
 ```{python}
+# This is ratio of total VAT paid of each decile to total potential VAT of each decile (i.e. total expenditures * 12%)
+
 vat_rate = 0.12
 
 vat_paid_est = (
@@ -298,12 +303,72 @@ vat_paid_est = (
 )
 print(vat_paid_est)
 
+# Alternatively, get the effective VAT rate for each HH and get the mean effective VAT rate for each decile
+
+avg_vat_etr = (
+    fies_raw
+    .with_columns([
+        (pl.sum_horizontal(vatable_items) * vat_rate).alias('estimated_vat_perHH'),
+        (pl.sum_horizontal(vatable_items) + pl.sum_horizontal(exempt_items)).alias('total_expenditures')
+    ])
+    .with_columns([
+        ((pl.col('estimated_vat_perHH') / pl.col('total_expenditures')) * 100).alias('vat_paid_to_total_expenditures')
+    ])
+    .group_by('NPCINC')
+    .agg([
+        pl.sum('RFACT').alias('number_households'),
+        pl.mean('vat_paid_to_total_expenditures').alias('avg_vat_etr')
+    ])
+    .sort('NPCINC')
+)
+
+# Adding VAT etr to the original fies_raw df
+
+fies_raw_vat_etr = (
+    fies_raw
+    .with_columns([
+        pl.sum_horizontal(vatable_items).alias('total_vatable_expenditures'),
+        pl.sum_horizontal(exempt_items).alias('total_exempt_expenditures')
+    ])
+    .with_columns([
+        (pl.col('total_vatable_expenditures') + pl.col('total_exempt_expenditures')).alias('total_expenditures'),
+        (pl.col('total_vatable_expenditures') * vat_rate).alias('estimated_vat_perHH'),
+        (pl.col('total_exempt_expenditures') * vat_rate).alias('estimated_vat_foregone')
+    ])
+    .with_columns([
+        ((pl.col('estimated_vat_perHH') / pl.col('total_expenditures')) * 100).alias('vat_paid_to_total_expenditures'),
+        ((pl.col('estimated_vat_foregone') / pl.col('total_expenditures')) * 100).alias('vat_foregone_to_total_expenditures')
+    ])
+)
+
+# export data as parquet file
+fies_raw_vat_etr.write_parquet('clean_data/fies_raw_vat_etr')
+
 ```
 
-
 4.  Estimate the VAT revenue forgone from the level of exempt expenditures, do this by income group. Q: Who benefits from the VAT exemptions?
+5.  Shortcut to estimate effective VAT rate and VAT forgone
 
 ```{python}
+main_summary = (
+    fies_raw_vat_etr
+    .group_by('NPCINC')
+    .agg([
+        pl.sum('RFACT').alias('number_households'),
+        pl.sum('total_vatable_expenditures').alias('total_vatable_expenditures'),
+        pl.sum('total_exempt_expenditures').alias('total_exempt_expenditures'),
+        pl.sum('estimated_vat_perHH').alias('estimated_vat_perHH'),
+        pl.sum('estimated_vat_foregone').alias('estimated_vat_foregone'),
+        pl.mean('vat_paid_to_total_expenditures').alias('avg_vat_etr'),
+        pl.mean('vat_foregone_to_total_expenditures').alias('avg_vat_foregone_etr')
+    ])
+    .sort('NPCINC')
+)
+    
+
+
+('estimated_vat_forgone')
+
 # How much is the estimated VAT foregone? 
 vat_foregone_est = (
     vat_paid_est
@@ -312,22 +377,18 @@ vat_foregone_est = (
         ((pl.col('exempt_expenditures') * vat_rate) / pl.col('total_expenditures') * 100).alias('vat_foregone_to_expenditure'),
     ])
 )
-print(vat_foregone_est)
-vat_foregone_est.write_csv('vat_paid_and_foregone.csv') 
+
+
 
 ```
 
 ## Focusing on exempt expenditure categories
 
-1. who benefits from exempting food items? public transport? education? health?
-
+1.  who benefits from exempting food items? public transport? education? health?
 
 ```{python}
 
 ```
-
-
-
 
 ## Visualize the results:
 
