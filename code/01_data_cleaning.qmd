@@ -350,6 +350,9 @@ fies_raw_vat_etr.write_parquet('clean_data/fies_raw_vat_etr')
 5.  Shortcut to estimate effective VAT rate and VAT forgone
 
 ```{python}
+fies_raw_vat_etr = pl.read_parquet('clean_data/fies_raw_vat_etr')
+
+# This sums the weighted values first, then calculates the ratio, giving you the true population-level ETR.
 main_summary = (
     fies_raw_vat_etr
     .group_by('NPCINC')
@@ -357,26 +360,44 @@ main_summary = (
         pl.sum('RFACT').alias('number_households'),
         pl.sum('total_vatable_expenditures').alias('total_vatable_expenditures'),
         pl.sum('total_exempt_expenditures').alias('total_exempt_expenditures'),
-        pl.sum('estimated_vat_perHH').alias('estimated_vat_perHH'),
-        pl.sum('estimated_vat_foregone').alias('estimated_vat_foregone'),
-        pl.mean('vat_paid_to_total_expenditures').alias('avg_vat_etr'),
-        pl.mean('vat_foregone_to_total_expenditures').alias('avg_vat_foregone_etr')
+        pl.sum('total_expenditures').alias('total_expenditures'),
+        pl.sum('estimated_vat_perHH').alias('total_vat_paid'),
+        pl.sum('estimated_vat_foregone').alias('total_vat_foregone')
+        ])
+    .with_columns([
+        (pl.col('total_vat_paid') / pl.col('total_expenditures') * 100).alias('avg_vat_etr'),
+        (pl.col('total_vat_foregone') / pl.col('total_expenditures') * 100).alias('avg_vat_foregone_etr')
     ])
     .sort('NPCINC')
 )
     
-
-
-('estimated_vat_forgone')
-
-# How much is the estimated VAT foregone? 
-vat_foregone_est = (
-    vat_paid_est
-    .with_columns([
-        (pl.col('exempt_expenditures') * vat_rate).alias('estimated_vat_foregone'),
-        ((pl.col('exempt_expenditures') * vat_rate) / pl.col('total_expenditures') * 100).alias('vat_foregone_to_expenditure'),
+## Formula: Weighted Mean = Σ(ratio × weight) / Σ(weight)
+## I need a weighted mean of the ratios using RFACT as weights.
+main_summary2 = (
+    fies_raw_vat_etr
+    .group_by('NPCINC')
+    .agg([
+        pl.sum('RFACT').alias('number_households'),
+        pl.sum('total_vatable_expenditures').alias('total_vatable_expenditures'),
+        pl.sum('total_exempt_expenditures').alias('total_exempt_expenditures'),
+        pl.sum('total_expenditures').alias('total_expenditures'),
+        pl.sum('estimated_vat_perHH').alias('total_vat_paid'),
+        pl.sum('estimated_vat_foregone').alias('total_vat_foregone'),
+        
+        # Weighted sum of ratios (ratio × weight)
+        (pl.col('vat_paid_to_total_expenditures') * pl.col('RFACT')).sum().alias('weighted_sum_vat_etr'),
+        (pl.col('vat_foregone_to_total_expenditures') * pl.col('RFACT')).sum().alias('weighted_sum_foregone_etr')
     ])
+    .with_columns([
+        # Weighted mean = weighted sum / sum of weights
+        (pl.col('weighted_sum_vat_etr') / pl.col('number_households')).alias('avg_vat_etr'),
+        (pl.col('weighted_sum_foregone_etr') / pl.col('number_households')).alias('avg_vat_foregone_etr')
+    ])
+    .sort('NPCINC')
 )
+
+# Export results
+main_summary2.write_csv('outputs/main_summary2.csv') 
 
 
 
@@ -384,38 +405,46 @@ vat_foregone_est = (
 
 ## Focusing on exempt expenditure categories
 
-1.  who benefits from exempting food items? public transport? education? health?
+1.  Out of the total exempt expenditures, what portions are from food? health? etc
+2.  Who benefits from exempting food items? public transport? education? health?
 
 ```{python}
+# Breakdown of exempt expenditures
+
+exempt_by_category = (
+    fies_raw_vat_etr
+    .with_columns([
+        pl.sum_horizontal(col for col in exempt_items[name] if col in exempt_items]).alias(f'{name}_exempt')
+        for name in expenditure_categories
+    ])
+    .group_by('NPCINC')
+    .agg([
+        pl.sum('RFACT').alias('number_households')] +
+        [pl.sum(f'{name}_exempt') for name in expenditure_categories]
+    )
+    .sort('NPCINC')
+)
+    
+print(exempt_by_category)
+
+exempt_by_category
+
 
 ```
 
-## Visualize the results:
+## 
 
-```{python}
-plot_data = budget_shares_overall.to_pandas()
+## Documentation Notes
 
-fig, ax = plt.subplots(figsize=(10, 6))
+**Data Source**: FIES 2023 Volume 2, Philippine Statistics Authority
 
-decile_labels = [f"Decile {int(d)}" for d in plot_data['NPCINC']]
+**Key Variables Identified**: - Household ID: `SEQ_NO` - Regional identifiers: `W_REGN`, `W_PROV` - Expenditure variables: Variables starting with `TOTAL_` - Income variables: To be identified in main dataset
 
-ax.bar(decile_labels, plot_data['vatable_share_pct'], 
-       label='Vatable', color='#e74c3c')
-ax.bar(decile_labels, plot_data['exempt_share_pct'], 
-       bottom=plot_data['vatable_share_pct'],
-       label='Exempt', color='#3498db')
+**VAT Rate**: 12% (standard rate in Philippines as of 2023)
 
-ax.set_xlabel('Per Capita Income Decile', fontweight='bold')
-ax.set_ylabel('Percentage Share (%)', fontweight='bold')
-ax.set_title('Budget Share by VAT Status and Income Decile', fontweight='bold')
-ax.set_ylim(0, 100)
-ax.legend()
-ax.grid(axis='y', alpha=0.3)
+**Assumptions**: - VAT is embedded in final prices (tax-inclusive pricing) - Basic commodities (rice, basic food items) are generally VAT-exempt - Processed foods, beverages, manufactured goods are VAT-taxable
 
-plt.tight_layout()
-plt.savefig('vat_shares_by_decile.png', dpi=300)
-plt.show()
-```
+**Next Steps**: 1. Load actual FIES 2023 microdata 2. Identify exact income variable names 3. Map expenditure categories to VAT tax status 4. Run full cleaning pipeline 5. Validate results against known income distribution patterns
 
 Get summary stats for each decile for Total income and total expenditure
 
@@ -677,14 +706,4 @@ def perform_quality_checks(df):
 # perform_quality_checks(fies_final)
 ```
 
-## Documentation Notes
-
-**Data Source**: FIES 2023 Volume 2, Philippine Statistics Authority
-
-**Key Variables Identified**: - Household ID: `SEQ_NO` - Regional identifiers: `W_REGN`, `W_PROV` - Expenditure variables: Variables starting with `TOTAL_` - Income variables: To be identified in main dataset
-
-**VAT Rate**: 12% (standard rate in Philippines as of 2023)
-
-**Assumptions**: - VAT is embedded in final prices (tax-inclusive pricing) - Basic commodities (rice, basic food items) are generally VAT-exempt - Processed foods, beverages, manufactured goods are VAT-taxable
-
-**Next Steps**: 1. Load actual FIES 2023 microdata 2. Identify exact income variable names 3. Map expenditure categories to VAT tax status 4. Run full cleaning pipeline 5. Validate results against known income distribution patterns
+##

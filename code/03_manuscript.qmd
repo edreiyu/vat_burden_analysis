@@ -40,11 +40,11 @@ The analysis utilizes the 2023 Family Income and Expenditure Survey (FIES) condu
 |                                                                                                                                                                                                             |                                  |         |
 | -   international air / shipping carriers                                                                                                                                                                   |                                  |         |
 |                                                                                                                                                                                                             |                                  |         |
-| -                                                                                                                                                                                                           |                                  |         |
+| -   financial services                                                                                                                                                                                      |                                  |         |
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
 | Medical, dental, hospital and veterinary services, except those rendered by professionals                                                                                                                   |                                  |         |
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
-|                                                                                                                                                                                                             |                                  |         |
+| Educational services                                                                                                                                                                                        |                                  |         |
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
 |                                                                                                                                                                                                             |                                  |         |
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
@@ -52,3 +52,65 @@ The analysis utilizes the 2023 Family Income and Expenditure Survey (FIES) condu
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
 
 : VAT exempt list
+
+On the other hand, several exempt items are exempt from VAT which cannot be determined from the FIES 2023 and therefore serves as a limitation in estimating the VAT incidence. These are:\
+
+-   sales to senior citizens
+
+-   sales to PWDs
+
+-   sale of gold to BSP
+
+-   sales of cooperatives
+
+## How do households spend their budgets?
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+# --- Data Loading ---
+df = pd.read_csv('outputs/budget_share_month_rfact.csv')
+
+share_cols = [
+    'food_share', 'alcohol_cigs_share', 'clothing_share', 'water_elec_share',
+    'furnishings_share', 'health_share', 'transport_share', 'ict_share',
+    'recreation_share', 'education_share', 'resto_accom_share',
+    'insurance_financial_share', 'personal_care_share', 'family_occasions_share',
+    'other_disbursements_share'
+]
+
+legend_labels = [
+    'Food', 'Alcohol & Cigs', 'Clothing', 'Water & Elec', 'Furnishings',
+    'Health', 'Transport', 'ICT', 'Recreation', 'Education', 'Resto & Accom',
+    'Insurance & Financial', 'Personal Care', 'Family Occasions', 'Other Disbursements'
+]
+
+# Prepare data
+plot_df = df[['NPCINC'] + share_cols].copy()
+deciles = plot_df['NPCINC'].values
+x_pos = np.arange(len(deciles))
+
+# Create stacked bar chart
+fig, ax = plt.subplots(figsize=(12, 7))
+
+bottom = np.zeros(len(deciles))
+colors = plt.cm.tab20(np.linspace(0, 1, len(share_cols)))
+
+for i, (col, label) in enumerate(zip(share_cols, legend_labels)):
+    values = plot_df[col].values
+    ax.bar(x_pos, values, bottom=bottom, label=label, color=colors[i])
+    bottom += values
+
+ax.set_xlabel('Per Capita Income Decile', fontsize=12)
+ax.set_ylabel('Percentage Share of Total Expenditure (%)', fontsize=12)
+ax.set_title('Expenditure Share by Item and Income Decile', fontsize=14)
+ax.set_xticks(x_pos)
+ax.set_xticklabels([f'Decile {d}' for d in deciles])
+ax.legend(loc='upper left', bbox_to_anchor=(1, 1), fontsize=9)
+
+plt.tight_layout()
+plt.show()
+
+```
