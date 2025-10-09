@@ -4,6 +4,7 @@ format:
     html:
         theme: cosmo
         code:-fold: true
+        code-summary: "Show the code"
         toc: true
 ---
 
@@ -20,6 +21,8 @@ The analysis aims to answer the following questions: - How do households allocat
 ## Data and Methodology
 
 The analysis utilizes the 2023 Family Income and Expenditure Survey (FIES) conducted by the Philippine Statistics Authority (PSA). The FIES provides comprehensive data on household income, expenditure patterns, and demographic characteristics. A review of the VAT provisions in the Philippine Tax Code was conducted to identify which goods and services in the FIES are subject to VAT and which are exempt. The exemptions list include basic food items, educational services, healthcare services, public transportation, among others. Table \_ provides a summary matrix of the VAT exemptions as defined in the Tax Code and sample covered expenditure items as found in the FIES.
+
+## VAT Exemption list
 
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+---------+
 | Tax Code Provision                                                                                                                                                                                          | Covered FIES expenditure         | Remarks |
@@ -66,12 +69,14 @@ On the other hand, several exempt items are exempt from VAT which cannot be dete
 ## How do households spend their budgets?
 
 ```{python}
+#| code-fold: true
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
 # --- Data Loading ---
-df = pd.read_csv('outputs/budget_share_month_rfact.csv')
+df = pd.read_csv('../outputs/budget_share_month_rfact.csv')  # Up one level
 
 share_cols = [
     'food_share', 'alcohol_cigs_share', 'clothing_share', 'water_elec_share',
@@ -93,7 +98,7 @@ deciles = plot_df['NPCINC'].values
 x_pos = np.arange(len(deciles))
 
 # Create stacked bar chart
-fig, ax = plt.subplots(figsize=(12, 7))
+fig, ax = plt.subplots(figsize=(8, 5))
 
 bottom = np.zeros(len(deciles))
 colors = plt.cm.tab20(np.linspace(0, 1, len(share_cols)))
@@ -112,5 +117,48 @@ ax.legend(loc='upper left', bbox_to_anchor=(1, 1), fontsize=9)
 
 plt.tight_layout()
 plt.show()
+
+```
+
+**Food Dominance.** The **Food** share (darkest color at the bottom) is the largest single component for the lowest deciles and dramatically decreases as income increases. This is a classic demonstration of **Engel's Law**, where the proportion of income spent on food falls as income rises.
+
+**Water and Electricity:** The share of **Water & Electricity** remains relatively high and steady across all deciles, likely because it is a necessity with inelastic demand.
+
+**Discretionary Spending Increase:** Categories typically considered **discretionary** or related to lifestyle improvement, such as **Transport**, **ICT**, **Resto & Accom**, and **Insurance & Financial** (higher up the stack), show a clear trend of increasing share as households move to higher income deciles.
+
+```{python}
+#| code-fold: true
+
+# --- Data Loading ---
+df2 = pd.read_csv('../outputs/tax_share_bydecile_month_rfact.csv')
+
+# Prepare data
+deciles = [f'Decile {int(d)}' for d in df2['NPCINC']]
+vatable = df2['vatable_share_exp']
+exempt = df2['exempt_share_exp']
+
+# Create stacked bar chart
+fig, ax = plt.subplots(figsize=(8, 6))
+
+ax.bar(deciles, vatable, label='VATable', color='#e74c3c', alpha=0.85)
+ax.bar(deciles, exempt, bottom=vatable, label='Exempt', color='#3498db', alpha=0.85)
+
+# Formatting
+ax.set_xlabel('Per Capita Income Decile', fontsize=12, fontweight='bold')
+ax.set_ylabel('Share of Total Expenditure (%)', fontsize=12, fontweight='bold')
+ax.set_title('VATable vs Exempt Expenditure Share by Income Decile', 
+             fontsize=14, fontweight='bold', pad=20)
+ax.set_ylim(0, 100)
+ax.legend(loc='upper right', fontsize=11)
+ax.grid(axis='y', alpha=0.3, linestyle='--')
+
+# Add a horizontal line at 50%
+ax.axhline(y=50, color='gray', linestyle=':', linewidth=1, alpha=0.5)
+
+plt.tight_layout()
+plt.show()
+
+
+
 
 ```
