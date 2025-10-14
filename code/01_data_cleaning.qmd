@@ -399,36 +399,58 @@ main_summary2 = (
 # Export results
 main_summary2.write_csv('outputs/main_summary2.csv') 
 
-
-
 ```
 
 ## Focusing on exempt expenditure categories
 
-1.  Out of the total exempt expenditures, what portions are from food? health? etc
-2.  Who benefits from exempting food items? public transport? education? health?
+1.  Out of the total exempt expenditures, what portions are from food? health? etc?
+2.  Who benefits from exempting food items? public transport? education? health? 
+
+Based on the data, 40% of the total food expenditures of the tenth decile are exempt, while only 14% of the total food expenditures of the richest decile are exempt. 
 
 ```{python}
 # Breakdown of exempt expenditures
 
+# First, identify which categories have exempt items
+categories_with_exempts = {
+    name: [col for col in expenditure_categories[name] if col in exempt_items]
+    for name in expenditure_categories.keys()
+}
+categories_with_exempts = {k: v for k, v in categories_with_exempts.items() if len(v) > 0}
+
+# Then process only those categories
 exempt_by_category = (
     fies_raw_vat_etr
     .with_columns([
-        pl.sum_horizontal(col for col in exempt_items[name] if col in exempt_items]).alias(f'{name}_exempt')
-        for name in expenditure_categories
+        pl.sum_horizontal(cols).alias(f'{name}_exempt')
+        for name, cols in categories_with_exempts.items()
     ])
     .group_by('NPCINC')
     .agg([
-        pl.sum('RFACT').alias('number_households')] +
-        [pl.sum(f'{name}_exempt') for name in expenditure_categories]
-    )
+        pl.sum('RFACT').alias('number_households'),
+        pl.sum('total_vatable_expenditures').alias('total_vatable_expenditures'),
+        pl.sum('total_exempt_expenditures').alias('total_exempt_expenditures'),
+        pl.sum('total_expenditures').alias('total_expenditures')
+    ] + [
+        pl.sum(f'{name}_exempt').alias(f'{name}_exempt')
+        for name in categories_with_exempts.keys()
+    ])
     .sort('NPCINC')
+    # Get the share of each exempt category to total exempt expenditures for each decile
+    .with_columns([
+        ((pl.col('food_exempt') / pl.col('total_expenditures')) * 100).alias('food_exempt_share'),
+        ((pl.col('water_elec_exempt') / pl.col('total_expenditures')) * 100).alias('water_elec_exempt_share'),
+        ((pl.col('furnishings_exempt') / pl.col('total_expenditures')) * 100).alias('furnishings_exempt_share'),
+        ((pl.col('health_exempt') / pl.col('total_expenditures')) * 100).alias('health_exempt_share'),
+        ((pl.col('transport_exempt') / pl.col('total_expenditures')) * 100).alias('transport_exempt_share'),
+        ((pl.col('recreation_exempt') / pl.col('total_expenditures')) * 100).alias('recreation_exempt_share'),
+        ((pl.col('education_exempt') / pl.col('total_expenditures')) * 100).alias('education_exempt_share'),
+        ((pl.col('insurance_financial_exempt') / pl.col('total_expenditures')) * 100).alias('insurance_financial_exempt_share')
+    ])
 )
-    
+
 print(exempt_by_category)
-
-exempt_by_category
-
+exempt_by_category.write_csv('outputs/exempt_by_category.csv') 
 
 ```
 
@@ -468,52 +490,15 @@ decile_summary = (
     .sort('NPCINC')
 )
 
-# Display results
-print("=== INCOME AND EXPENDITURE BY DECILE ===")
 print(decile_summary)
-
 # Export to Excel
-decile_summary.write_csv('decile_summary.csv')
-print("\nExported to: decile_summary.csv")
-
 decile_summary.to_pandas().to_excel('decile_summary.xlsx', index=False, sheet_name='Decile_Summary')
-print("Exported to: decile_summary.xlsx")
+
 ```
 
-STEP 3: Calculate VAT Analysis (Polars Version)
-
-```{python}
-# Calculate VAT analysis using Polars expressions
-vat_rate = 0.12
-
-vat_analysis = (
-    fies_data
-    .with_columns([
-        # Sum vatable expenditures
-        pl.sum_horizontal(vatable_cols_available).alias('total_vatable_expenditure'),
-        
-        # Sum exempt expenditures  
-        pl.sum_horizontal(exempt_cols_available).alias('total_exempt_expenditure')
-    ])
-    .with_columns([
-        # Calculate total FIES expenditure
-        (pl.col('total_vatable_expenditure') + pl.col('total_exempt_expenditure'))
-        .alias('total_fies_expenditure'),
-        
-        # Calculate VAT amount (embedded in prices)
-        (pl.col('total_vatable_expenditure') * (vat_rate / (1 + vat_rate)))
-        .alias('vat_amount')
-    ])
-    .with_columns([
-        # Calculate VAT burden as percentage of total income
-        ((pl.col('vat_amount') / pl.col('TOINC')) * 100)
-        .alias('vat_burden_percent')
-    ])
-)
-
-print("VAT analysis calculated successfully with Polars!")
 
 # Display some summary statistics using Polars
+```{python}
 summary_stats = (
     vat_analysis
     .select([
@@ -526,20 +511,8 @@ summary_stats = (
     ])
 )
 
-print("\n=== VAT BURDEN ANALYSIS SUMMARY (Polars) ===")
 print(summary_stats)
 
-# Show first few rows of results
-print("\n=== Sample Results ===")
-sample_results = (
-    vat_analysis
-    .select([
-        'SEQ_NO', 'TOINC', 'total_vatable_expenditure', 
-        'total_exempt_expenditure', 'vat_amount', 'vat_burden_percent'
-    ])
-    .head(5)
-)
-print(sample_results)
 ```
 
 ## 4. Data Cleaning Functions
@@ -652,58 +625,6 @@ def calculate_vat_burden(df, vat_rate=0.12):
 # print(summary_stats)
 ```
 
-## 6. Export Cleaned Data
 
-```{python}
-# Export cleaned data for analysis
-# When you have the actual data, uncomment these lines:
-
-# # Main household-level dataset
-# fies_final.to_csv('data/fies_2023_clean.csv', index=False)
-
-# # Summary by income quintile
-# summary_stats.to_csv('data/fies_2023_summary_by_quintile.csv')
-
-# # VAT-taxable expenditure categories mapping
-# vat_categories_df = pd.DataFrame([
-#     {'category': cat, 'keywords': ', '.join(keywords)} 
-#     for cat, keywords in vat_taxable_categories.items()
-# ])
-# vat_categories_df.to_csv('data/vat_categories_mapping.csv', index=False)
-
-print("Data cleaning completed. Files saved to data/ directory.")
-```
-
-## 7. Data Quality Checks
-
-```{python}
-# Quality checks for the cleaned data
-def perform_quality_checks(df):
-    """
-    Perform data quality checks on cleaned FIES data
-    """
-    print("=== DATA QUALITY REPORT ===")
-    
-    print(f"\n1. Dataset shape: {df.shape}")
-    
-    print(f"\n2. Missing values:")
-    missing_pct = (df.isnull().sum() / len(df)) * 100
-    print(missing_pct[missing_pct > 0].sort_values(ascending=False))
-    
-    print(f"\n3. Duplicate household IDs: {df['SEQ_NO'].duplicated().sum()}")
-    
-    print(f"\n4. Income distribution:")
-    # print(df['TOTAL_INCOME'].describe())
-    
-    print(f"\n5. Expenditure checks:")
-    expenditure_cols = [col for col in df.columns if col.startswith('TOTAL_')]
-    print(f"   - Number of expenditure variables: {len(expenditure_cols)}")
-    print(f"   - Negative values: {(df[expenditure_cols] < 0).sum().sum()}")
-    
-    return True
-
-# When you have the actual data:
-# perform_quality_checks(fies_final)
-```
 
 ##
