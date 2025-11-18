@@ -152,10 +152,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>An existing proposal in Congress aims to reduce the VAT rate from 12% to 10%. This proposal has sparked debates regarding its potential impact on different socioeconomic groups.</p>
 <p>Understanding its incidence is crucial for policymakers to determine who are currently benefiting from the existing VAT structure. COnsidering the proposed changes, it is essential to evaluate the potential effects on various income groups. This study aims to analyze the incidence of VAT in the Philippines using the 2023 Family Income and Expenditure Survey from the PSA.</p>
 <p>The analysis aims to answer the following questions: - How do households allocate their budgets across different consumption categories? How much is allocated to savings/investments? (optional) - Which types of goods/services are exempt from VAT according to the Tax Code? - What is the distribution of VAT burden across different income groups considering both 1) household consumption patterns, and 2) exemptions based on law? - What is the impact of reducing the VAT rate on various socioeconomic groups?</p>
+<p>A box is also provided specifically on certain exempt items <strong>(ie., food items, health expenditures, education, and purchases of senior citizens)</strong>. Who are benefitting from these exemptions? How much revenues is the government foregoing due to these exemptions? Is there room to repeal this exemptions to improve the VAT system’s efficiency?</p>
 </section>
 <section id="data-and-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="data-and-methodology">Data and Methodology</h2>
-<p>The analysis utilizes the 2023 Family Income and Expenditure Survey (FIES) conducted by the Philippine Statistics Authority (PSA). The FIES provides comprehensive data on household income, expenditure patterns, and demographic characteristics. A review of the VAT provisions in the Philippine Tax Code was conducted to identify which goods and services in the FIES are subject to VAT and which are exempt. The exemptions list include basic food items, educational services, healthcare services, public transportation, among others.</p>
+<p>The analysis uses expenditure data from the 2023 Family Income and Expenditure Survey (FIES) conducted by the Philippine Statistics Authority (PSA). The FIES provides comprehensive data on the annual household spending on 900 expenditure items including food, beverages, housing, health, clothing, durable goods, etc. The data also include income and demographic characteristics of households.</p>
+<p>A review of the VAT provisions in the Philippine Tax Code was conducted to identify which goods and services in the FIES are subject to VAT and are exempt. The exemptions list include basic food items, educational services, healthcare services, public transportation, among others.</p>
 </section>
 <section id="vat-exemption-list" class="level2">
 <h2 class="anchored" data-anchor-id="vat-exemption-list">VAT Exemption list</h2>
@@ -236,7 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="how-do-households-spend-their-budgets" class="level2">
 <h2 class="anchored" data-anchor-id="how-do-households-spend-their-budgets">How do households spend their budgets?</h2>
-<div id="893f3167" class="cell" data-execution_count="1">
+<div id="7e2b4c6b" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -297,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Food Dominance.</strong> The <strong>Food</strong> share (darkest color at the bottom) is the largest single component for the lowest deciles and dramatically decreases as income increases. This is a classic demonstration of <strong>Engel’s Law</strong>, where the proportion of income spent on food falls as income rises.</p>
 <p><strong>Water and Electricity:</strong> The share of <strong>Water &amp; Electricity</strong> remains relatively high and steady across all deciles, likely because it is a necessity with inelastic demand.</p>
 <p><strong>Discretionary Spending Increase:</strong> Categories typically considered <strong>discretionary</strong> or related to lifestyle improvement, such as <strong>Transport</strong>, <strong>ICT</strong>, <strong>Resto &amp; Accom</strong>, and <strong>Insurance &amp; Financial</strong> (higher up the stack), show a clear trend of increasing share as households move to higher income deciles.</p>
-<div id="207c3686" class="cell" data-execution_count="2">
+<div id="a75843a4" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Data Loading ---</span></span>

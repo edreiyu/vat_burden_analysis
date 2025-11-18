@@ -12,7 +12,7 @@ TOTAL_111168,"Corn on the cob (includes yellow, white and glutinous) (Total)",ex
 TOTAL_111163,"Whole corn, grain (Total)",exempt
 TOTAL_111166,"Corn grits, milled (Total)",exempt
 TOTAL_111169,"Other corn, n.e.c. (Total)",exempt
-TOTAL_111165,Popcorn (variety) (Total),exempt
+TOTAL_111165,Popcorn (variety) (Total),vatable
 TOTAL_111190,"Other Cereals (oats, rye, etc.) (Total)",vatable
 TOTAL_111210,"Wheat flour (All-purpose flour, cake flour, etc.) (Total)",vatable
 TOTAL_111290,"Other flours of cereals, n.e.c. (Total)",vatable
@@ -20,7 +20,7 @@ TOTAL_111220,Rice flour (Total),vatable
 TOTAL_111261,Corn starch (Total),vatable
 TOTAL_111269,"Corn Flour/Cornmeal, n.e.c. (Total)",vatable
 TOTAL_111311,Loaf bread (Total),vatable
-TOTAL_111312,Pandesal (Total),exempt
+TOTAL_111312,Pandesal (Total),vatable
 TOTAL_111313,"Toasted bread, croutons,and similar toasted products (Total)",vatable
 TOTAL_111314,"Crackers, crispbread (Total)",vatable
 TOTAL_111319,"Other breads, n.e.c (Total)",vatable
@@ -506,8 +506,8 @@ TOTAL_321330,"Parts of footwear for infants and children (e.g. heels, soles, sho
 TOTAL_322000,"Cleaning, repair, dying/coloring, and rental of footwear (Total)",vatable
 TOTAL_411011,Rentals actually paid by tenants or subtenants occupying unfurnished premises as their main residence (Total),exempt
 TOTAL_411012,Rentals actually paid by tenants or subtenants occupying furnished premises as their main residence (Total),exempt
-TOTAL_411020,Payments by households occupying a room in a hotel or boarding house as their main residence. (Total),vatable
-TOTAL_411090,"Other actual rentals paid by tenants for main residence, n.e.c. (Total)",vatable
+TOTAL_411020,Payments by households occupying a room in a hotel or boarding house as their main residence. (Total),exempt
+TOTAL_411090,"Other actual rentals paid by tenants for main residence, n.e.c. (Total)",exempt
 TOTAL_412100,Actual rentals paid by tenants for secondary residences (Total),exempt
 TOTAL_412200,"Garage rentals and other rentals paid by tenants (e.g. parking lot in connection with the dwelling as main residence and other garage rentals, n.e.c.) (Total)",exempt
 TOTAL_421000,Imputed rentals of owner-occupiers for main residence (Own or owner-like possession) (Total),exempt
@@ -524,7 +524,7 @@ TOTAL_431130,Fitted carpets and linoleum (Total),vatable
 TOTAL_431140,"Door fittings, power sockets, wiring flex (Total)",vatable
 TOTAL_431200,"Security equipment (e.g., smoke detector, security alarms, security/surveillance cameras, door phones for dwellings, and fire extinguishers) (Total)",vatable
 TOTAL_432000,"Services for the maintenance, repair and security of the dwelling (e.g. services of plumbers, electricians, guard services, carpenters, locksmith, etc.) (Total)",vatable
-TOTAL_441000,Water supply (Total),vatable
+TOTAL_441000,Water supply (Total),exempt
 TOTAL_444000,"Other services relating to the dwelling (e.g., maintenance charges, association fees, etc.) (Total)",exempt
 TOTAL_451000,Electricity (Total),vatable
 TOTAL_452200,"LPG, butane, propane, etc. (Total)",vatable
@@ -593,7 +593,7 @@ TOTAL_611134,Oral contraceptives (Total),vatable
 TOTAL_611135,"Injectible contraceptives and other contraceptives, except contraceptive devices (Total)",vatable
 TOTAL_611140,Vitamins and minerals (Total),vatable
 TOTAL_611150,"Alcohol for external use, fluids required for dialysis, and gases used in health care, such as oxygen, when the patient purchases them directly. (Total)",vatable
-TOTAL_611160,Service fees to dispense medicines charged by the pharmacists (Total),exempt
+TOTAL_611160,Service fees to dispense medicines charged by the pharmacists (Total),vatable
 TOTAL_611190,Other pharmaceutical products or articles for medical or surgical purposes (Total),vatable
 TOTAL_611200,Herbal medicines and homeopathic products (Total),vatable
 TOTAL_612101,Pregnancy test kit (Total),vatable
@@ -602,8 +602,8 @@ TOTAL_612103,Glucose meters (Total),vatable
 TOTAL_612104,Blood pressure meters (Total),vatable
 TOTAL_612105,Baby scales (Total),vatable
 TOTAL_612109,"Other medical diagnostic products, n.e.c. (Total)",vatable
-TOTAL_612201,Face Masks (Total),exempt
-TOTAL_612202,Face shields (Total),exempt
+TOTAL_612201,Face Masks (Total),vatable
+TOTAL_612202,Face shields (Total),vatable
 TOTAL_612203,Medicinal stockings (e.g. compression stockings) (Total),vatable
 TOTAL_612204,Medicinal gloves (Total),vatable
 TOTAL_612205,Protective gowns and aprones (Total),vatable
@@ -622,11 +622,11 @@ TOTAL_613200,"Hearing and communication (e.g., digital hearing aids, etc.) (Tota
 TOTAL_613300,"Mobility and daily living (e.g., Therapeutic footwear, orthoses, prostheses, crutches, wheelchairs, adult diapers, etc.) (Total)",vatable
 TOTAL_614000,"Repair, rental and maintenance of medical and assistive products (Total)",vatable
 TOTAL_621110,Public immunization services (Total),exempt
-TOTAL_621120,Private immunization services (Total),vatable
+TOTAL_621120,Private immunization services (Total),exempt
 TOTAL_621911,Covid-19 testing services (Total),exempt
 TOTAL_621919,"Other public preventive services, n.e.c. (Total)",exempt
 TOTAL_621921,Covid-19 testing services (Total),exempt
-TOTAL_621929,"Other private preventive services, n.e.c. (Total)",vatable
+TOTAL_621929,"Other private preventive services, n.e.c. (Total)",exempt
 TOTAL_622110,Public dental preventive services (Total),exempt
 TOTAL_622120,Private dental preventive services (Total),vatable
 TOTAL_622910,Other Public dental preventive services (Total),exempt
@@ -636,13 +636,13 @@ TOTAL_623112,Public curative and rehabilitative services provided in any setting
 TOTAL_623121,Online consultation fees of private telehealth services (Total),vatable
 TOTAL_623122,Private curative and rehabilitative services provided in any setting except online consultation (Total),vatable
 TOTAL_623210,Public long-term care services (Total),exempt
-TOTAL_623220,Private long-term care services (Total),vatable
+TOTAL_623220,Private long-term care services (Total),exempt
 TOTAL_631010,Public inpatient curative and rehabilitative services (Total),exempt
-TOTAL_631020,Private inpatient curative and rehabilitative services (Total),vatable
+TOTAL_631020,Private inpatient curative and rehabilitative services (Total),exempt
 TOTAL_632010,Public inpatient long-term care services service (Total),exempt
-TOTAL_632020,Private inpatient long-term care services services (Total),vatable
+TOTAL_632020,Private inpatient long-term care services services (Total),exempt
 TOTAL_641010,Services of medical analysis laboratories (urine/blood tests) (Total),exempt
-TOTAL_641020,"Diagnostic imaging services (CT, MRI, sonography, x-ray, etc.) (Total)",vatable
+TOTAL_641020,"Diagnostic imaging services (CT, MRI, sonography, x-ray, etc.) (Total)",exempt
 TOTAL_642010,Ambulance services for individuals with or without emergency rescue (Total),vatable
 TOTAL_642020,Individual's transportation by airplane and vehicles (Total),vatable
 TOTAL_642030,Memberships for emergency transport services (Total),vatable
@@ -690,8 +690,8 @@ TOTAL_732905,"Other TNVS fare (e.g., motorcycle, tricycle) (Total)",exempt
 TOTAL_732909,"Other road passenger transport fare (e.g., habal-habal, etc.) (Total)",exempt
 TOTAL_733100,Domestic air fare (Total),vatable
 TOTAL_733200,International air fare (Total),exempt
-TOTAL_734000,"Passenger transport by sea and inland waterway (e.g., fare for ship, boat, ferry, etc.) (Total)",exempt
-TOTAL_735000,"Combined passenger transport (e.g., bus and RORO, etc.) (Total)",exempt
+TOTAL_734000,"Passenger transport by sea and inland waterway (e.g., fare for ship, boat, ferry, etc.) (Total)",vatable
+TOTAL_735000,"Combined passenger transport (e.g., bus and RORO, etc.) (Total)",vatable
 TOTAL_736000,"Other purchased transport services (e.g., porters, travel agent's commissions, left-luggage, etc.) (Total)",vatable
 TOTAL_741100,"Letter handling services (e.g., Payment for new postage stamps and other pre-franked postal matte, Courier services for letters, etc.) (Total)",vatable
 TOTAL_741200,Courier and parcel delivery services (Total),vatable
@@ -965,8 +965,8 @@ TOTAL_1512000,Alcoholic beverages (Total),vatable
 TOTAL_1513000,"Service of priests, cooks, waiters, etc. (Total)",vatable
 TOTAL_1514000,"Rental of space, facilities and equipment (Total)",vatable
 TOTAL_1516000,"Others (balloons, flowers, candles, paints, firecrackers, etc.) (Total)",vatable
-TOTAL_1701000,Purchase/amortization of real property (Total),vatable
-TOTAL_1703000,"Installments for appliances, etc. bought before 2023 (Total)",vatable
-TOTAL_1704000,Installments for personal transport bought before 2023 (Total),vatable
-TOTAL_1707000,Major repair of the house (Total),vatable
-TOTAL_1708000,Construction of new house (Total),vatable
+,,
+,,
+,,
+,,
+,,

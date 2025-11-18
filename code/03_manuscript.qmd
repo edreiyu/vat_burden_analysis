@@ -18,9 +18,13 @@ Understanding its incidence is crucial for policymakers to determine who are cur
 
 The analysis aims to answer the following questions: - How do households allocate their budgets across different consumption categories? How much is allocated to savings/investments? (optional) - Which types of goods/services are exempt from VAT according to the Tax Code? - What is the distribution of VAT burden across different income groups considering both 1) household consumption patterns, and 2) exemptions based on law? - What is the impact of reducing the VAT rate on various socioeconomic groups?
 
+A box is also provided specifically on certain exempt items **(ie., food items, health expenditures, education, and purchases of senior citizens)**. Who are benefitting from these exemptions? How much revenues is the government foregoing due to these exemptions? Is there room to repeal this exemptions to improve the VAT system's efficiency?
+
 ## Data and Methodology
 
-The analysis utilizes the 2023 Family Income and Expenditure Survey (FIES) conducted by the Philippine Statistics Authority (PSA). The FIES provides comprehensive data on household income, expenditure patterns, and demographic characteristics. A review of the VAT provisions in the Philippine Tax Code was conducted to identify which goods and services in the FIES are subject to VAT and which are exempt. The exemptions list include basic food items, educational services, healthcare services, public transportation, among others.
+The analysis uses expenditure data from the 2023 Family Income and Expenditure Survey (FIES) conducted by the Philippine Statistics Authority (PSA). The FIES provides comprehensive data on the annual household spending on 900 expenditure items including food, beverages, housing, health, clothing, durable goods, etc. The data also include income and demographic characteristics of households.  
+
+A review of the VAT provisions in the Philippine Tax Code was conducted to identify which goods and services in the FIES are subject to VAT and are exempt. The exemptions list include basic food items, educational services, healthcare services, public transportation, among others.
 
 ## VAT Exemption list
 
