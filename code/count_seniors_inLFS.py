@@ -51,3 +51,27 @@ df_senior_counts = (
 
 # Export df into parquet for mergin with the main FIES df
 df_senior_counts.write_parquet('senior_counts.parquet')
+
+# Profiling the employment and income status of senior citizens
+
+# pull-in the summary data to get the per capita income variable
+hh_summary_subset = pl.read_csv('FIES-LFS PUF 2023 Household Summary.CSV').select(['SEQ_NO', 'NPCINC', 'FSIZE', 'TOINC', 'TOTEX', 'RFACT', 'MEM_RFACT'])
+
+# join hh_members and hh_summary_subset
+hh_members_summary = hh_members.join(hh_summary_subset, on='SEQ_NO', how='left')
+
+# group seniors by ??
+seniors_by_PCINC = (
+    hh_members_summary
+    .filter(pl.col('LC05_AGE') >= 60)
+    .group_by('NEWEMPSTAT') # 'NPCINC'
+    .agg(
+        pl.sum('PWGTPRV').alias('PWGTPRV_sum'),
+        pl.count().alias('count')
+    )
+)
+
+# Total number of SCs is around 10.81 million in 2023
+# EMPLOYED	1
+# UNEMPLOYED	2
+# NOT IN THE LABOR FORCE	3
