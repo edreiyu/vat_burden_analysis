@@ -72,10 +72,18 @@ def get_expenditure_items(df, major_code):
 print("Loading data...")
 exempt_list = pl.read_csv('clean_data/vat_exempt_list.csv')
 fies_raw = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED.parquet')
+senior_counts = (
+    pl.read_parquet('clean_data/senior_counts.parquet')
+    .select([
+        pl.exclude(['W_REGN', 'W_PROV'])
+    ])
+)
+# Merge senior counts into FIES data
+fies_raw = fies_raw.join(senior_counts, on='SEQ_NO', how='left')
 
 print(f"FIES data shape: {fies_raw.shape}")
 print(f"Exempt list shape: {exempt_list.shape}")
-
+print(f"senior counts list shape: {senior_counts.shape}")
 
 # =============================================================================
 # CLEAN AND STANDARDIZE ITEM CODES
@@ -83,7 +91,7 @@ print(f"Exempt list shape: {exempt_list.shape}")
 
 print("\nCleaning item codes...")
 
-# Clean exempt_list item codes
+# Clean exempt_list item codes - Add leading zero for 6-digit item codes; then get first 2 digits to classify major categories
 exempt_list = exempt_list.with_columns([
     pl.col('item_code')
       .cast(pl.Utf8)
@@ -139,20 +147,20 @@ print("\nCreating major expenditure categories...")
 
 category_codes = {
     'food': '01',
-    'alcohol_cigs': '02',
+    'alcohol_&cigarettes': '02',
     'clothing': '03',
-    'water_elec': '04',
-    'furnishings': '05',
+    'housing_&utilities': '04',
+    'furnishings_&maintenance': '05',
     'health': '06',
     'transport': '07',
-    'ict': '08',
+    'ict_&equipments': '08',
     'recreation': '09',
     'education': '10',
-    'resto_accom': '11',
-    'insurance_financial': '12',
+    'resto_&accomodation': '11',
+    'insurance_&financial': '12',
     'personal_care': '13',
-    'family_occasions': '15',
-    'other_disbursements': '17'
+    'family_occasions': '15'
+    #'other_disbursements': '17'
 }
 
 expenditure_categories = {
@@ -365,6 +373,7 @@ tax_share.write_csv('outputs/tax_share.csv')
 tax_share_bydecile.write_csv('outputs/tax_share_bydecile.csv')
 budget_share.write_csv('outputs/budget_share.csv')
 main_summary.write_csv('outputs/main_summary.csv')
+
 exempt_by_category.write_csv('outputs/exempt_by_category.csv')
 vat_paid_and_foregone.write_csv('outputs/vat_paid_and_foregone.csv')
 
