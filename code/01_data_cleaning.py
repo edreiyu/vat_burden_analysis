@@ -283,18 +283,18 @@ main_summary = (
         pl.sum('total_expenditures').alias('total_expenditures'),
         pl.sum('estimated_vat_perHH').alias('total_vat_paid'),
         pl.sum('estimated_vat_foregone').alias('total_vat_foregone'),
+        # Mean VAT ETR by decile
+        pl.mean('vat_paid_to_total_expenditures').alias('avg_vat_etr'),
+        pl.mean('vat_foregone_to_total_expenditures').alias('avg_vat_foregone_etr')
 
         # Weighted sum for weighted mean calculation
-        (pl.col('vat_paid_to_total_expenditures') * pl.col('RFACT')).sum().alias('weighted_sum_vat_etr'),
-        (pl.col('vat_foregone_to_total_expenditures') * pl.col('RFACT')).sum().alias('weighted_sum_foregone_etr')
+        # (pl.col('vat_paid_to_total_expenditures') * pl.col('RFACT')).sum().alias('weighted_sum_vat_etr'),
+        # (pl.col('vat_foregone_to_total_expenditures') * pl.col('RFACT')).sum().alias('weighted_sum_foregone_etr')
     ])
     .with_columns([
         # Population-level effective tax rates
-        (pl.col('total_vat_paid') / pl.col('total_expenditures') * 100).alias('population_vat_etr'),
-        (pl.col('total_vat_foregone') / pl.col('total_expenditures') * 100).alias('population_vat_foregone_etr'),
-        # Weighted mean of household-level rates
-        (pl.col('weighted_sum_vat_etr') / pl.col('number_households')).alias('avg_vat_etr'),
-        (pl.col('weighted_sum_foregone_etr') / pl.col('number_households')).alias('avg_vat_foregone_etr')
+        (pl.col('total_vat_paid') / pl.col('total_expenditures') * 100).alias('sum_vat_etr'),
+        (pl.col('total_vat_foregone') / pl.col('total_expenditures') * 100).alias('sum_vat_foregone_etr')
     ])
     .sort('NPCINC')
 )
@@ -361,6 +361,28 @@ vat_paid_and_foregone = (
 
 print(vat_paid_and_foregone)
 
+# =============================================================================
+# ADD ANALYSIS FOR HH WITH SENIOR CITIZENS
+# =============================================================================
+
+print("\nCalculating VAT burden for households with senior citizens...")
+
+senior_summary = (
+    fies_raw_vat_etr
+    .filter(pl.col('senior_count') > 0)
+    .group_by('NPCINC')
+    .agg([
+        pl.sum('RFACT').alias('number_households_with_seniors'),
+        pl.sum('senior_count').alias('number_seniors'),
+        # (pl.col('RFACT') * pl.col('senior_count')).alias('weighted_senior_count'),
+        pl.sum('total_vatable_expenditures').alias('total_vatable_expenditures')
+    ])
+)
+        # (pl.col('total_exempt_expenditures') * VAT_RATE).alias('estimated_vat_foregone')
+
+print(senior_summary)
+senior_summary.write_csv('outputs/senior_summary.csv')
+
 
 # =============================================================================
 # EXPORT RESULTS
@@ -373,7 +395,6 @@ tax_share.write_csv('outputs/tax_share.csv')
 tax_share_bydecile.write_csv('outputs/tax_share_bydecile.csv')
 budget_share.write_csv('outputs/budget_share.csv')
 main_summary.write_csv('outputs/main_summary.csv')
-
 exempt_by_category.write_csv('outputs/exempt_by_category.csv')
 vat_paid_and_foregone.write_csv('outputs/vat_paid_and_foregone.csv')
 
