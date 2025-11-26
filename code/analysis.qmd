@@ -1,0 +1,75 @@
+
+
+
+
+
+Import packages
+```{r}
+# install.packages("tidyverse")
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("scales")
+
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(scales)
+```
+
+Load data
+```{r}
+df <- read.csv("outputs/tax_share_bydecile.csv")
+
+df_long <- df %>%
+  pivot_longer(
+    cols = c(vatable_share_exp, exempt_share_exp),
+    names_to = "type",
+    values_to = "share"
+  ) %>%
+  mutate(
+    # type = factor(type, levels = c("vatable_share_exp", "exempt_share_exp")),
+    share_prop = share / 100,   # Convert 56.12 → 0.5612
+    NPCINC = factor(NPCINC, levels = sort(unique(NPCINC), decreasing = TRUE)),
+    label = paste0(round(share, 1), "%")   # keep label in percent
+  )
+
+df_long <- df_long %>%
+  mutate(
+    type = factor(type, levels = c("vatable_share_exp", "exempt_share_exp"))
+  )
+
+vatable_sh <- ggplot(df_long, aes(x = NPCINC, y = share, fill = type)) +
+  geom_bar(stat = "identity", position = "fill") +
+  geom_text(
+    aes(label = label),
+    position = position_fill(vjust = 0.5),
+    color = "black",
+    size = 6
+  ) +
+    coord_flip() +
+    scale_y_continuous(labels = scales::percent_format()) +
+    scale_fill_manual(
+    values = c("vatable_share_exp" = "lightblue", "exempt_share_exp" = "orange"),
+    labels = c("vatable_share_exp" = "Vatable", "exempt_share_exp" = "Exempt"),
+    name = "",
+    guide = guide_legend(reverse = TRUE)   # <-- FIX
+  ) +
+    labs(
+    x = "Per Capita Income Decile",
+    y = "Share of Total Expenditure"
+  ) +
+    theme_minimal(base_size = 14) +
+    theme(legend.position = "top")
+
+ggsave(
+  filename = "outputs/vatable_sh.png",
+  plot = vatable_sh,
+  width = 10,
+  height = 6,
+  units = "in",
+  dpi = 500
+)
+
+

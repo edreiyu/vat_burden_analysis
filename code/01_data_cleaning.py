@@ -370,18 +370,29 @@ print("\nCalculating VAT burden for households with senior citizens...")
 senior_summary = (
     fies_raw_vat_etr
     .filter(pl.col('senior_count') > 0)
+    .with_columns([
+        (pl.col('RFACT') * pl.col('senior_count')).alias('weighted_number_seniors'),
+        ((pl.col('total_vatable_expenditures') / pl.col('TOTEX') * 100).alias('ratio_vatable_to_total_expenditures'))
+])
     .group_by('NPCINC')
     .agg([
         pl.sum('RFACT').alias('number_households_with_seniors'),
         pl.sum('senior_count').alias('number_seniors'),
-        # (pl.col('RFACT') * pl.col('senior_count')).alias('weighted_senior_count'),
-        pl.sum('total_vatable_expenditures').alias('total_vatable_expenditures')
+        pl.sum('weighted_number_seniors').alias('weighted_number_seniors'),
+        pl.sum('total_vatable_expenditures').alias('total_vatable_expenditures'),
+        pl.sum('total_exempt_expenditures').alias('total_exempt_expenditures'),
+        pl.sum('total_expenditures').alias('total_expenditures'),
+        pl.sum('estimated_vat_perHH').alias('total_vat_paid'),
+        pl.sum('estimated_vat_foregone').alias('total_vat_foregone'),
+        # Mean VAT ETR by decile
+        pl.mean('vat_paid_to_total_expenditures').alias('avg_vat_etr'),
+        pl.mean('vat_foregone_to_total_expenditures').alias('avg_vat_foregone_etr'),
+        pl.mean('ratio_vatable_to_total_expenditures').alias('avg_vat_to_total')
     ])
+    .sort('NPCINC')
 )
-        # (pl.col('total_exempt_expenditures') * VAT_RATE).alias('estimated_vat_foregone')
 
 print(senior_summary)
-senior_summary.write_csv('outputs/senior_summary.csv')
 
 
 # =============================================================================
@@ -397,6 +408,7 @@ budget_share.write_csv('outputs/budget_share.csv')
 main_summary.write_csv('outputs/main_summary.csv')
 exempt_by_category.write_csv('outputs/exempt_by_category.csv')
 vat_paid_and_foregone.write_csv('outputs/vat_paid_and_foregone.csv')
+senior_summary.write_csv('outputs/senior_summary.csv')
 
 # Export processed household-level data
 fies_raw_vat_etr.write_parquet('clean_data/fies_raw_vat_etr.parquet')
