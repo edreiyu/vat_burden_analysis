@@ -17,8 +17,12 @@ pl.Config.set_tbl_width_chars(1000)
 # chunk_size = 50000
 # chunks = pd.read_csv('file.csv', chunksize=chunk_size)
 
+# ==============================================================================
+# STEP 1: Preliminary data cleaning / formatting
+# ==============================================================================
+
 # Set working directory
-os.chdir('/Users/edreiyu/Work-Offline/')
+os.chdir('/Users/edreiyu/Documents/Work-Offline/')
 print(os.getcwd()) #get current working directory
 
 # Import FIES volume 2 data
@@ -48,11 +52,17 @@ if hh_vol2_totals_complete['CASH_ABROAD'].isnull().any() or hh_vol2_totals_compl
     print("There are missing values in the cash columns.")
 
 # Save the final dataframe to a new CSV file
-hh_vol2_totals_complete.to_csv('FIES2023_VOL2_COMPLETE.csv', index=False)
+# hh_vol2_totals_complete.to_csv('FIES2023_VOL2_COMPLETE.csv', index=False)
 
 
+# ==============================================================================
+# STEP 2: Convert annual FIES into monthly by dividing by 12
+# ==============================================================================
 
-## Convert annual FIES into monthly by dividing by 12
+# Set working directory for this specific csv file
+os.chdir('/Users/edreiyu/Documents/Projects/vat_burden_analysis/')
+
+# Read merged csv file
 fies_raw = pl.read_csv('clean_data/FIES2023_VOL2_COMPLETE.csv')
 
 # Define non-amount columns
@@ -93,9 +103,44 @@ fies_monthly = fies_raw.with_columns([
 ])
 
 # Save to CSV
-fies_monthly.write_csv('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.csv')
+# fies_monthly.write_csv('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.csv')
+
+# SAVE AS .PARQUET FOR FASTER LOADING / PRCESSING
+fies_monthly.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.parquet')
 
 
+# ==============================================================================
+# STEP 3: I need differentiate the column on rentals that are exempt from VAT <=15,000 monthly
+# ==============================================================================
+
+## Read monthly FIES data
+fies_monthly_rent = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.parquet')
+
+# Tag rental values <=15,000 as exempt
+fies_monthly_rent = fies_monthly_rent.with_columns([
+    pl.when(pl.col('TOTAL_411011') <= 15000)
+      .then(pl.lit('EXEMPT'))
+      .otherwise(pl.lit('VATABLE'))
+      .alias('EXEMPT_411011'),
+    
+    pl.when(pl.col('TOTAL_411012') <= 15000)
+      .then(pl.lit('EXEMPT'))
+      .otherwise(pl.lit('VATABLE'))
+      .alias('EXEMPT_411012')
+])
+
+print(fies_monthly_rent[["TOTAL_411011","EXEMPT_411011"]].head(10))
+
+# SAVE AS .PARQUET with additional rent_exempt columns
+fies_monthly_rent.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RENT.parquet')
+
+
+
+
+
+# ==============================================================================
+# STEP 4: Get the population-adjusted expenditures now, instead of converting it later (i.e., after the summary tables)
+# ==============================================================================
 
 # Calculate sum of RFACT column
 rfact_sum = fies_monthly['RFACT'].sum()
