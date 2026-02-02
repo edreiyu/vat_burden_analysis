@@ -1,3 +1,11 @@
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │ Table of Contents                      
+# │   Prelim data cleaning                 
+# │   Convert to monthly                   
+# │   Classify rent into vatable and exempt
+# │   Get population-weighted expenditures by decile                      
+# └───────────────────────────────────────────────────────────────────────────┘
+
 import pandas as pd
 import numpy as np
 import os
@@ -92,21 +100,22 @@ amount_columns = [col for col in all_columns if col not in exclude_columns]
 print(f"Converting {len(amount_columns)} amount columns from annual to monthly...")
 print(f"Keeping {len(exclude_columns)} identifier/categorical columns unchanged")
 
-# Show sample of columns being converted
-print(f"\nSample amount columns being converted:")
-for col in amount_columns[:10]:
-    print(f"  - {col}")
-
 # Convert to monthly amounts
 fies_monthly = fies_raw.with_columns([
     (pl.col(col) / 12).alias(col) for col in amount_columns
 ])
+
+# Show sample of columns being converted
+print(f"\nSample amount columns being converted:")
+for col in amount_columns[:10]:
+    print(f"  - {col}")
 
 # Save to CSV
 # fies_monthly.write_csv('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.csv')
 
 # SAVE AS .PARQUET FOR FASTER LOADING / PRCESSING
 fies_monthly.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.parquet')
+
 
 
 # ==============================================================================
@@ -118,23 +127,32 @@ fies_monthly_rent = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.p
 
 # Tag rental values <=15,000 as exempt
 fies_monthly_rent = fies_monthly_rent.with_columns([
+    # Exempt amounts (≤ 15,000)
     pl.when(pl.col('TOTAL_411011') <= 15000)
-      .then(pl.lit('EXEMPT'))
-      .otherwise(pl.lit('VATABLE'))
-      .alias('EXEMPT_411011'),
+      .then(pl.col('TOTAL_411011'))
+      .otherwise(0)
+      .alias('TOTAL_0411011E'),
     
-    pl.when(pl.col('TOTAL_411012') <= 15000)
-      .then(pl.lit('EXEMPT'))
-      .otherwise(pl.lit('VATABLE'))
-      .alias('EXEMPT_411012')
-])
+    # Vatable amounts (> 15,000)
+    pl.when(pl.col('TOTAL_411011') > 15000)
+      .then(pl.col('TOTAL_411011'))
+      .otherwise(0)
+      .alias('TOTAL_0411011V')
 
-print(fies_monthly_rent[["TOTAL_411011","EXEMPT_411011"]].head(10))
+    ]).with_columns([
+    pl.when(pl.col('TOTAL_411012') <= 15000)
+    .then(pl.col('TOTAL_411012'))
+    .otherwise(0)
+    .alias('TOTAL_0411012E'),
+    
+    pl.when(pl.col('TOTAL_411012') > 15000)
+    .then(pl.col('TOTAL_411012'))
+    .otherwise(0)
+    .alias('TOTAL_0411012V')
+    ])
 
 # SAVE AS .PARQUET with additional rent_exempt columns
 fies_monthly_rent.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RENT.parquet')
-
-
 
 
 
@@ -142,23 +160,36 @@ fies_monthly_rent.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RENT.
 # STEP 4: Get the population-adjusted expenditures now, instead of converting it later (i.e., after the summary tables)
 # ==============================================================================
 
+## Read monthly FIES data (with adjustted rent classification)
+fies_monthly_rent = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RENT.parquet')
+
 # Calculate sum of RFACT column
-rfact_sum = fies_monthly['RFACT'].sum()
-mem_rfact_sum = fies_monthly['MEM_RFACT'].sum()
+rfact_sum = fies_monthly_rent['RFACT'].sum()
+mem_rfact_sum = fies_monthly_rent['MEM_RFACT'].sum()
 print(f"\nSum of RFACT column (number of households): {rfact_sum:.2f}")
 print(f"\nSum of MEM_RFACT column (number of population): {mem_rfact_sum:.2f}")
 
 # Calculate sum of RFACT column by NPINC
 rfact_sum_by_npinc = (
-    fies_monthly
+    fies_monthly_rent
     .group_by('NPCINC')
     .agg(pl.sum('RFACT').alias('RFACT_sum'))
     .sort('NPCINC')
 )
 
+# Define non-amount columns
+exclude_columns = [
+    'W_REGN', 'W_PROV', 'SEQ_NO', 'RPROV', 'FSIZE', 'RPSU', 'RFACT', 
+    'MEM_RFACT', 'URB', 'NPCINC', 'RPCINC', 'PRPCINC', 'PPCINC', 
+    'RPCINC_NIR', 'W_REGN_NIR'
+]
 
-## Multiply the monthly amounts  by RFACT to get household population totals
-fies_monthly_x_rfact = fies_monthly.with_columns([
+# Get amount columns
+all_columns = fies_monthly_rent.columns
+amount_columns = [col for col in all_columns if col not in exclude_columns]
+
+## Multiply the monthly amounts by RFACT to get household population totals
+fies_monthly_x_rfact = fies_monthly_rent.with_columns([
     (pl.col(col) * pl.col('RFACT')).alias(col) for col in amount_columns
 ])
 
@@ -172,13 +203,43 @@ decile_analysis = (
 print(decile_analysis)
 
 # Save to CSV
-fies_monthly_x_rfact.write_csv('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED.csv')
+# fies_monthly_x_rfact.write_csv('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED.csv')
 # OR better - use Parquet (faster, smaller, preserves types)
-fies_monthly_x_rfact.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED.parquet')
+fies_monthly_x_rfact.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED_RENT.parquet')
+
+
+# =============================================== END ===============================================
+
+
+
+
+
+# ==============================================================================
+# Trash codes
+# ==============================================================================
+
+count_zero_011 = (fies_monthly_rent["TOTAL_411011"] <= 0).sum()
+print(count_zero_011)
+
+count_zero_012 = (fies_monthly_rent["TOTAL_411012"] <= 0).sum()
+print(count_zero_012)
+
+
+# Tag rental values <=15,000 as exempt
+# fies_monthly_rent = fies_monthly_rent.with_columns([
+#     pl.when(pl.col('TOTAL_411011') <= 15000)
+#       .then(pl.lit('EXEMPT'))
+#       .otherwise(pl.lit('VATABLE'))
+#       .alias('EXEMPT_411011'),
+    
+#     pl.when(pl.col('TOTAL_411012') <= 15000)
+#       .then(pl.lit('EXEMPT'))
+#       .otherwise(pl.lit('VATABLE'))
+#       .alias('EXEMPT_411012')
+# ])
 
 # Works with Polars: pl.read_parquet('file.parquet')
-xx = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED.parquet')
-
+# xx = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED.parquet')
 
 # Calculate sum of TOREC column for NPCINC == 1
 torec_sum_npinc1 = fies_monthly_x_rfact.filter(pl.col('NPCINC') == 1)['TOREC'].sum()
