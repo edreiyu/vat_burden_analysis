@@ -163,6 +163,10 @@ fies_monthly_rent.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RENT.
 ## Read monthly FIES data (with adjustted rent classification)
 fies_monthly_rent = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RENT.parquet')
 
+# Drop the four columns right after reading, BEFORE computing amount_columns ---
+cols_to_drop = ["TOTAL_421000", "TOTAL_422000", "TOTAL_411011", "TOTAL_411012"]
+fies_monthly_rent = fies_monthly_rent.drop(cols_to_drop)
+
 # Calculate sum of RFACT column
 rfact_sum = fies_monthly_rent['RFACT'].sum()
 mem_rfact_sum = fies_monthly_rent['MEM_RFACT'].sum()

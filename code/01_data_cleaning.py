@@ -71,7 +71,7 @@ def get_expenditure_items(df, major_code):
 
 print("Loading data...")
 exempt_list = pl.read_csv('clean_data/vat_exempt_list.csv')
-fies_raw = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED.parquet')
+fies_raw = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED_RENT.parquet')
 senior_counts = (
     pl.read_parquet('clean_data/senior_counts.parquet')
     .select([
@@ -187,7 +187,7 @@ tax_share = (
     .group_by('NPCINC').agg([
         pl.sum('RFACT').alias('number_households'),
         pl.sum('TOINC').alias('total_income'),
-        pl.sum('TOTEX').alias('total_HH_expenditures'),
+        pl.sum('TOTEX').alias('total_FIES_expenditures'),
         pl.sum('vatable_spending').alias('vatable_expenditures'),
         pl.sum('exempt_spending').alias('exempt_expenditures'),
         pl.sum('total_spending').alias('total_expenditures')
@@ -198,8 +198,8 @@ tax_share = (
         (pl.col('exempt_expenditures') / pl.col('total_expenditures') * 100).alias('exempt_share_exp'),
         (pl.col('vatable_expenditures') / pl.col('total_income') * 100).alias('vatable_share_income'),
         (pl.col('exempt_expenditures') / pl.col('total_income') * 100).alias('exempt_share_income'),
-        (pl.col('vatable_expenditures') / pl.col('total_HH_expenditures') * 100).alias('vatable_share_HHexp'),
-        (pl.col('exempt_expenditures') / pl.col('total_HH_expenditures') * 100).alias('exempt_share_HHexp')
+        (pl.col('vatable_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('vatable_share_HHexp'),
+        (pl.col('exempt_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('exempt_share_HHexp')
     ])
 )
 
@@ -283,6 +283,7 @@ main_summary = (
         pl.sum('total_expenditures').alias('total_expenditures'),
         pl.sum('estimated_vat_perHH').alias('total_vat_paid'),
         pl.sum('estimated_vat_foregone').alias('total_vat_foregone'),
+        pl.sum('TOTEX').alias('total_FIES_expenditures'),
         # Mean VAT ETR by decile
         pl.mean('vat_paid_to_total_expenditures').alias('avg_vat_etr'),
         pl.mean('vat_foregone_to_total_expenditures').alias('avg_vat_foregone_etr')
@@ -400,15 +401,24 @@ print(senior_summary)
 # =============================================================================
 
 print("\nExporting results...")
+# Export to separate CSVs
+tax_share.write_csv('outputs/feb3/tax_share.csv')
+tax_share_bydecile.write_csv('outputs/feb3/tax_share_bydecile.csv')
+budget_share.write_csv('outputs/feb3/budget_share.csv')
+main_summary.write_csv('outputs/feb3/main_summary.csv')
+exempt_by_category.write_csv('outputs/feb3/exempt_by_category.csv')
+vat_paid_and_foregone.write_csv('outputs/feb3/vat_paid_and_foregone.csv')
+senior_summary.write_csv('outputs/feb3/senior_summary.csv')
 
-# Export main outputs
-tax_share.write_csv('outputs/tax_share.csv')
-tax_share_bydecile.write_csv('outputs/tax_share_bydecile.csv')
-budget_share.write_csv('outputs/budget_share.csv')
-main_summary.write_csv('outputs/main_summary.csv')
-exempt_by_category.write_csv('outputs/exempt_by_category.csv')
-vat_paid_and_foregone.write_csv('outputs/vat_paid_and_foregone.csv')
-senior_summary.write_csv('outputs/senior_summary.csv')
+# Export into one excel with separate sheets
+with pd.ExcelWriter('outputs/vat_outputs.xlsx', engine='openpyxl') as writer:
+    tax_share.to_pandas().to_excel(writer, sheet_name='tax_share', index=False)
+    tax_share_bydecile.to_pandas().to_excel(writer, sheet_name='tax_share_bydecile', index=False)
+    budget_share.to_pandas().to_excel(writer, sheet_name='budget_share', index=False)
+    main_summary.to_pandas().to_excel(writer, sheet_name='main_summary', index=False)
+    exempt_by_category.to_pandas().to_excel(writer, sheet_name='exempt_by_category', index=False)
+    vat_paid_and_foregone.to_pandas().to_excel(writer, sheet_name='vat_paid_and_foregone', index=False)
+    senior_summary.to_pandas().to_excel(writer, sheet_name='senior_summary', index=False)
 
 # Export processed household-level data
 fies_raw_vat_etr.write_parquet('clean_data/fies_raw_vat_etr.parquet')

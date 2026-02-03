@@ -504,14 +504,14 @@ TOTAL_321323,Children's sports shoes (Total),vatable
 TOTAL_321329,"Other footwear for children, n.e.c. __________ (Total)",vatable
 TOTAL_321330,"Parts of footwear for infants and children (e.g. heels, soles, shoelaces, gaiters, etc.) _____________ (Total)",vatable
 TOTAL_322000,"Cleaning, repair, dying/coloring, and rental of footwear (Total)",vatable
-TOTAL_411011,Rentals actually paid by tenants or subtenants occupying unfurnished premises as their main residence (Total),exempt
-TOTAL_411012,Rentals actually paid by tenants or subtenants occupying furnished premises as their main residence (Total),exempt
+TOTAL_0411011E,Exempt Rentals actually paid by tenants or subtenants occupying unfurnished premises,exempt
+TOTAL_0411011V,Vatable Rentals actually paid by tenants or subtenants occupying unfurnished premises,vatable
+TOTAL_0411012E,Exempt Rentals actually paid by tenants or subtenants occupying furnished premises,exempt
+TOTAL_0411012V,Vatable Rentals actually paid by tenants or subtenants occupying furnished premises,vatable
 TOTAL_411020,Payments by households occupying a room in a hotel or boarding house as their main residence. (Total),exempt
 TOTAL_411090,"Other actual rentals paid by tenants for main residence, n.e.c. (Total)",exempt
 TOTAL_412100,Actual rentals paid by tenants for secondary residences (Total),exempt
 TOTAL_412200,"Garage rentals and other rentals paid by tenants (e.g. parking lot in connection with the dwelling as main residence and other garage rentals, n.e.c.) (Total)",exempt
-TOTAL_421000,Imputed rentals of owner-occupiers for main residence (Own or owner-like possession) (Total),exempt
-TOTAL_422000,"Other imputed rentals (e.g. Imputed rentals for secondary residences, garage in connection with the dwelling, and storage units) (Total)",exempt
 TOTAL_431111,Paints and varnishes (Total),vatable
 TOTAL_431112,"Wallpaper, wall paper pastes and fabric wall covering (Total)",vatable
 TOTAL_431113,Plaster (Total),vatable
