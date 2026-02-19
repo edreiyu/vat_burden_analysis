@@ -271,10 +271,7 @@ plt.text(x[-1], y2[-1] - 0.7, f"{y2[-1]:.1f}%", color="black", fontsize=11)
 plt.tight_layout()
 plt.show()
 
-# Optional: save
 # fig.savefig("vat_burdens_two_panels.png", dpi=300, bbox_inches="tight")
-
-
 
 # Calculate distribution across deciles
 tax_share_bydecile = (
@@ -288,6 +285,141 @@ tax_share_bydecile = (
 )
 
 print(tax_share_bydecile)
+
+# =============================================================================
+# CALCULATE COSTS OF EXEMPTING PRIVATE EDUCATION AND HEALTH BY DECILE
+# =============================================================================
+
+# educ_health = pl.read_csv('clean_data/private_educ_health.csv')
+# educ_health_filtered = fies_raw.filter(pl.col('item_code').is_in(educ_health['item_code']))
+
+private_educ_health = (
+    exempt_list
+    .filter(pl.col('new_item_code').is_in(
+        ["1010121", "1010141", "1010144", "1010161", "1010181", "1010184", "1010221", "1010241", "1010244", "1020121", "1020141", "1020144", "1020321",
+        "1020521", "1030021", "1030041", "1030043", "1040021", "1040041", "1040061", "1040081", "1010123", "1010143", "1010145", "1010163", "1010183", 
+        "1010185", "1010223", "1010243", "1010245", "1020123", "1020143", "1020145", "1020323", "1020523", "0611122", "0611125", "0611126", "0621120",
+        "0621929", "0623220", "0631020", "0632020", "0641010", "0641020"]))
+    .select('new_item_code')
+    .to_series()
+    .to_list()
+)
+
+private_educ = (
+    exempt_list
+    .filter(pl.col('new_item_code').is_in(
+        ["1010121", "1010141", "1010144", "1010161", "1010181", "1010184", "1010221", "1010241", "1010244", "1020121", "1020141", "1020144", "1020321",
+        "1020521", "1030021", "1030041", "1030043", "1040021", "1040041", "1040061", "1040081", "1010123", "1010143", "1010145", "1010163", "1010183", 
+        "1010185", "1010223", "1010243", "1010245", "1020123", "1020143", "1020145", "1020323", "1020523"]))
+    .select('new_item_code')
+    .to_series()
+    .to_list()
+)
+
+medicines = (
+    exempt_list
+    .filter(pl.col('new_item_code').is_in(
+        ["0611122", "0611125", "0611126"]))
+    .select('new_item_code')
+    .to_series()
+    .to_list()
+)
+
+private_health = (
+    exempt_list
+    .filter(pl.col('new_item_code').is_in(
+        ["0621120", "0621929", "0623220", "0631020", "0632020", "0641010", "0641020"]))
+    .select('new_item_code')
+    .to_series()
+    .to_list()
+)
+
+exempt_educ_health = (
+    fies_raw
+    .with_columns([
+        pl.sum_horizontal(vatable_items).alias('vatable_spending'),
+        pl.sum_horizontal(exempt_items).alias('exempt_spending'),
+        pl.sum_horizontal(private_educ).alias('private_educ_spending'),
+        pl.sum_horizontal(medicines).alias('medicines_spending'),
+        pl.sum_horizontal(private_health).alias('private_health_spending')
+    ])
+    .with_columns((pl.col('vatable_spending') + pl.col('exempt_spending')).alias('total_spending'))    
+    .with_columns((pl.col('private_educ_spending') + pl.col('medicines_spending') + pl.col('private_health_spending')).alias('total_educ_health_spending'))
+    .group_by('NPCINC').agg([
+        pl.sum('RFACT').alias('number_households'),
+        pl.sum('TOINC').alias('total_income'),
+        pl.sum('TOTEX').alias('total_FIES_expenditures'),
+        pl.sum('vatable_spending').alias('vatable_expenditures'),
+        pl.sum('exempt_spending').alias('exempt_expenditures'),
+        pl.sum('total_spending').alias('total_expenditures'),
+        pl.sum('private_educ_spending').alias('private_educ_expenditures'),
+        pl.sum('medicines_spending').alias('medicines_expenditures'),
+        pl.sum('private_health_spending').alias('private_health_expenditures'),
+        pl.sum('total_educ_health_spending').alias('total_educ_health_expenditures')
+    ])
+    .sort('NPCINC')
+    .with_columns([
+        (pl.col('private_educ_expenditures') / pl.col('total_expenditures') * 100).alias('private_educ_share_exp'),
+        (pl.col('medicines_expenditures') / pl.col('total_expenditures') * 100).alias('medicines_share_exp'),
+        (pl.col('private_health_expenditures') / pl.col('total_expenditures') * 100).alias('private_health_share_exp'),
+        (pl.col('total_educ_health_expenditures') / pl.col('total_expenditures') * 100).alias('total_educ_health_share_exp'),
+       
+        (pl.col('private_educ_expenditures') / pl.col('total_income') * 100).alias('private_educ_share_income'),
+        (pl.col('medicines_expenditures') / pl.col('total_income') * 100).alias('medicines_share_income'),
+        (pl.col('private_health_expenditures') / pl.col('total_income') * 100).alias('private_health_share_income'),
+        (pl.col('total_educ_health_expenditures') / pl.col('total_income') * 100).alias('total_educ_health_share_income'),
+
+
+        (pl.col('private_educ_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('private_educ_share_HHexp'),
+        (pl.col('medicines_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('medicines_share_HHexp'),
+        (pl.col('private_health_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('private_health_share_HHexp'),
+        (pl.col('total_educ_health_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('total_educ_health_share_HHexp'),
+
+        ])
+    .with_columns([
+        # Get the estimated VAT paid
+        (pl.col('private_educ_expenditures') * VAT_RATE).alias('vat_private_educ'),
+        (pl.col('medicines_expenditures') * VAT_RATE).alias('vat_medicines'),
+        (pl.col('private_health_expenditures') * VAT_RATE).alias('vat_private_health'),
+        (pl.col('total_educ_health_expenditures') * VAT_RATE).alias('vat_total_educ_health'),
+        ])
+)
+
+exempt_educ_health.write_csv('outputs/feb3/exempt_educ_health.csv')
+
+
+# # Clean educ_health item codes - Add leading zero for 6-digit item codes; then get first 2 digits to classify major categories
+# educ_health = educ_health.with_columns([
+#     pl.col('item_code')
+#       .cast(pl.Utf8)
+#       .map_elements(clean_item_code, return_dtype=pl.Utf8)
+#       .alias('new_item_code'),
+
+#     pl.col('item_code')
+#       .cast(pl.Utf8)
+#       .map_elements(clean_item_code, return_dtype=pl.Utf8)
+#       .map_elements(extract_major_code, return_dtype=pl.Utf8)
+#       .alias('item_code_major')
+# ])
+
+print("Item codes cleaned and standardized")
+print(educ_health[['item_code_major', 'new_item_code', 'item_code', 'description', 'vatable']].head())
+
+# GROUP EDUCATION AND HEALTH INTO 3 GROUPS - EDUC SERVICES, HEALTH MEDICINES, HEALTH SERVICES
+educ_health = educ_health.with_columns([
+    pl.when(pl.col("item_code_major") == "10")
+      .then(pl.lit("private_educ"))
+      .when(pl.col("new_item_code").is_in(["0611122", "0611125", "0611126"]))
+      .then(pl.lit("medicines"))
+      .when(pl.col("new_item_code").is_in([
+          "0621120", "0621929", "0623220",
+          "0631020", "0632020", "0641010", "0641020"
+      ]))
+      .then(pl.lit("private_healthservices"))
+      .otherwise(pl.lit("OTHER"))
+      .alias("new_category")
+])
+
 
 
 # =============================================================================
