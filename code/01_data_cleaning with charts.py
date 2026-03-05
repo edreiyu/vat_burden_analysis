@@ -473,6 +473,11 @@ fies_raw_vat_etr = (
         ((pl.col('estimated_vat_perHH') / pl.col('total_expenditures')) * 100).alias('vat_paid_to_total_expenditures'),
         ((pl.col('estimated_vat_foregone') / pl.col('total_expenditures')) * 100).alias('vat_foregone_to_total_expenditures')
     ])
+    # Add computed disposable income and expenditure to income ratio
+    .with_columns([
+        ((pl.col('TOINC') / pl.col('TOTEX')).alias('expenditure_to_income_ratio')),
+        ((pl.col('TOINC') - pl.col('income tax1601100')) - pl.col('rpt1601200')).alias('disposable_income'),
+    ])
 )
 
 # Calculate aggregate VAT statistics by decile

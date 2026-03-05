@@ -149,6 +149,12 @@ fies_monthly_rent = fies_monthly_rent.with_columns([
     .then(pl.col('TOTAL_411012'))
     .otherwise(0)
     .alias('TOTAL_0411012V')
+    
+    ]).with_columns([
+    (pl.col('TOTAL_451000') * 0.80).alias('TOTAL_451000V'),
+    (pl.col('TOTAL_451000') * 0.20).alias('TOTAL_451000E'),
+    (pl.col('TOTAL_946000') * 0.50).alias('TOTAL_946000V'),
+    (pl.col('TOTAL_946000') * 0.50).alias('TOTAL_946000E')
     ])
 
 # SAVE AS .PARQUET with additional rent_exempt columns

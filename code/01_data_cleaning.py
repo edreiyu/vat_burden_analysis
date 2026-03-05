@@ -201,6 +201,28 @@ tax_share = (
         (pl.col('vatable_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('vatable_share_HHexp'),
         (pl.col('exempt_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('exempt_share_HHexp')
     ])
+    .with_columns([
+        # Get the estimated VAT paid
+        (pl.col('vatable_expenditures') * VAT_RATE).alias('estimated_vat_perHH'),
+        (pl.col('exempt_expenditures') * VAT_RATE).alias('estimated_vat_foregone'),
+        ])
+    .with_columns([
+        # Get ratio of VAT collection to INCOME, FIES EXPENDITURES, and TOTAL EXPENDITURES
+        (pl.col('estimated_vat_perHH') / pl.col('total_income') * 100)
+        .alias('vat_to_income'),
+        (pl.col('estimated_vat_perHH') / pl.col('total_FIES_expenditures') * 100)
+        .alias('vat_to_FIESexpenditures'),
+        (pl.col('estimated_vat_perHH') / pl.col('total_expenditures') * 100)
+        .alias('vat_to_TOTALexpenditures'),
+
+        # Get ratio of EXEMPT EXPENDITURES to INCOME, FIES EXPENDITURES, and TOTAL EXPENDITURES
+        (pl.col('estimated_vat_foregone') / pl.col('total_income') * 100)
+        .alias('exempt_to_income'),
+        (pl.col('estimated_vat_foregone') / pl.col('total_FIES_expenditures') * 100)
+        .alias('exempt_to_FIESexpenditures'),
+        (pl.col('estimated_vat_foregone') / pl.col('total_expenditures') * 100)
+        .alias('exempt_to_TOTALexpenditures')
+    ])    
 )
 
 print(tax_share)
@@ -269,6 +291,11 @@ fies_raw_vat_etr = (
     .with_columns([
         ((pl.col('estimated_vat_perHH') / pl.col('total_expenditures')) * 100).alias('vat_paid_to_total_expenditures'),
         ((pl.col('estimated_vat_foregone') / pl.col('total_expenditures')) * 100).alias('vat_foregone_to_total_expenditures')
+    ])
+    # Add computed disposable income and expenditure to income ratio
+    .with_columns([
+        ((pl.col('TOINC') / pl.col('TOTEX')).alias('expenditure_to_income_ratio')),
+        ((pl.col('TOINC') - pl.col('1601100')) - pl.col('1601200')).alias('disposable_income')
     ])
 )
 

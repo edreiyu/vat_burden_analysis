@@ -526,7 +526,8 @@ TOTAL_431200,"Security equipment (e.g., smoke detector, security alarms, securit
 TOTAL_432000,"Services for the maintenance, repair and security of the dwelling (e.g. services of plumbers, electricians, guard services, carpenters, locksmith, etc.) (Total)",vatable
 TOTAL_441000,Water supply (Total),exempt
 TOTAL_444000,"Other services relating to the dwelling (e.g., maintenance charges, association fees, etc.) (Total)",exempt
-TOTAL_451000,Electricity (Total),vatable
+TOTAL_451000V,Electricity (Total),vatable
+TOTAL_451000E,Electricity (Total),exempt
 TOTAL_452200,"LPG, butane, propane, etc. (Total)",vatable
 TOTAL_453000,Kerosene (Total),vatable
 TOTAL_454100,"Coal, coal briquettes and peat (Total)",vatable
@@ -628,13 +629,13 @@ TOTAL_621919,"Other public preventive services, n.e.c. (Total)",exempt
 TOTAL_621921,Covid-19 testing services (Total),exempt
 TOTAL_621929,"Other private preventive services, n.e.c. (Total)",exempt
 TOTAL_622110,Public dental preventive services (Total),exempt
-TOTAL_622120,Private dental preventive services (Total),vatable
+TOTAL_622120,Private dental preventive services (Total),exempt
 TOTAL_622910,Other Public dental preventive services (Total),exempt
-TOTAL_622920,Other Private dental preventive services (Total),vatable
+TOTAL_622920,Other Private dental preventive services (Total),exempt
 TOTAL_623111,Online consultation fees of public telehealth services (Total),exempt
 TOTAL_623112,Public curative and rehabilitative services provided in any setting except online consultation (Total),exempt
-TOTAL_623121,Online consultation fees of private telehealth services (Total),vatable
-TOTAL_623122,Private curative and rehabilitative services provided in any setting except online consultation (Total),vatable
+TOTAL_623121,Online consultation fees of private telehealth services (Total),exempt
+TOTAL_623122,Private curative and rehabilitative services provided in any setting except online consultation (Total),exempt
 TOTAL_623210,Public long-term care services (Total),exempt
 TOTAL_623220,Private long-term care services (Total),exempt
 TOTAL_631010,Public inpatient curative and rehabilitative services (Total),exempt
@@ -643,7 +644,7 @@ TOTAL_632010,Public inpatient long-term care services service (Total),exempt
 TOTAL_632020,Private inpatient long-term care services services (Total),exempt
 TOTAL_641010,Services of medical analysis laboratories (urine/blood tests) (Total),exempt
 TOTAL_641020,"Diagnostic imaging services (CT, MRI, sonography, x-ray, etc.) (Total)",exempt
-TOTAL_642010,Ambulance services for individuals with or without emergency rescue (Total),vatable
+TOTAL_642010,Ambulance services for individuals with or without emergency rescue (Total),exempt
 TOTAL_642020,Individual's transportation by airplane and vehicles (Total),vatable
 TOTAL_642030,Memberships for emergency transport services (Total),vatable
 TOTAL_721100,"Tires (e.g., new and used/retreaded tires, inner tubes) (Total)",vatable
@@ -731,8 +732,9 @@ TOTAL_942000,"Hire, maintenance and repair of major durables for recreation (e.g
 TOTAL_943000,"Hire and repair of video game consoles, toys and hobby articles (e.g., rental of game software and subscription to online games, etc.) (Total)",vatable
 TOTAL_944000,"Hire and repair of equipment for sport, camping and open-air recreation (Total)",vatable
 TOTAL_945000,"Veterinary and other services for pets (e.g., pet grooming, pet training, etc.) (Total)",vatable
-TOTAL_946000,"Recreational and sporting services (e.g., amusement park, arcades, water parks and beaches, stadiums, courts, arenas, halls, aerobics, Zumba, admission tickets, etc.) (Total)",vatable
-TOTAL_947000,"Games of chance (e.g., lotteries, bingo, sweepstakes, casino games, online games, etc.) (Total)",vatable
+TOTAL_946000V,"Recreational and sporting services (e.g., amusement park, arcades, water parks and beaches, stadiums, courts, arenas, halls, aerobics, Zumba, admission tickets, etc.) (Total)",vatable
+TOTAL_946000E,"Recreational and sporting services (e.g., amusement park, arcades, water parks and beaches, stadiums, courts, arenas, halls, aerobics, Zumba, admission tickets, etc.) (Total)",exempt
+TOTAL_947000,"Games of chance (e.g., lotteries, bingo, sweepstakes, casino games, online games, etc.) (Total)",exempt
 TOTAL_950000,"Cultural Goods [Audio-visual media (e.g., flash drives, blu-ray discs for reproduction of sound and picture material, audio-visual content purchased online for immediate downloading, etc.)] (Total)",vatable
 TOTAL_961001,"Services provided live (Cinemas, theaters and opera houses) (Total)",vatable
 TOTAL_961002,Services provided live (Concert and music venues) (Total),vatable
