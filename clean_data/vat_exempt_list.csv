@@ -526,8 +526,8 @@ TOTAL_431200,"Security equipment (e.g., smoke detector, security alarms, securit
 TOTAL_432000,"Services for the maintenance, repair and security of the dwelling (e.g. services of plumbers, electricians, guard services, carpenters, locksmith, etc.) (Total)",vatable
 TOTAL_441000,Water supply (Total),exempt
 TOTAL_444000,"Other services relating to the dwelling (e.g., maintenance charges, association fees, etc.) (Total)",exempt
-TOTAL_451000V,Electricity (Total),vatable
-TOTAL_451000E,Electricity (Total),exempt
+TOTAL_0451000V,Electricity (Total),vatable
+TOTAL_0451000E,Electricity (Total),exempt
 TOTAL_452200,"LPG, butane, propane, etc. (Total)",vatable
 TOTAL_453000,Kerosene (Total),vatable
 TOTAL_454100,"Coal, coal briquettes and peat (Total)",vatable
@@ -732,8 +732,8 @@ TOTAL_942000,"Hire, maintenance and repair of major durables for recreation (e.g
 TOTAL_943000,"Hire and repair of video game consoles, toys and hobby articles (e.g., rental of game software and subscription to online games, etc.) (Total)",vatable
 TOTAL_944000,"Hire and repair of equipment for sport, camping and open-air recreation (Total)",vatable
 TOTAL_945000,"Veterinary and other services for pets (e.g., pet grooming, pet training, etc.) (Total)",vatable
-TOTAL_946000V,"Recreational and sporting services (e.g., amusement park, arcades, water parks and beaches, stadiums, courts, arenas, halls, aerobics, Zumba, admission tickets, etc.) (Total)",vatable
-TOTAL_946000E,"Recreational and sporting services (e.g., amusement park, arcades, water parks and beaches, stadiums, courts, arenas, halls, aerobics, Zumba, admission tickets, etc.) (Total)",exempt
+TOTAL_0946000V,"Recreational and sporting services (e.g., amusement park, arcades, water parks and beaches, stadiums, courts, arenas, halls, aerobics, Zumba, admission tickets, etc.) (Total)",vatable
+TOTAL_0946000E,"Recreational and sporting services (e.g., amusement park, arcades, water parks and beaches, stadiums, courts, arenas, halls, aerobics, Zumba, admission tickets, etc.) (Total)",exempt
 TOTAL_947000,"Games of chance (e.g., lotteries, bingo, sweepstakes, casino games, online games, etc.) (Total)",exempt
 TOTAL_950000,"Cultural Goods [Audio-visual media (e.g., flash drives, blu-ray discs for reproduction of sound and picture material, audio-visual content purchased online for immediate downloading, etc.)] (Total)",vatable
 TOTAL_961001,"Services provided live (Cinemas, theaters and opera houses) (Total)",vatable
