@@ -122,11 +122,21 @@ fies_monthly.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.parquet')
 # STEP 3: I need differentiate the column on rentals that are exempt from VAT <=15,000 monthly
 # ==============================================================================
 
-## Read monthly FIES data
-fies_monthly_rent = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.parquet')
+## Read monthly FIES data ***SKIP THIS, STICK TO ANNUAL DATA
+# fies_monthly_rent = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY.parquet')
+
+# READ ANNUAL FIES DATA ***READS CSV FILE INSTEAD
+fies_annual_rent = pl.read_csv('clean_data/FIES2023_VOL2_COMPLETE.csv')
+
+# ADD THE 2 DERIVED COLUMNS
+fies_annual_rent = fies_annual_rent.with_columns([
+    (pl.col('TOTEX') / pl.col('TOINC')).alias('expenditure_to_income_ratio'),
+    (pl.col('TOINC') - pl.col('TOTAL_1601100') - pl.col('TOTAL_1601200')).alias('disposable_income')
+])
+
 
 # Tag rental values <=15,000 as exempt
-fies_monthly_rent = fies_monthly_rent.with_columns([
+fies_annual_rent = fies_annual_rent.with_columns([
     # Exempt amounts (≤ 15,000)
     pl.when(pl.col('TOTAL_411011') <= 15000)
       .then(pl.col('TOTAL_411011'))
@@ -150,15 +160,16 @@ fies_monthly_rent = fies_monthly_rent.with_columns([
     .otherwise(0)
     .alias('TOTAL_0411012V')
     
+    # Get proportions that are VAT-exempt from electricity and recreational activities
     ]).with_columns([
-    (pl.col('TOTAL_451000') * 0.80).alias('TOTAL_451000V'),
-    (pl.col('TOTAL_451000') * 0.20).alias('TOTAL_451000E'),
-    (pl.col('TOTAL_946000') * 0.50).alias('TOTAL_946000V'),
-    (pl.col('TOTAL_946000') * 0.50).alias('TOTAL_946000E')
+    (pl.col('TOTAL_451000') * 0.80).alias('TOTAL_0451000V'), 
+    (pl.col('TOTAL_451000') * 0.20).alias('TOTAL_0451000E'), #assumes 20% of electricity is generated from renewable sources, which is exempt from VAT
+    (pl.col('TOTAL_946000') * 0.50).alias('TOTAL_0946000V'), #assumes 50% of recreational activities subject to percentage tax (cabarets, cockpits, boxing, basketball)
+    (pl.col('TOTAL_946000') * 0.50).alias('TOTAL_0946000E')
     ])
 
 # SAVE AS .PARQUET with additional rent_exempt columns
-fies_monthly_rent.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RENT.parquet')
+fies_annual_rent.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_ANNUAL_RENT.parquet')
 
 
 
@@ -167,21 +178,23 @@ fies_monthly_rent.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RENT.
 # ==============================================================================
 
 ## Read monthly FIES data (with adjustted rent classification)
-fies_monthly_rent = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RENT.parquet')
+fies_annual_rent = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_ANNUAL_RENT.parquet')
 
 # Drop the four columns right after reading, BEFORE computing amount_columns ---
-cols_to_drop = ["TOTAL_421000", "TOTAL_422000", "TOTAL_411011", "TOTAL_411012"]
-fies_monthly_rent = fies_monthly_rent.drop(cols_to_drop)
+cols_to_drop = ["TOTAL_421000", "TOTAL_422000",  # Imputed rent, main residence & secondary/parking   
+                "TOTAL_411011", "TOTAL_411012",  # Rentals paid for unfurnished & furnished
+                "TOTAL_451000", "TOTAL_946000"] # Electricity & recreational/sporting activities
+fies_annual_rent = fies_annual_rent.drop(cols_to_drop)
 
 # Calculate sum of RFACT column
-rfact_sum = fies_monthly_rent['RFACT'].sum()
-mem_rfact_sum = fies_monthly_rent['MEM_RFACT'].sum()
+rfact_sum = fies_annual_rent['RFACT'].sum()
+mem_rfact_sum = fies_annual_rent['MEM_RFACT'].sum()
 print(f"\nSum of RFACT column (number of households): {rfact_sum:.2f}")
 print(f"\nSum of MEM_RFACT column (number of population): {mem_rfact_sum:.2f}")
 
 # Calculate sum of RFACT column by NPINC
 rfact_sum_by_npinc = (
-    fies_monthly_rent
+    fies_annual_rent
     .group_by('NPCINC')
     .agg(pl.sum('RFACT').alias('RFACT_sum'))
     .sort('NPCINC')
@@ -191,15 +204,15 @@ rfact_sum_by_npinc = (
 exclude_columns = [
     'W_REGN', 'W_PROV', 'SEQ_NO', 'RPROV', 'FSIZE', 'RPSU', 'RFACT', 
     'MEM_RFACT', 'URB', 'NPCINC', 'RPCINC', 'PRPCINC', 'PPCINC', 
-    'RPCINC_NIR', 'W_REGN_NIR'
+    'RPCINC_NIR', 'W_REGN_NIR', 'expenditure_to_income_ratio'
 ]
 
 # Get amount columns
-all_columns = fies_monthly_rent.columns
+all_columns = fies_annual_rent.columns
 amount_columns = [col for col in all_columns if col not in exclude_columns]
 
 ## Multiply the monthly amounts by RFACT to get household population totals
-fies_monthly_x_rfact = fies_monthly_rent.with_columns([
+fies_monthly_x_rfact = fies_annual_rent.with_columns([
     (pl.col(col) * pl.col('RFACT')).alias(col) for col in amount_columns
 ])
 
@@ -215,7 +228,7 @@ print(decile_analysis)
 # Save to CSV
 # fies_monthly_x_rfact.write_csv('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED.csv')
 # OR better - use Parquet (faster, smaller, preserves types)
-fies_monthly_x_rfact.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED_RENT.parquet')
+fies_monthly_x_rfact.write_parquet('clean_data/FIES2023_VOL2_COMPLETE_ANNUAL_RFACT-ADJUSTED_RENT.parquet')
 
 
 # =============================================== END ===============================================

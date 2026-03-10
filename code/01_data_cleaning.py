@@ -71,7 +71,7 @@ def get_expenditure_items(df, major_code):
 
 print("Loading data...")
 exempt_list = pl.read_csv('clean_data/vat_exempt_list.csv')
-fies_raw = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_MONTHLY_RFACT-ADJUSTED_RENT.parquet')
+fies_raw = pl.read_parquet('clean_data/FIES2023_VOL2_COMPLETE_ANNUAL_RFACT-ADJUSTED_RENT.parquet')
 senior_counts = (
     pl.read_parquet('clean_data/senior_counts.parquet')
     .select([
@@ -187,6 +187,7 @@ tax_share = (
     .group_by('NPCINC').agg([
         pl.sum('RFACT').alias('number_households'),
         pl.sum('TOINC').alias('total_income'),
+        pl.sum('disposable_income').alias('total_disposable_income'),
         pl.sum('TOTEX').alias('total_FIES_expenditures'),
         pl.sum('vatable_spending').alias('vatable_expenditures'),
         pl.sum('exempt_spending').alias('exempt_expenditures'),
@@ -199,29 +200,27 @@ tax_share = (
         (pl.col('vatable_expenditures') / pl.col('total_income') * 100).alias('vatable_share_income'),
         (pl.col('exempt_expenditures') / pl.col('total_income') * 100).alias('exempt_share_income'),
         (pl.col('vatable_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('vatable_share_HHexp'),
-        (pl.col('exempt_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('exempt_share_HHexp')
+        (pl.col('exempt_expenditures') / pl.col('total_FIES_expenditures') * 100).alias('exempt_share_HHexp'),
+        (pl.col('vatable_expenditures') / pl.col('total_disposable_income') * 100).alias('vatable_share_disp_income'),
+        (pl.col('exempt_expenditures') / pl.col('total_disposable_income') * 100).alias('exempt_share_disp_income')
     ])
     .with_columns([
         # Get the estimated VAT paid
-        (pl.col('vatable_expenditures') * VAT_RATE).alias('estimated_vat_perHH'),
+        (pl.col('vatable_expenditures') * VAT_RATE).alias('estimated_vat_paid'),
         (pl.col('exempt_expenditures') * VAT_RATE).alias('estimated_vat_foregone'),
         ])
     .with_columns([
-        # Get ratio of VAT collection to INCOME, FIES EXPENDITURES, and TOTAL EXPENDITURES
-        (pl.col('estimated_vat_perHH') / pl.col('total_income') * 100)
-        .alias('vat_to_income'),
-        (pl.col('estimated_vat_perHH') / pl.col('total_FIES_expenditures') * 100)
-        .alias('vat_to_FIESexpenditures'),
-        (pl.col('estimated_vat_perHH') / pl.col('total_expenditures') * 100)
-        .alias('vat_to_TOTALexpenditures'),
+        # Get ratio of VAT collection to INCOME, FIES EXPENDITURES, TOTAL EXPENDITURES and DISPOSABLE INCOME
+        (pl.col('estimated_vat_paid') / pl.col('total_income') * 100).alias('vat_to_income'),
+        (pl.col('estimated_vat_paid') / pl.col('total_FIES_expenditures') * 100).alias('vat_to_FIESexpenditures'),
+        (pl.col('estimated_vat_paid') / pl.col('total_expenditures') * 100).alias('vat_to_TOTALexpenditures'),
+        (pl.col('estimated_vat_paid') / pl.col('total_disposable_income') * 100).alias('vat_to_disp_income'),
 
         # Get ratio of EXEMPT EXPENDITURES to INCOME, FIES EXPENDITURES, and TOTAL EXPENDITURES
-        (pl.col('estimated_vat_foregone') / pl.col('total_income') * 100)
-        .alias('exempt_to_income'),
-        (pl.col('estimated_vat_foregone') / pl.col('total_FIES_expenditures') * 100)
-        .alias('exempt_to_FIESexpenditures'),
-        (pl.col('estimated_vat_foregone') / pl.col('total_expenditures') * 100)
-        .alias('exempt_to_TOTALexpenditures')
+        (pl.col('estimated_vat_foregone') / pl.col('total_income') * 100).alias('exempt_to_income'),
+        (pl.col('estimated_vat_foregone') / pl.col('total_FIES_expenditures') * 100).alias('exempt_to_FIESexpenditures'),
+        (pl.col('estimated_vat_foregone') / pl.col('total_expenditures') * 100).alias('exempt_to_TOTALexpenditures'),
+        (pl.col('estimated_vat_foregone') / pl.col('total_disposable_income') * 100).alias('exempt_to_disp_income')
     ])    
 )
 
@@ -239,6 +238,76 @@ tax_share_bydecile = (
 )
 
 print(tax_share_bydecile)
+
+
+# =============================================================================
+# CALCULATE TAX SHARES - BUT AVERAGED RATIOS RATHER THAN SUMS
+# =============================================================================
+
+tax_share_mean = (
+    fies_raw
+    .with_columns([
+        pl.sum_horizontal(vatable_items).alias('vatable_spending'),
+        pl.sum_horizontal(exempt_items).alias('exempt_spending')
+    ])
+    .with_columns([
+        (pl.col('vatable_spending') + pl.col('exempt_spending')).alias('total_spending')
+    ])
+    # Compute all HH-level ratios BEFORE group_by
+    .with_columns([
+        (pl.col('vatable_spending') / pl.col('total_spending') * 100).alias('vatable_share_exp'),
+        (pl.col('exempt_spending') / pl.col('total_spending') * 100).alias('exempt_share_exp'),
+        (pl.col('vatable_spending') / pl.col('TOINC') * 100).alias('vatable_share_income'),
+        (pl.col('exempt_spending') / pl.col('TOINC') * 100).alias('exempt_share_income'),
+        (pl.col('vatable_spending') / pl.col('TOTEX') * 100).alias('vatable_share_HHexp'),
+        (pl.col('exempt_spending') / pl.col('TOTEX') * 100).alias('exempt_share_HHexp'),
+        (pl.col('vatable_spending') / pl.col('disposable_income') * 100).alias('vatable_share_disp_income'),
+        (pl.col('exempt_spending') / pl.col('disposable_income') * 100).alias('exempt_share_disp_income'),
+        (pl.col('vatable_spending') * VAT_RATE).alias('estimated_vat_paid'),
+        (pl.col('exempt_spending') * VAT_RATE).alias('estimated_vat_foregone'),
+    ])
+    .with_columns([
+        (pl.col('estimated_vat_paid') / pl.col('TOINC') * 100).alias('vat_to_income'),
+        (pl.col('estimated_vat_paid') / pl.col('TOTEX') * 100).alias('vat_to_FIESexpenditures'),
+        (pl.col('estimated_vat_paid') / pl.col('total_spending') * 100).alias('vat_to_TOTALexpenditures'),
+        (pl.col('estimated_vat_paid') / pl.col('disposable_income') * 100).alias('vat_to_disp_income'),
+        (pl.col('estimated_vat_foregone') / pl.col('TOINC') * 100).alias('exempt_to_income'),
+        (pl.col('estimated_vat_foregone') / pl.col('TOTEX') * 100).alias('exempt_to_FIESexpenditures'),
+        (pl.col('estimated_vat_foregone') / pl.col('total_spending') * 100).alias('exempt_to_TOTALexpenditures'),
+        (pl.col('estimated_vat_foregone') / pl.col('disposable_income') * 100).alias('exempt_to_disp_income'),
+    ])
+    # Now aggregate: totals for amounts, means for ratios
+    .group_by('NPCINC').agg([
+        pl.sum('RFACT').alias('number_households'),
+        pl.sum('TOINC').alias('total_income'),
+        pl.sum('disposable_income').alias('total_disposable_income'),
+        pl.sum('TOTEX').alias('total_FIES_expenditures'),
+        pl.sum('vatable_spending').alias('vatable_expenditures'),
+        pl.sum('exempt_spending').alias('exempt_expenditures'),
+        pl.sum('total_spending').alias('total_expenditures'),
+        pl.sum('estimated_vat_paid').alias('estimated_vat_paid'),
+        pl.sum('estimated_vat_foregone').alias('estimated_vat_foregone'),
+        # Mean of HH-level ratios
+        pl.mean('vatable_share_exp').alias('vatable_share_exp'),
+        pl.mean('exempt_share_exp').alias('exempt_share_exp'),
+        pl.mean('vatable_share_income').alias('vatable_share_income'),
+        pl.mean('exempt_share_income').alias('exempt_share_income'),
+        pl.mean('vatable_share_HHexp').alias('vatable_share_HHexp'),
+        pl.mean('exempt_share_HHexp').alias('exempt_share_HHexp'),
+        pl.mean('vatable_share_disp_income').alias('vatable_share_disp_income'),
+        pl.mean('exempt_share_disp_income').alias('exempt_share_disp_income'),
+        pl.mean('vat_to_income').alias('vat_to_income'),
+        pl.mean('vat_to_FIESexpenditures').alias('vat_to_FIESexpenditures'),
+        pl.mean('vat_to_TOTALexpenditures').alias('vat_to_TOTALexpenditures'),
+        pl.mean('vat_to_disp_income').alias('vat_to_disp_income'),
+        pl.mean('exempt_to_income').alias('exempt_to_income'),
+        pl.mean('exempt_to_FIESexpenditures').alias('exempt_to_FIESexpenditures'),
+        pl.mean('exempt_to_TOTALexpenditures').alias('exempt_to_TOTALexpenditures'),
+        pl.mean('exempt_to_disp_income').alias('exempt_to_disp_income'),
+    ])
+    .sort('NPCINC')
+)
+print(tax_share_mean)
 
 
 # =============================================================================
@@ -271,12 +340,11 @@ print(budget_share)
 
 
 # =============================================================================
-# CALCULATE VAT ESTIMATES AND EFFECTIVE TAX RATES
+# ADD RATIOS, VAT ESTIMATES AND EFFECTIVE TAX RATES TO THE MAIN DATASET
 # =============================================================================
 
 print("\nCalculating VAT estimates and effective tax rates...")
 
-# Add VAT calculations to household-level data
 fies_raw_vat_etr = (
     fies_raw
     .with_columns([
@@ -285,19 +353,35 @@ fies_raw_vat_etr = (
     ])
     .with_columns([
         (pl.col('total_vatable_expenditures') + pl.col('total_exempt_expenditures')).alias('total_expenditures'),
-        (pl.col('total_vatable_expenditures') * VAT_RATE).alias('estimated_vat_perHH'),
+        (pl.col('total_vatable_expenditures') * VAT_RATE).alias('estimated_vat_paid'),
         (pl.col('total_exempt_expenditures') * VAT_RATE).alias('estimated_vat_foregone')
     ])
     .with_columns([
-        ((pl.col('estimated_vat_perHH') / pl.col('total_expenditures')) * 100).alias('vat_paid_to_total_expenditures'),
-        ((pl.col('estimated_vat_foregone') / pl.col('total_expenditures')) * 100).alias('vat_foregone_to_total_expenditures')
-    ])
-    # Add computed disposable income and expenditure to income ratio
-    .with_columns([
-        ((pl.col('TOINC') / pl.col('TOTEX')).alias('expenditure_to_income_ratio')),
-        ((pl.col('TOINC') - pl.col('1601100')) - pl.col('1601200')).alias('disposable_income')
+        # Shares of total expenditures
+        (pl.col('total_vatable_expenditures') / pl.col('total_expenditures') * 100).alias('vatable_share_exp'),
+        (pl.col('total_exempt_expenditures') / pl.col('total_expenditures') * 100).alias('exempt_share_exp'),
+        # Shares of FIES total expenditures (TOTEX)
+        (pl.col('total_vatable_expenditures') / pl.col('TOTEX') * 100).alias('vatable_share_HHexp'),
+        (pl.col('total_exempt_expenditures') / pl.col('TOTEX') * 100).alias('exempt_share_HHexp'),
+        # Shares of gross income (TOINC)
+        (pl.col('total_vatable_expenditures') / pl.col('TOINC') * 100).alias('vatable_share_income'),
+        (pl.col('total_exempt_expenditures') / pl.col('TOINC') * 100).alias('exempt_share_income'),
+        # Shares of disposable income
+        (pl.col('total_vatable_expenditures') / pl.col('disposable_income') * 100).alias('vatable_share_disp_income'),
+        (pl.col('total_exempt_expenditures') / pl.col('disposable_income') * 100).alias('exempt_share_disp_income'),
+        # VAT paid ratios
+        (pl.col('estimated_vat_paid') / pl.col('total_expenditures') * 100).alias('vat_to_TOTALexpenditures'),
+        (pl.col('estimated_vat_paid') / pl.col('TOTEX') * 100).alias('vat_to_FIESexpenditures'),
+        (pl.col('estimated_vat_paid') / pl.col('TOINC') * 100).alias('vat_to_income'),
+        (pl.col('estimated_vat_paid') / pl.col('disposable_income') * 100).alias('vat_to_disp_income'),
+        # VAT foregone ratios
+        (pl.col('estimated_vat_foregone') / pl.col('total_expenditures') * 100).alias('exempt_to_TOTALexpenditures'),
+        (pl.col('estimated_vat_foregone') / pl.col('TOTEX') * 100).alias('exempt_to_FIESexpenditures'),
+        (pl.col('estimated_vat_foregone') / pl.col('TOINC') * 100).alias('exempt_to_income'),
+        (pl.col('estimated_vat_foregone') / pl.col('disposable_income') * 100).alias('exempt_to_disp_income'),
     ])
 )
+
 
 # Calculate aggregate VAT statistics by decile
 main_summary = (
@@ -308,13 +392,21 @@ main_summary = (
         pl.sum('total_vatable_expenditures').alias('total_vatable_expenditures'),
         pl.sum('total_exempt_expenditures').alias('total_exempt_expenditures'),
         pl.sum('total_expenditures').alias('total_expenditures'),
-        pl.sum('estimated_vat_perHH').alias('total_vat_paid'),
+        pl.sum('estimated_vat_paid').alias('total_vat_paid'),
         pl.sum('estimated_vat_foregone').alias('total_vat_foregone'),
         pl.sum('TOTEX').alias('total_FIES_expenditures'),
-        # Mean VAT ETR by decile
-        pl.mean('vat_paid_to_total_expenditures').alias('avg_vat_etr'),
-        pl.mean('vat_foregone_to_total_expenditures').alias('avg_vat_foregone_etr')
-
+        pl.sum('TOINC').alias('total_income'),
+        pl.sum('disposable_income').alias('total_disposable_income'),
+        # Mean VAT paid ETR by decile
+        pl.mean('vat_to_TOTALexpenditures').alias('avg_vat_to_TOTALexpenditures'),
+        pl.mean('vat_to_FIESexpenditures').alias('avg_vat_to_FIESexpenditures'),
+        pl.mean('vat_to_income').alias('avg_vat_to_income'),
+        pl.mean('vat_to_disp_income').alias('avg_vat_to_disp_income'),
+        # Mean VAT foregone ETR by decile
+        pl.mean('exempt_to_TOTALexpenditures').alias('avg_exempt_to_TOTALexpenditures'),
+        pl.mean('exempt_to_FIESexpenditures').alias('avg_exempt_to_FIESexpenditures'),
+        pl.mean('exempt_to_income').alias('avg_exempt_to_income'),
+        pl.mean('exempt_to_disp_income').alias('avg_exempt_to_disp_income'),
         # Weighted sum for weighted mean calculation
         # (pl.col('vat_paid_to_total_expenditures') * pl.col('RFACT')).sum().alias('weighted_sum_vat_etr'),
         # (pl.col('vat_foregone_to_total_expenditures') * pl.col('RFACT')).sum().alias('weighted_sum_foregone_etr')
@@ -400,7 +492,6 @@ senior_summary = (
     .filter(pl.col('senior_count') > 0)
     .with_columns([
         (pl.col('RFACT') * pl.col('senior_count')).alias('weighted_number_seniors'),
-        ((pl.col('total_vatable_expenditures') / pl.col('TOTEX') * 100).alias('ratio_vatable_to_total_expenditures'))
 ])
     .group_by('NPCINC')
     .agg([
@@ -410,12 +501,13 @@ senior_summary = (
         pl.sum('total_vatable_expenditures').alias('total_vatable_expenditures'),
         pl.sum('total_exempt_expenditures').alias('total_exempt_expenditures'),
         pl.sum('total_expenditures').alias('total_expenditures'),
-        pl.sum('estimated_vat_perHH').alias('total_vat_paid'),
+        pl.sum('estimated_vat_paid').alias('total_vat_paid'),
         pl.sum('estimated_vat_foregone').alias('total_vat_foregone'),
         # Mean VAT ETR by decile
-        pl.mean('vat_paid_to_total_expenditures').alias('avg_vat_etr'),
-        pl.mean('vat_foregone_to_total_expenditures').alias('avg_vat_foregone_etr'),
-        pl.mean('ratio_vatable_to_total_expenditures').alias('avg_vat_to_total')
+        pl.mean('vat_to_TOTALexpenditures').alias('avg_vat_to_TOTALexpenditures'),
+        pl.mean('exempt_to_TOTALexpenditures').alias('avg_exempt_to_TOTALexpenditures'),
+        pl.mean('vatable_share_HHexp').alias('avg_vatable_to_TOTEX'), # ratio of total vatable expenditures to TOTEX
+        pl.mean('exempt_share_HHexp').alias('avg_exempt_to_TOTEX') # ratio of total exempt expenditures to TOTEX
     ])
     .sort('NPCINC')
 )
@@ -429,28 +521,44 @@ print(senior_summary)
 
 print("\nExporting results...")
 # Export to separate CSVs
-tax_share.write_csv('outputs/feb3/tax_share.csv')
-tax_share_bydecile.write_csv('outputs/feb3/tax_share_bydecile.csv')
-budget_share.write_csv('outputs/feb3/budget_share.csv')
-main_summary.write_csv('outputs/feb3/main_summary.csv')
-exempt_by_category.write_csv('outputs/feb3/exempt_by_category.csv')
-vat_paid_and_foregone.write_csv('outputs/feb3/vat_paid_and_foregone.csv')
-senior_summary.write_csv('outputs/feb3/senior_summary.csv')
+tax_share.write_csv('outputs/mar10/tax_share.csv')
+tax_share_mean.write_csv('outputs/mar10/tax_share_mean.csv')
+tax_share_bydecile.write_csv('outputs/mar10/tax_share_bydecile.csv')
+budget_share.write_csv('outputs/mar10/budget_share.csv')
+main_summary.write_csv('outputs/mar10/main_summary.csv')
+exempt_by_category.write_csv('outputs/mar10/exempt_by_category.csv')
+vat_paid_and_foregone.write_csv('outputs/mar10/vat_paid_and_foregone.csv')
+senior_summary.write_csv('outputs/mar10/senior_summary.csv')
 
 # Export processed household-level data
 fies_raw_vat_etr.write_parquet('clean_data/fies_raw_vat_etr.parquet')
-fies_raw_vat_etr.write_csv('clean_data/fies_raw_vat_etr.csv')   # Never mind. This creates 1 GB csv, not user friendly for processing
+# fies_raw_vat_etr.write_csv('clean_data/fies_raw_vat_etr.csv')   # Never mind. This creates 1 GB csv, not user friendly for processing
 
 
-# Export into one excel with separate sheets
-# with pd.ExcelWriter('outputs/vat_outputs.xlsx', engine='openpyxl') as writer:
-#     tax_share.to_pandas().to_excel(writer, sheet_name='tax_share', index=False)
-#     tax_share_bydecile.to_pandas().to_excel(writer, sheet_name='tax_share_bydecile', index=False)
-#     budget_share.to_pandas().to_excel(writer, sheet_name='budget_share', index=False)
-#     main_summary.to_pandas().to_excel(writer, sheet_name='main_summary', index=False)
-#     exempt_by_category.to_pandas().to_excel(writer, sheet_name='exempt_by_category', index=False)
-#     vat_paid_and_foregone.to_pandas().to_excel(writer, sheet_name='vat_paid_and_foregone', index=False)
-#     senior_summary.to_pandas().to_excel(writer, sheet_name='senior_summary', index=False)
+# =============================================================================
+# CALCULATE VAT ESTIMATES AND EFFECTIVE TAX RATES
+# =============================================================================
+
+# print("\nCalculating VAT estimates and effective tax rates...")
+
+# # Add VAT calculations to household-level data
+# fies_raw_vat_etr = (
+#     fies_raw
+#     .with_columns([
+#         pl.sum_horizontal(vatable_items).alias('total_vatable_expenditures'),
+#         pl.sum_horizontal(exempt_items).alias('total_exempt_expenditures')
+#     ])
+#     .with_columns([
+#         (pl.col('total_vatable_expenditures') + pl.col('total_exempt_expenditures')).alias('total_expenditures'),
+#         (pl.col('total_vatable_expenditures') * VAT_RATE).alias('estimated_vat_paid'),
+#         (pl.col('total_exempt_expenditures') * VAT_RATE).alias('estimated_vat_foregone')
+#     ])
+#     .with_columns([
+#         ((pl.col('estimated_vat_paid') / pl.col('total_expenditures')) * 100).alias('vat_paid_to_total_expenditures'),
+#         ((pl.col('estimated_vat_foregone') / pl.col('total_expenditures')) * 100).alias('vat_foregone_to_total_expenditures')
+#     ])
+# )
+
 
 print("\nAll outputs exported successfully!")
 print("\nOutput files:")
